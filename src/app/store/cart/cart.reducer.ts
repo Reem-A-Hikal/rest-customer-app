@@ -40,18 +40,16 @@ export const cartReducer = createReducer(
 
     if (item && item.quantity > 1) {
       return {
-        items: state.items.filter(
-          (item) => item.productId !== action.productId,
+        items: state.items.map((item) =>
+          item.productId === action.productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item,
         ),
       };
     }
 
     return {
-      items: state.items.map((item) =>
-        item.productId === action.productId
-          ? { ...item, quantity: item.quantity - 1 }
-          : item,
-      ),
+      items: state.items.filter((item) => item.productId !== action.productId),
     };
   }),
 
