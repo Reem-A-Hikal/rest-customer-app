@@ -16,6 +16,7 @@ import { ErrorHandlingInterceptor } from './core/interceptors/error-handling.int
 import { UnwrapResponseInterceptor } from './core/interceptors/unwrap-response.interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([ErrorHandlingInterceptor, UnwrapResponseInterceptor]),
     ),
     provideAnimations(),
+    provideAnimationsAsync(),
     provideToastr({
       positionClass: 'toast-top-right',
       preventDuplicates: true,
