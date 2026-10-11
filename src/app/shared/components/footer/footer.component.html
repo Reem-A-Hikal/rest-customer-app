@@ -1,0 +1,125 @@
+<footer
+  class="bg-ink pt-2xl pb-lg text-warm-grey shadow-[0_-8px_24px_rgba(0,0,0,0.28)]"
+>
+  <div class="container">
+    <div
+      class="grid gap-xl border-b border-paper/16 pb-xl min-[56rem]:grid-cols-[1.3fr_1fr_1fr_1.2fr]"
+    >
+      <div>
+        <a routerLink="/" aria-label="REST home">
+          <app-brand-logo />
+        </a>
+        <p class="mt-sm max-w-[24rem] text-sm">
+          A delivery-only kitchen. No walk-ins, no dining room — just food
+          finished the moment it's ordered.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
+          Explore
+        </h3>
+        <ul class="grid gap-2xs">
+          @for (link of exploreLinks; track link.label) {
+            <li>
+              <a
+                class="text-sm transition-colors hover:text-accent-soft"
+                [routerLink]="link.route"
+                [fragment]="link.fragment"
+                >{{ link.label }}</a
+              >
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
+          Hours
+        </h3>
+        <ul class="grid gap-2xs">
+          @for (line of hours; track line) {
+            <li>{{ line }}</li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
+          Tomorrow's menu, first
+        </h3>
+        <form
+          class="mt-sm flex max-w-[22rem] gap-2xs"
+          (submit)="subscribe($event)"
+        >
+          <label class="sr-only" for="newsletter-email">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            required
+            placeholder="you@email.com"
+            [value]="email.value"
+            (input)="email.setValue($any($event.target).value)"
+            class="min-h-11 flex-1 rounded-sm border border-paper/16 bg-surface px-sm text-paper placeholder:text-warm-grey"
+          />
+          <button
+            type="submit"
+            class="min-h-11 cursor-pointer rounded-sm bg-accent-soft px-5 font-body-en text-sm font-semibold text-ink transition hover:bg-amber active:translate-y-px"
+          >
+            Join
+          </button>
+        </form>
+        <output
+          class="mt-2xs block min-h-[1.2em] text-sm text-accent-soft"
+          aria-live="polite"
+        >
+          {{ note() }}
+        </output>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-wrap items-center justify-between gap-sm pt-lg text-sm"
+    >
+      <p>© {{ year }} REST. All rights reserved.</p>
+      <div class="flex gap-sm">
+        <a
+          href="#"
+          aria-label="REST on Instagram"
+          class="grid size-11 place-items-center rounded-full border border-paper/16 transition-colors hover:border-accent-soft hover:text-accent-soft"
+        >
+          <svg
+            class="size-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.2" cy="6.8" r="1" />
+          </svg>
+        </a>
+        <a
+          href="#"
+          aria-label="REST on Facebook"
+          class="grid size-11 place-items-center rounded-full border border-paper/16 transition-colors hover:border-accent-soft hover:text-accent-soft"
+        >
+          <svg
+            class="size-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+          >
+            <path
+              d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V12H8v3h2.5v6h3v-6H16l.5-3h-3V9.8c0-.5.3-.8.5-.8Z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
