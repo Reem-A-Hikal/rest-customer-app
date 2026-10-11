@@ -1,0 +1,132 @@
+<section
+  id="hero"
+  aria-labelledby="hero-heading"
+  class="bg-[radial-gradient(120%_90%_at_78%_8%,color-mix(in_srgb,var(--color-ink)_85%,var(--color-paper)_15%)_0%,var(--color-ink)_55%)] py-2xl"
+>
+  <div class="container grid items-center gap-xl md:grid-cols-2">
+    <div>
+      <p
+        class="mb-sm flex items-center gap-2 font-body-en text-sm"
+        [class.text-signature-soft]="kitchenOpen()"
+        [class.text-warm-grey]="!kitchenOpen()"
+      >
+        <span
+          class="h-2 w-2 rounded-full"
+          [class.bg-signature-soft]="kitchenOpen()"
+          [class.bg-warm-grey]="!kitchenOpen()"
+          [class.is-live]="kitchenOpen()"
+        ></span>
+        {{
+          kitchenOpen() ? "Kitchen's live right now" : "Kitchen opens at 6 PM"
+        }}
+      </p>
+
+      <p class="mb-sm font-display text-lg text-accent-soft">
+        A cloud kitchen, plated properly
+      </p>
+
+      <h1 class="font-display text-h1 font-bold text-paper">
+        You'll never see our kitchen. Only taste what leaves it.
+      </h1>
+
+      <p class="mt-md max-w-[32rem] font-body-en text-warm-grey">
+        No dining room, no hostess stand, no rent for a room you'd sit in for an
+        hour. One commercial kitchen, a small team of chefs, and every plate
+        finished the moment your order arrives.
+      </p>
+
+      <div class="mt-lg flex flex-wrap gap-md">
+        <a
+          routerLink="/menu"
+          class="cursor-pointer rounded-sm bg-accent-soft py-xs px-md font-body-en text-sm font-semibold text-ink transition-colors hover:bg-amber active:translate-y-px"
+        >
+          See Tonight's Menu
+        </a>
+        <a
+          href="#kitchen"
+          class="rounded-sm border border-paper/30 py-xs px-md font-body-en text-sm font-semibold text-paper transition-colors hover:border-accent-soft"
+        >
+          How a cloud kitchen works
+        </a>
+      </div>
+
+      <dl class="mt-lg flex flex-wrap gap-lg border-t border-paper/16 pt-md">
+        <div>
+          <strong dir="ltr" class="block font-display text-lg text-paper"
+            >6:00 PM</strong
+          >
+          <span class="text-xs text-warm-grey">Kitchen opens</span>
+        </div>
+        <div>
+          <strong dir="ltr" class="block font-display text-lg text-paper"
+            >35–50 min</strong
+          >
+          <span class="text-xs text-warm-grey">To your door</span>
+        </div>
+        <div>
+          <strong class="block font-display text-lg text-paper">Cairo</strong>
+          <span class="text-xs text-warm-grey">Delivery only</span>
+        </div>
+      </dl>
+    </div>
+
+    <div class="hidden md:block" aria-hidden="true">
+      <svg
+        viewBox="0 0 320 320"
+        fill="none"
+        class="mx-auto h-auto w-full max-w-[25rem] text-accent-soft"
+      >
+        <g>
+          <path
+            class="steam-line"
+            d="M120 90c-10-14 10-20 0-34"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            opacity="0.7"
+          />
+          <path
+            class="steam-line"
+            d="M160 84c-10-14 10-22 0-36"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            opacity="0.7"
+          />
+          <path
+            class="steam-line"
+            d="M200 90c-10-14 10-20 0-34"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            opacity="0.7"
+          />
+        </g>
+        <ellipse cx="160" cy="230" rx="112" ry="14" class="fill-shadow-soft" />
+        <ellipse
+          cx="160"
+          cy="222"
+          rx="96"
+          ry="10"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
+        <g class="cloche-lid">
+          <path
+            d="M64 210c0-58 43-105 96-105s96 47 96 105"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <circle
+            cx="160"
+            cy="99"
+            r="6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
