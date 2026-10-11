@@ -1,0 +1,42 @@
+<header
+  [class]="headerStateClasses"
+  class="fixed start-0 end-0 top-0 z-[100] transition-[background-color,padding,box-shadow] duration-300"
+>
+  <div class="container flex items-center gap-md">
+    <a routerLink="/" class="relative z-10 me-auto flex items-center gap-2xs">
+      <app-brand-logo></app-brand-logo>
+    </a>
+
+    <div class="relative z-10 empty:hidden lg:order-2">
+      <ng-content select="[headerActions]"></ng-content>
+    </div>
+
+    <button
+      type="button"
+      class="relative z-10 grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber lg:hidden"
+      aria-controls="header-panel"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-label]="isOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggle()"
+    >
+      @if (isOpen()) {
+        <svg lucideX class="size-5" stroke-width="1.6"></svg>
+      } @else {
+        <svg lucideMenu class="size-5" stroke-width="1.6"></svg>
+      }
+    </button>
+
+    <div
+      id="header-panel"
+      [class]="panelClasses"
+      (click)="onPanelClick($event)"
+    >
+      <div class="empty:hidden lg:order-1">
+        <ng-content select="[headerLinks]"></ng-content>
+      </div>
+      <div class="empty:hidden lg:order-3">
+        <ng-content select="[headerCta]"></ng-content>
+      </div>
+    </div>
+  </div>
+</header>
