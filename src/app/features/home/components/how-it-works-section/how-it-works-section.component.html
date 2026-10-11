@@ -1,0 +1,35 @@
+<section
+  id="how-it-works"
+  class="bg-ink text-paper py-2xl"
+  aria-labelledby="how-it-works-heading"
+>
+  <div class="container">
+    <p class="mb-xs font-display text-lead font-semibold text-accent-soft">
+      Course Two
+    </p>
+    <div class="mb-xl max-w-[42rem]">
+      <h2 class="font-display text-h2 font-semibold">Order to doorstep</h2>
+      <p class="mt-sm text-lead text-warm-grey">
+        Three steps, same as any kitchen — you just don't have to sit in it.
+      </p>
+    </div>
+
+    <ol class="grid gap-xl min-[56rem]:grid-cols-3 ps-lg">
+      @for (step of steps; track step.title; let i = $index) {
+        <li class="flex gap-md">
+          <span
+            aria-hidden="true"
+            class="grid h-12 w-12 flex-none place-items-center rounded-full border border-accent-soft font-display text-lg text-accent-soft"
+            >{{ i + 1 }}</span
+          >
+          <div>
+            <h3 class="font-body-en text-xl font-semibold">{{ step.title }}</h3>
+            <p class="mt-[0.4rem] max-w-[30rem] leading-[1.6] text-warm-grey">
+              {{ step.description }}
+            </p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

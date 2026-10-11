@@ -1,0 +1,65 @@
+<app-header>
+  <nav headerLinks class="flex flex-col gap-md lg:flex-row lg:items-center">
+    <ul class="nav flex flex-col lg:flex-row lg:items-center lg:gap-lg">
+      <li class="border-b border-paper/10 lg:border-0">
+        <a
+          href="#kitchen"
+          class="flex min-h-14 items-center font-display text-2xl text-paper transition-colors hover:text-accent-soft lg:min-h-0 lg:py-1 lg:font-body-en lg:text-sm lg:text-warm-grey lg:hover:text-paper"
+          >The Kitchen</a
+        >
+      </li>
+      <li class="border-b border-paper/10 lg:border-0">
+        <a
+          href="#how-it-works"
+          class="flex min-h-14 items-center font-display text-2xl text-paper transition-colors hover:text-accent-soft lg:min-h-0 lg:py-1 lg:font-body-en lg:text-sm lg:text-warm-grey lg:hover:text-paper"
+          >How It Works</a
+        >
+      </li>
+      <li class="border-b border-paper/10 lg:border-0">
+        <a
+          href="#standards"
+          class="flex min-h-14 items-center font-display text-2xl text-paper transition-colors hover:text-accent-soft lg:min-h-0 lg:py-1 lg:font-body-en lg:text-sm lg:text-warm-grey lg:hover:text-paper"
+          >Standards</a
+        >
+      </li>
+      <li class="border-b border-paper/10 lg:border-0">
+        <a
+          href="#reviews"
+          class="flex min-h-14 items-center font-display text-2xl text-paper transition-colors hover:text-accent-soft lg:min-h-0 lg:py-1 lg:font-body-en lg:text-sm lg:text-warm-grey lg:hover:text-paper"
+          >Reviews</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div headerActions class="flex items-center gap-md">
+    <a
+      class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 font-body-en text-xs font-semibold text-paper transition-colors hover:border-amber hover:text-amber"
+    >
+      AR
+    </a>
+
+    <a
+      routerLink="/cart"
+      class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
+      aria-label="Open cart"
+    >
+      <svg lucideShoppingCart class="size-4" [strokeWidth]="1.6"></svg>
+    </a>
+  </div>
+
+  <a
+    headerCta
+    routerLink="/menu"
+    class="block flex-none rounded-sm bg-accent-soft px-md py-sm text-center font-body-en text-base font-semibold text-ink transition-colors hover:bg-amber lg:inline-block lg:py-xs lg:text-sm"
+  >
+    See Tonight's Menu
+  </a>
+</app-header>
+
+<app-hero-section />
+<app-kitchen-section />
+<app-how-it-works-section />
+<app-standards-section />
+<app-reviews-section />
+<app-menu-cta-section />
