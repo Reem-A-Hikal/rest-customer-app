@@ -1,0 +1,29 @@
+@if (quantity === 0) {
+  <button
+    (click)="add.emit()"
+    aria-label="Add to cart"
+    class="grid h-10 w-10 place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-accent-soft hover:text-accent-soft"
+  >
+    +
+  </button>
+} @else {
+  <div
+    class="flex items-center gap-1 rounded-full border border-flame bg-ink px-2 py-1"
+  >
+    <button
+      (click)="decrement.emit()"
+      aria-label="Decrease quantity"
+      class="h-6 w-6 rounded-full text-signature-soft"
+    >
+      −
+    </button>
+    <span class="text-sm font-bold text-signature-soft">{{ quantity }}</span>
+    <button
+      (click)="increment.emit()"
+      aria-label="Increase quantity"
+      class="h-6 w-6 rounded-full text-signature-soft"
+    >
+      +
+    </button>
+  </div>
+}

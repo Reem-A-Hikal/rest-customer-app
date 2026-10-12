@@ -1,0 +1,50 @@
+<article
+  class="w-full flex flex-col mt-sm bg-surface rounded-md p-3 sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-white/25 transition-colors"
+>
+  <div
+    class="flex items-start sm:items-center gap-4 sm:gap-5 flex-1 w-full min-w-0"
+  >
+    <div
+      class="h-[58px] w-[58px] flex-none overflow-hidden rounded-md bg-[radial-gradient(120%_120%_at_30%_20%,color-mix(in_srgb,var(--color-amber)_20%,var(--color-ink)_80%)_0%,var(--color-ink)_70%)]"
+    >
+      <app-dish-image [product]="product"></app-dish-image>
+    </div>
+
+    <div class="flex-1 min-w-0 space-y-1">
+      <h3 class="font-display text-xl sm:text-2xl font-semibold text-paper">
+        {{ product.name }}
+      </h3>
+      @if (product.description) {
+        <p class="text-sm text-warm-grey leading-relaxed max-w-full">
+          {{ product.description }}
+        </p>
+      }
+    </div>
+  </div>
+
+  <div
+    class="flex justify-between w-full sm:w-auto sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5 flex-none"
+  >
+    <div class="flex items-baseline gap-1.5 font-display flex-none" dir="ltr">
+      @if (hasDiscount) {
+        <span class="text-xs line-through text-warm-grey">{{
+          product.price | number: "1.0-0"
+        }}</span>
+      }
+      <span class="text-xl sm:text-2xl font-bold text-accent-soft">{{
+        displayPrice | number: "1.0-0"
+      }}</span>
+      <span
+        class="text-[10px] text-warm-grey uppercase font-body-en tracking-wider font-medium"
+        >EGP</span
+      >
+    </div>
+
+    <app-qty-control
+      [quantity]="quantity"
+      (add)="onAdd()"
+      (increment)="onIncrement()"
+      (decrement)="onDecrement()"
+    ></app-qty-control>
+  </div>
+</article>

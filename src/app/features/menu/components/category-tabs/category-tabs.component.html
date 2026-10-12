@@ -1,0 +1,27 @@
+<nav
+  aria-label="Menu categories"
+  class="sticky top-[4.75rem] z-50 border-b border-outline bg-ink/92 backdrop-blur-[10px] mb-md"
+>
+  <ul
+    class="flex gap-lg overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  >
+    @for (tab of tabs(); track tab.id) {
+      <li class="flex-none">
+        <button
+          type="button"
+          [attr.data-tab-id]="tab.id"
+          [attr.aria-current]="tab.id === activeId() ? 'true' : null"
+          class="relative flex min-h-14 cursor-pointer items-center whitespace-nowrap font-display text-lg transition-colors hover:text-paper focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent-soft after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-center after:bg-amber after:transition-transform after:duration-300 motion-reduce:after:transition-none"
+          [class]="
+            tab.id === activeId()
+              ? 'text-paper after:scale-x-100'
+              : 'text-warm-grey after:scale-x-0'
+          "
+          (click)="tabSelected.emit(tab.id)"
+        >
+          {{ tab.name }}
+        </button>
+      </li>
+    }
+  </ul>
+</nav>

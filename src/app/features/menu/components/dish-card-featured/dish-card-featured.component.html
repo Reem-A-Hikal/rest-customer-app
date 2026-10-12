@@ -1,0 +1,137 @@
+@if (isSingle) {
+  <article
+    class="dish-card w-full bg-surface border border-outline rounded-md overflow-hidden flex flex-col mt-sm md:flex-row items-stretch justify-between group hover:border-accent-soft/50 transition-all duration-300"
+  >
+    <div
+      class="relative w-full md:w-5/12 lg:w-4/12 h-48 md:h-64 bg-charcoal overflow-hidden flex-shrink-0"
+    >
+      <app-dish-image [product]="product" />
+      <div
+        class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-surface via-transparent to-transparent"
+      ></div>
+      <div class="absolute top-3 left-3 z-10">
+        <span
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink/90 border border-accent-soft/40 text-accent-soft text-[10px] sm:text-xs font-medium tracking-wide"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span> Chef's
+          Pick
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="p-4 md:p-6 flex-1 min-w-0 flex flex-col justify-between space-y-4"
+    >
+      <div class="space-y-1.5 w-full">
+        <div class="flex items-baseline justify-between gap-3 w-full">
+          <h3
+            class="font-display text-xl sm:text-2xl font-semibold text-paper group-hover:text-accent-soft transition-colors truncate"
+          >
+            {{ product.name }}
+          </h3>
+          <div
+            class="flex items-baseline gap-1.5 font-display flex-none"
+            dir="ltr"
+          >
+            @if (hasDiscount) {
+              <span class="text-xs line-through text-warm-grey">{{
+                product.price | number: "1.0-0"
+              }}</span>
+            }
+            <span class="text-xl sm:text-2xl font-bold text-accent-soft">{{
+              displayPrice | number: "1.0-0"
+            }}</span>
+            <span
+              class="text-[10px] text-warm-grey uppercase tracking-wider font-body-en font-medium"
+              >EGP</span
+            >
+          </div>
+        </div>
+        @if (product.description) {
+          <p
+            class="text-xs sm:text-sm text-warm-grey max-w-full leading-relaxed"
+          >
+            {{ product.description }}
+          </p>
+        }
+      </div>
+
+      <div
+        class="pt-3 border-t border-outline flex items-center justify-between"
+      >
+        <span class="text-[10px] sm:text-xs text-warm-grey"
+          >Cooked to fire upon order</span
+        >
+        <app-qty-control
+          [quantity]="quantity"
+          (add)="onAdd()"
+          (increment)="onIncrement()"
+          (decrement)="onDecrement()"
+        />
+      </div>
+    </div>
+  </article>
+} @else {
+  <article
+    class="dish-card h-full mt-sm bg-surface border border-outline rounded-md overflow-hidden flex flex-col justify-between group hover:border-accent-soft/50 transition-all duration-300"
+  >
+    <div class="relative w-full h-64 sm:h-72 bg-charcoal overflow-hidden">
+      <app-dish-image [product]="product" />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/40"
+      ></div>
+      <div class="absolute top-3 left-3 z-10">
+        <span
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink/90 border border-accent-soft/40 text-accent-soft text-[10px] sm:text-xs font-medium tracking-wide"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span> Chef's
+          Pick
+        </span>
+      </div>
+
+      <div
+        class="absolute bottom-4 right-4 z-10 bg-ink/95 border border-white/10 px-3.5 py-1.5 rounded flex items-baseline gap-2"
+        dir="ltr"
+      >
+        @if (hasDiscount) {
+          <span class="text-xs line-through text-warm-grey">{{
+            product.price | number: "1.0-0"
+          }}</span>
+        }
+        <span class="font-display text-2xl font-bold text-accent-soft">{{
+          displayPrice | number: "1.0-0"
+        }}</span>
+        <span class="text-[11px] font-body-en text-warm-grey font-medium"
+          >EGP</span
+        >
+      </div>
+    </div>
+
+    <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+      <div class="space-y-2">
+        <h3
+          class="font-display text-2xl font-semibold text-paper group-hover:text-accent-soft transition-colors"
+        >
+          {{ product.name }}
+        </h3>
+        @if (product.description) {
+          <p class="text-sm text-warm-grey leading-relaxed">
+            {{ product.description }}
+          </p>
+        }
+      </div>
+
+      <div
+        class="pt-4 border-t border-outline flex items-center justify-between"
+      >
+        <span class="text-xs text-warm-grey">Cooked to fire upon order</span>
+        <app-qty-control
+          [quantity]="quantity"
+          (add)="onAdd()"
+          (increment)="onIncrement()"
+          (decrement)="onDecrement()"
+        />
+      </div>
+    </div>
+  </article>
+}

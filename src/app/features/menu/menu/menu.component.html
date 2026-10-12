@@ -1,0 +1,113 @@
+@if (loading()) {
+  <div
+    class="flex min-h-[50vh] items-center justify-center bg-ink text-warm-grey"
+  >
+    Loading menu...
+  </div>
+} @else if (error()) {
+  <div
+    class="flex min-h-[50vh] flex-col items-center justify-center gap-sm bg-ink text-paper"
+  >
+    <p>{{ error() }}</p>
+    <button
+      (click)="retry()"
+      class="rounded-sm bg-accent-soft px-md py-xs font-semibold text-ink transition-colors hover:bg-amber"
+    >
+      Try again
+    </button>
+  </div>
+} @else {
+  <app-header [showMenuToggle]="false">
+    <div headerActions class="flex items-center gap-md">
+      <a
+        class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-xs font-semibold text-paper transition-colors hover:border-amber hover:text-amber"
+      >
+        AR
+      </a>
+
+      <a
+        routerLink="/cart"
+        class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 transition-colors hover:border-amber hover:text-amber"
+        aria-label="Open cart"
+      >
+        <svg lucideShoppingCart class="size-4" [strokeWidth]="1.6"></svg>
+      </a>
+    </div>
+  </app-header>
+
+  <main>
+    <div class="container pt-2xl pb-lg">
+      <h1
+        class="text-h1 font-bold text-paper"
+        id="menu-heading"
+        data-i18n="menu.heading"
+      >
+        Tonight's menu
+      </h1>
+      <p data-i18n="menu.subheading" class="text-lead text-warm-grey mt-sm">
+        Set daily by the chef on duty. Order by 9pm for delivery tonight.
+      </p>
+    </div>
+
+    <div class="container space-y-16 pb-md">
+      <app-category-tabs
+        [tabs]="categoryTabs()"
+        [activeId]="selectedCategoryId()"
+        (tabSelected)="selectCategory($event)"
+      />
+      @for (group of menuGroups(); track group.category.categoryId) {
+        <section
+          [id]="'category-' + group.category.categoryId"
+          class="scroll-mt-[8.5rem]"
+        >
+          <div
+            class="flex items-baseline justify-between border-b border-amber pb-4"
+          >
+            <h2 class="text-h2 sm:text-3xl font-semibold text-paper">
+              {{ group.category.name }}
+            </h2>
+            <span
+              class="text-xs text-warm-grey font-display"
+              data-i18n="menu.items-count"
+              >{{ group.featured.length + group.regular.length }} Items</span
+            >
+          </div>
+
+          @if (group.featured.length > 0) {
+            @if (group.featured.length === 1) {
+              <div class="mb-md">
+                <app-dish-card-featured
+                  [product]="group.featured[0].product"
+                  [quantity]="group.featured[0].quantity"
+                  [isSingle]="true"
+                  (cartIntent)="onCartIntent($event)"
+                />
+              </div>
+            } @else {
+              <div class="mb-md grid gap-md md:grid-cols-2">
+                @for (entry of group.featured; track entry.product.productId) {
+                  <app-dish-card-featured
+                    [product]="entry.product"
+                    [quantity]="entry.quantity"
+                    [isSingle]="false"
+                    (cartIntent)="onCartIntent($event)"
+                  />
+                }
+              </div>
+            }
+          }
+
+          <div class="flex flex-col">
+            @for (entry of group.regular; track entry.product.productId) {
+              <app-dish-card-item
+                [product]="entry.product"
+                [quantity]="entry.quantity"
+                (cartIntent)="onCartIntent($event)"
+              />
+            }
+          </div>
+        </section>
+      }
+    </div>
+  </main>
+}
