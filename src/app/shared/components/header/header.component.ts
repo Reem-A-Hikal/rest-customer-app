@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, input, signal } from '@angular/core';
 import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
 import { RouterLink } from '@angular/router';
 import { LucideMenu, LucideX } from '@lucide/angular';
@@ -10,6 +10,7 @@ import { LucideMenu, LucideX } from '@lucide/angular';
   styleUrls: ['./header.component.css'],
 })
 export class AppHeaderComponent {
+  readonly showMenuToggle = input(true);
   private readonly isScrolled = signal(false);
   readonly isOpen = signal(false);
 
@@ -28,7 +29,7 @@ export class AppHeaderComponent {
   }
 
   onPanelClick(event: MouseEvent): void {
-    if ((event.target as HTMLElement).closest('a')) {
+    if ((event.target as HTMLElement).closest('a, button')) {
       this.close();
     }
   }

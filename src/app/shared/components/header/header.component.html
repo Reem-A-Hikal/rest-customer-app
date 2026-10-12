@@ -11,21 +11,22 @@
       <ng-content select="[headerActions]"></ng-content>
     </div>
 
-    <button
-      type="button"
-      class="relative z-10 grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber lg:hidden"
-      aria-controls="header-panel"
-      [attr.aria-expanded]="isOpen()"
-      [attr.aria-label]="isOpen() ? 'Close menu' : 'Open menu'"
-      (click)="toggle()"
-    >
-      @if (isOpen()) {
-        <svg lucideX class="size-5" stroke-width="1.6"></svg>
-      } @else {
-        <svg lucideMenu class="size-5" stroke-width="1.6"></svg>
-      }
-    </button>
-
+    @if (showMenuToggle()) {
+      <button
+        type="button"
+        class="relative z-10 grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber lg:hidden"
+        aria-controls="header-panel"
+        [attr.aria-expanded]="isOpen()"
+        [attr.aria-label]="isOpen() ? 'Close menu' : 'Open menu'"
+        (click)="toggle()"
+      >
+        @if (isOpen()) {
+          <svg lucideX class="size-5" stroke-width="1.6"></svg>
+        } @else {
+          <svg lucideMenu class="size-5" stroke-width="1.6"></svg>
+        }
+      </button>
+    }
     <div
       id="header-panel"
       [class]="panelClasses"

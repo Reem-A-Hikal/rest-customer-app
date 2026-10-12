@@ -16,9 +16,7 @@
       </div>
 
       <div>
-        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
-          Explore
-        </h3>
+        <h3 class="mb-sm text-sm font-semibold text-paper">Explore</h3>
         <ul class="grid gap-2xs">
           @for (link of exploreLinks; track link.label) {
             <li>
@@ -34,9 +32,7 @@
       </div>
 
       <div>
-        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
-          Hours
-        </h3>
+        <h3 class="mb-sm text-sm font-semibold text-paper">Hours</h3>
         <ul class="grid gap-2xs">
           @for (line of hours; track line) {
             <li>{{ line }}</li>
@@ -45,7 +41,7 @@
       </div>
 
       <div>
-        <h3 class="mb-sm font-body-en text-sm font-semibold text-paper">
+        <h3 class="mb-sm text-sm font-semibold text-paper">
           Tomorrow's menu, first
         </h3>
         <form
@@ -64,7 +60,7 @@
           />
           <button
             type="submit"
-            class="min-h-11 cursor-pointer rounded-sm bg-accent-soft px-5 font-body-en text-sm font-semibold text-ink transition hover:bg-amber active:translate-y-px"
+            class="min-h-11 cursor-pointer rounded-sm bg-accent-soft px-5 text-sm font-semibold text-ink transition hover:bg-amber active:translate-y-px"
           >
             Join
           </button>
