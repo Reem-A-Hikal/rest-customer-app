@@ -5,6 +5,7 @@ import {
   inject,
   input,
   output,
+  viewChild,
 } from '@angular/core';
 export interface CategoryTab {
   id: number;
@@ -19,23 +20,31 @@ export class CategoryTabsComponent {
   readonly activeId = input<CategoryTab['id'] | null>(null);
   readonly tabSelected = output<CategoryTab['id']>();
 
+  private readonly list = viewChild<ElementRef<HTMLElement>>('list');
+
   readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   constructor() {
     effect(() => {
       const id = this.activeId();
-      if (id === null) return;
+      const list = this.list()?.nativeElement;
+      if (id === null || !list) return;
+
+      const tab = list.querySelector<HTMLElement>(`[data-tab-id="${id}"]`);
+      if (!tab) return;
+
+      const listRect = list.getBoundingClientRect();
+      const tabRect = tab.getBoundingClientRect();
+      const offset =
+        tabRect.left + tabRect.width / 2 - (listRect.left + listRect.width / 2);
 
       const reduceMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches;
 
-      this.host.nativeElement
-        .querySelector<HTMLElement>('[data-tab-id="${id}"]')
-        ?.scrollIntoView({
-          inline: 'center',
-          block: 'nearest',
-          behavior: reduceMotion ? 'auto' : 'smooth',
-        });
+      list?.scrollBy({
+        left: offset,
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
     });
   }
 }
