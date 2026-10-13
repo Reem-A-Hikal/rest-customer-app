@@ -1,15 +1,25 @@
-import { Component, HostListener, input, signal } from '@angular/core';
+import { Component, HostListener, inject, input, signal } from '@angular/core';
 import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
 import { RouterLink } from '@angular/router';
-import { LucideMenu, LucideX } from '@lucide/angular';
+import { LucideMenu, LucideShoppingCart, LucideX } from '@lucide/angular';
+import { CartFacade } from '../../../features/cart/services/cart.facade';
 
 @Component({
   selector: 'app-header',
-  imports: [BrandLogoComponent, RouterLink, LucideMenu, LucideX],
+  imports: [
+    BrandLogoComponent,
+    RouterLink,
+    LucideMenu,
+    LucideShoppingCart,
+    LucideX,
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class AppHeaderComponent {
+  private readonly cartFacade = inject(CartFacade);
+  readonly cartCount = this.cartFacade.count;
+
   readonly showMenuToggle = input(true);
   private readonly isScrolled = signal(false);
   readonly isOpen = signal(false);

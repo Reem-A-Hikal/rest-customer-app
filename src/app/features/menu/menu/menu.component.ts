@@ -12,7 +12,6 @@ import { DishCartIntent } from '../models/dish-cart-intent.model';
 import { DishCardFeaturedComponent } from '../components/dish-card-featured/dish-card-featured.component';
 import { DishCardItemComponent } from '../components/dish-card-item/dish-card-item.component';
 import { AppHeaderComponent } from '../../../shared/components/header/header.component';
-import { LucideShoppingCart } from '@lucide/angular';
 import { CategoryTabsComponent } from '../components/category-tabs/category-tabs.component';
 
 @Component({
@@ -21,7 +20,6 @@ import { CategoryTabsComponent } from '../components/category-tabs/category-tabs
     DishCardItemComponent,
     DishCardFeaturedComponent,
     AppHeaderComponent,
-    LucideShoppingCart,
     CategoryTabsComponent,
   ],
   templateUrl: './menu.component.html',

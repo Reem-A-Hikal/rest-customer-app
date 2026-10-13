@@ -7,8 +7,29 @@
       <app-brand-logo></app-brand-logo>
     </a>
 
-    <div class="relative z-10 empty:hidden lg:order-2">
-      <ng-content select="[headerActions]"></ng-content>
+    <div class="relative z-10 flex items-center gap-md lg:order-2">
+      <button
+        type="button"
+        aria-label="Switch language"
+        class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 font-body-en text-xs font-semibold text-paper transition-colors hover:border-amber hover:text-amber"
+      >
+        AR
+      </button>
+
+      <a
+        routerLink="/cart"
+        [attr.aria-label]="'Open cart, ' + cartCount() + ' items'"
+        class="position-relative grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
+      >
+        <svg lucideShoppingCart class="size-5" [strokeWidth]="1.6"></svg>
+        @if (cartCount() > 0) {
+          <span
+            class="absolute -end-1 -top-1 grid min-w-5 place-items-center rounded-full bg-accent-soft px-1 font-body-en text-[0.6875rem] font-semibold leading-5 text-ink"
+          >
+            {{ cartCount() }}
+          </span>
+        }
+      </a>
     </div>
 
     @if (showMenuToggle()) {

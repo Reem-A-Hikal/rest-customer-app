@@ -1,4 +1,3 @@
-import { LucideShoppingCart } from '@lucide/angular';
 import { Component } from '@angular/core';
 import { AppHeaderComponent } from '../../shared/components/header/header.component';
 import { RouterLink } from '@angular/router';
@@ -20,7 +19,6 @@ import { ReviewsSectionComponent } from './components/reviews-section/reviews-se
     MenuCtaSectionComponent,
     StandardsSectionComponent,
     ReviewsSectionComponent,
-    LucideShoppingCart,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
