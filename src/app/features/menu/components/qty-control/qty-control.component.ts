@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FlyToCartDirective } from '../../../../shared/directives/fly-to-cart.directive';
 
 @Component({
   selector: 'app-qty-control',
+  imports: [FlyToCartDirective],
   templateUrl: './qty-control.component.html',
   styleUrls: ['./qty-control.component.css'],
 })

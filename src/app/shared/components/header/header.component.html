@@ -17,17 +17,20 @@
       </button>
 
       <a
+        #cartLink
         routerLink="/cart"
-        [attr.aria-label]="'Open cart, ' + cartCount() + ' items'"
+        [attr.aria-label]="'Open cart, ' + shownCount() + ' items'"
         class="position-relative grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
       >
         <svg lucideShoppingCart class="size-5" [strokeWidth]="1.6"></svg>
-        @if (cartCount() > 0) {
-          <span
-            class="absolute -end-1 -top-1 grid min-w-5 place-items-center rounded-full bg-accent-soft px-1 font-body-en text-[0.6875rem] font-semibold leading-5 text-ink"
-          >
-            {{ cartCount() }}
-          </span>
+        @if (shownCount() > 0) {
+          @for (count of [shownCount()]; track count) {
+            <span
+              class="absolute -end-1 -top-1 grid min-w-5 animate-badge-pop place-items-center rounded-full bg-accent-soft px-1 font-body-en text-[0.6875rem] font-semibold leading-5 text-ink"
+            >
+              {{ count }}
+            </span>
+          }
         }
       </a>
     </div>

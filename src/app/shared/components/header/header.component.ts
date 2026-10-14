@@ -1,8 +1,19 @@
-import { Component, HostListener, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
 import { RouterLink } from '@angular/router';
 import { LucideMenu, LucideShoppingCart, LucideX } from '@lucide/angular';
 import { CartFacade } from '../../../features/cart/services/cart.facade';
+import { CartFlyService } from '../../services/cart-fly.service';
 
 @Component({
   selector: 'app-header',
@@ -17,12 +28,25 @@ import { CartFacade } from '../../../features/cart/services/cart.facade';
   styleUrls: ['./header.component.css'],
 })
 export class AppHeaderComponent {
+  private readonly cartFly = inject(CartFlyService);
+  private readonly cartLink = viewChild<ElementRef<HTMLElement>>('cartLink');
+
   private readonly cartFacade = inject(CartFacade);
   readonly cartCount = this.cartFacade.count;
+
+  protected readonly shownCount = computed(() =>
+    Math.max(0, this.cartCount() - this.cartFly.arrivals()),
+  );
 
   readonly showMenuToggle = input(true);
   private readonly isScrolled = signal(false);
   readonly isOpen = signal(false);
+
+  constructor() {
+    effect(() => {
+      this.cartFly.registerCartIcon(this.cartLink()?.nativeElement ?? null);
+    });
+  }
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
