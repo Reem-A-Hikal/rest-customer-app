@@ -4,59 +4,53 @@ import { CartActions } from './cart.actions';
 
 export const cartReducer = createReducer(
   initialCartState,
-  on(CartActions.addItem, (state, action): CartState => {
-    const existingItem = state.items.some(
-      (item) => item.productId === action.item.productId,
-    );
+  on(CartActions.addItem, (state, { item, quantity }): CartState => {
+    const exists = state.items.some((i) => i.productId === item.productId);
 
-    if (existingItem) {
+    if (exists) {
       return {
-        items: state.items.map((item) =>
-          item.productId === action.item.productId
-            ? { ...item, quantity: item.quantity + action.quantity }
-            : item,
+        items: state.items.map((i) =>
+          i.productId === item.productId
+            ? { ...i, quantity: i.quantity + quantity }
+            : i,
         ),
       };
     }
 
     return {
-      items: [...state.items, { ...action.item, quantity: action.quantity }],
+      items: [...state.items, { ...item, quantity }],
     };
   }),
 
   on(
     CartActions.incrementQuantity,
-    (state, action): CartState => ({
+    (state, { productId }): CartState => ({
       items: state.items.map((i) =>
-        i.productId === action.productId
-          ? { ...i, quantity: i.quantity + 1 }
-          : i,
+        i.productId === productId ? { ...i, quantity: i.quantity + 1 } : i,
       ),
     }),
   ),
 
-  on(CartActions.decrementQuantity, (state, action): CartState => {
-    const item = state.items.find((i) => i.productId === action.productId);
+  on(CartActions.decrementQuantity, (state, { productId }): CartState => {
+    const current = state.items.find((i) => i.productId === productId);
 
-    if (item && item.quantity > 1) {
+    if (current && current.quantity > 1) {
       return {
-        items: state.items.map((item) =>
-          item.productId === action.productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item,
+        items: state.items.map((i) =>
+          i.productId === productId ? { ...i, quantity: i.quantity - 1 } : i,
         ),
       };
     }
 
     return {
-      items: state.items.filter((item) => item.productId !== action.productId),
+      items: state.items.filter((i) => i.productId !== productId),
     };
   }),
 
   on(
     CartActions.removeItem,
-    (state, action): CartState => ({
-      items: state.items.filter((item) => item.productId !== action.productId),
+    (state, { productId }): CartState => ({
+      items: state.items.filter((i) => i.productId !== productId),
     }),
   ),
 
@@ -67,11 +61,9 @@ export const cartReducer = createReducer(
     }),
   ),
 
-  on(CartActions.loadCartFromStorage, (state): CartState => state),
-
   on(
     CartActions.cartLoaded,
-    (action): CartState => ({
+    (_, action): CartState => ({
       items: action.items,
     }),
   ),

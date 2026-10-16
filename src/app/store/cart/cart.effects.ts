@@ -4,7 +4,19 @@ import { Store } from '@ngrx/store';
 import { CartActions } from './cart.actions';
 import { map, tap, withLatestFrom } from 'rxjs';
 import { selectCartItems } from './cart.selectors';
+import { CartItem } from '../../shared/models/cart-item.model';
 
+const STORAGE_kEY = 'cart';
+
+function readStoredCart(): CartItem[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_kEY);
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+}
 @Injectable()
 export class CartEffects {
   private readonly actions$ = inject(Actions);
@@ -22,7 +34,7 @@ export class CartEffects {
         ),
         withLatestFrom(this.store.select(selectCartItems)),
         tap(([_, items]) => {
-          localStorage.setItem('cart', JSON.stringify(items));
+          localStorage.setItem(STORAGE_kEY, JSON.stringify(items));
         }),
       ),
     { dispatch: false },
@@ -31,11 +43,7 @@ export class CartEffects {
   loadCart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.loadCartFromStorage),
-      map(() => {
-        const raw = localStorage.getItem('cart');
-        const items = raw ? JSON.parse(raw) : [];
-        return CartActions.cartLoaded({ items });
-      }),
+      map(() => CartActions.cartLoaded({ items: readStoredCart() })),
     ),
   );
 }

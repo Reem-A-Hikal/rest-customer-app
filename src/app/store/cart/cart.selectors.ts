@@ -24,3 +24,11 @@ export const selectItemQuantity = (productId: number) =>
     const item = items.find((i) => i.productId === productId);
     return item ? item.quantity : 0;
   });
+
+export const selectCartDiscount = createSelector(selectCartItems, (items) =>
+  items.reduce(
+    (total, item) =>
+      total + (item.price - item.discountedPrice) * item.quantity,
+    0,
+  ),
+);

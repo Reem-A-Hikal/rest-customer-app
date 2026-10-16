@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   selectCartCount,
+  selectCartDiscount,
   selectCartItems,
   selectCartSubtotal,
 } from '../../../store/cart/cart.selectors';
@@ -24,6 +25,10 @@ export class CartFacade {
   });
 
   readonly subtotal = toSignal(this.store.select(selectCartSubtotal), {
+    initialValue: 0,
+  });
+
+  readonly discount = toSignal(this.store.select(selectCartDiscount), {
     initialValue: 0,
   });
 
