@@ -1,0 +1,92 @@
+<aside
+  aria-labelledby="summary-title"
+  class="rounded-md border border-outline bg-surface p-md lg:sticky lg:top-28"
+>
+  <h2 id="summary-title" class="font-display text-2xl font-bold">
+    Order Summary
+  </h2>
+
+  <dl class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-sm">
+    <div class="flex justify-between gap-sm">
+      <dt>
+        Dishes Subtotal ({{ itemCount() }}
+        {{ itemCount() === 1 ? "item" : "items" }})
+      </dt>
+      <dd class="tabular-nums">
+        {{ originalSubtotal() | number: "1.2-2" }} EGP
+      </dd>
+    </div>
+
+    @if (discount() > 0) {
+      <div class="flex justify-between gap-sm text-signature-soft">
+        <dt>Discount</dt>
+        <dd class="tabular-nums">−{{ discount() | number: "1.2-2" }} EGP</dd>
+      </div>
+    }
+
+    <div class="flex justify-between gap-sm">
+      <dt>Delivery Fee</dt>
+      <dd class="tabular-nums">
+        {{ totals().delivery | number: "1.2-2" }} EGP
+      </dd>
+    </div>
+  </dl>
+
+  <div
+    class="mt-md flex items-end justify-between gap-sm border-t border-outline pt-md"
+  >
+    <p class="font-display text-xl font-bold">Total</p>
+    <p
+      class="font-display text-3xl font-bold text-accent-soft tabular-nums"
+      aria-live="polite"
+    >
+      {{ totals().total | number: "1.0-2" }} EGP
+    </p>
+  </div>
+
+  <div class="mt-md flex items-center gap-sm rounded-sm bg-ink/40 p-sm">
+    <span
+      class="grid size-10 shrink-0 place-items-center rounded-full bg-flame/25 text-signature-soft"
+    >
+      <svg class="size-5" lucideClock [strokeWidth]="1.6"></svg>
+    </span>
+    <div>
+      <p class="text-sm font-semibold">Target Arrival: 35–50 minutes</p>
+      <p class="text-xs text-warm-grey">
+        Fire ticket generated upon confirmation.
+      </p>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="cursor-pointer mt-md flex min-h-12 w-full items-center justify-center gap-sm rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
+    [disabled]="subtotal() <= 0"
+    (click)="confirmed.emit()"
+  >
+    Confirm &amp; Dispatch
+    <span class="tabular-nums">{{ totals().total | number: "1.0-2" }} EGP</span>
+    <svg
+      class="size-5 rtl:-scale-x-100"
+      lucideMoveRight
+      [strokeWidth]="1.6"
+    ></svg>
+  </button>
+
+  <ul
+    class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-xs text-warm-grey"
+  >
+    @for (text of assurances; track text) {
+      <li class="flex items-center gap-xs">
+        <svg
+          class="size-4 shrink-0 text-accent-soft"
+          lucideCheck
+          [strokeWidth]="1.6"
+        >
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+        {{ text }}
+      </li>
+    }
+  </ul>
+</aside>
