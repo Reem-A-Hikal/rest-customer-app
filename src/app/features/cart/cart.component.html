@@ -53,6 +53,8 @@
           </ul>
 
           <app-order-notes [(value)]="notes" />
+
+          <app-add-ons [products]="addOns()" (add)="onAddOn($event)" />
         </section>
 
         <app-order-summary
