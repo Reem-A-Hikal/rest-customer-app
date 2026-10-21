@@ -3,11 +3,12 @@ import { CartFacade } from './services/cart.facade';
 import { OrderNotesComponent } from './components/order-notes/order-notes.component';
 import { AppHeaderComponent } from '../../shared/components/header/header.component';
 import { CartItemCardComponent } from './components/cart-item-card/cart-item-card.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { AddOnsComponent } from './components/add-ons/add-ons.component';
 import { MenuService } from '../menu/services/menu.service';
 import { AddOnProduct, pickAddOns } from './utils/pick-add-ons';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,9 @@ import { AddOnProduct, pickAddOns } from './utils/pick-add-ons';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
   protected readonly cart = inject(CartFacade);
   private readonly menu = inject(MenuService);
 
@@ -45,5 +49,13 @@ export class CartComponent {
     this.cart.addItem(product, 1);
   }
 
-  protected onConfirm(): void {}
+  protected onConfirm(): void {
+    if (!this.auth.isSignedIn()) {
+      this.router.navigate(['/signin'], {
+        queryParams: { returnUrl: '/cart' },
+      });
+      return;
+    }
+    //
+  }
 }

@@ -9,6 +9,7 @@
   --color-charcoal: #2a2521;
   --color-warm-grey: #8c8073;
   --color-surface: #211d19;
+  --color-danger: #ee8d78;
 
   /* ===== Color semantic ===== */
   --color-accent-soft: color-mix(
@@ -99,6 +100,13 @@ html[lang="ar"] body {
     hover:text-accent-soft hover:after:scale-x-100
     motion-reduce:after:transition-none
     lg:min-h-0 lg:py-1 lg:font-body-en lg:text-sm lg:text-warm-grey lg:hover:text-paper;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--paper);
+  caret-color: var(--paper);
+  box-shadow: 0 0 0 1000px var(--color-bg-dark-raised) inset;
 }
 
 .hero .container {

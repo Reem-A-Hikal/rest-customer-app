@@ -1,0 +1,133 @@
+<app-auth-shell
+  title="Create your account"
+  subtitle="One minute, then your order is on its way."
+>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+    class="flex flex-col gap-md"
+  >
+    <app-form-field
+      label="Full name"
+      inputId="register-name"
+      [error]="fieldError('fullName')"
+    >
+      <input
+        id="register-name"
+        type="text"
+        formControlName="fullName"
+        autocomplete="name"
+        aria-label="Full name"
+        [attr.aria-invalid]="!!fieldError('fullName')"
+        [attr.aria-describedby]="
+          fieldError('fullName') ? 'register-name-error' : null
+        "
+      />
+    </app-form-field>
+
+    <app-form-field
+      label="Email"
+      inputId="register-email"
+      [error]="fieldError('email')"
+    >
+      <input
+        id="register-email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        inputmode="email"
+        aria-label="Email"
+        [attr.aria-invalid]="!!fieldError('email')"
+        [attr.aria-describedby]="
+          fieldError('email') ? 'register-email-error' : null
+        "
+      />
+    </app-form-field>
+
+    <app-form-field
+      label="Phone number"
+      inputId="register-phone"
+      [optional]="true"
+      [error]="fieldError('phoneNumber')"
+    >
+      <input
+        id="register-phone"
+        type="tel"
+        formControlName="phoneNumber"
+        autocomplete="tel"
+        inputmode="numeric"
+        maxlength="11"
+        placeholder="01012345678"
+        aria-label="Phone number"
+        [attr.aria-invalid]="!!fieldError('phoneNumber')"
+        [attr.aria-describedby]="
+          fieldError('phoneNumber') ? 'register-phone-error' : null
+        "
+      />
+    </app-form-field>
+
+    <div class="flex flex-col gap-xs">
+      <app-password-field
+        inputId="register-password"
+        autocomplete="new-password"
+        [control]="form.controls.password"
+        [error]="passwordError()"
+      />
+
+      <ul class="grid gap-2xs text-sm" aria-label="Password requirements">
+        @for (rule of passwordRules; track rule.key) {
+          @let met = ruleMet(rule);
+          <li class="flex items-center gap-xs" [class.text-warm-grey]="!met">
+            @if (met) {
+              <svg
+                lucideCheck
+                class="size-5 text-signature-soft"
+                [strokeWidth]="1.6"
+              ></svg>
+            } @else {
+              <svg
+                lucideDot
+                class="size-5 text-danger"
+                [strokeWidth]="1.6"
+              ></svg>
+            }
+            <span class="sr-only">{{ met ? "Met:" : "Required:" }}</span>
+            {{ rule.label }}
+          </li>
+        }
+      </ul>
+    </div>
+
+    <app-password-field
+      label="Confirm password"
+      inputId="register-confirm"
+      autocomplete="new-password"
+      [control]="form.controls.confirmPassword"
+      [error]="confirmError()"
+    />
+
+    @if (serverError(); as message) {
+      <p class="text-sm text-danger" role="alert">{{ message }}</p>
+    }
+
+    <button
+      type="submit"
+      class="cursor-pointer min-h-12 w-full rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
+      [disabled]="submitting()"
+    >
+      {{ submitting() ? "Creating your account…" : "Create account" }}
+    </button>
+
+    <p class="text-center text-sm text-warm-grey">
+      Already have an account?
+      <a
+        routerLink="/signin"
+        [queryParams]="returnQuery"
+        class="font-semibold text-accent-soft hover:underline"
+      >
+        Sign in
+      </a>
+    </p>
+  </form>
+</app-auth-shell>

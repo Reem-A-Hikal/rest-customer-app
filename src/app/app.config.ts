@@ -17,6 +17,7 @@ import { UnwrapResponseInterceptor } from './core/interceptors/unwrap-response.i
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +33,11 @@ export const appConfig: ApplicationConfig = {
     provideEffects([CartEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(
-      withInterceptors([ErrorHandlingInterceptor, UnwrapResponseInterceptor]),
+      withInterceptors([
+        ErrorHandlingInterceptor,
+        UnwrapResponseInterceptor,
+        authInterceptor,
+      ]),
     ),
     provideAnimations(),
     provideAnimationsAsync(),

@@ -1,0 +1,21 @@
+<div
+  class="flex flex-col gap-2xs [&_input]:min-h-11 [&_input]:w-full [&_input]:rounded-sm [&_input]:border [&_input]:border-outline [&_input]:bg-ink/40 [&_input]:ps-sm [&_input]:pe-sm [&_input]:text-paper [&_input]:placeholder:text-warm-grey [&_input[aria-invalid=true]]:border-danger [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-accent-soft"
+>
+  <label
+    [attr.for]="inputId()"
+    class="flex items-baseline justify-between text-sm font-semibold"
+  >
+    {{ label() }}
+    @if (optional()) {
+      <span class="font-normal text-warm-grey">Optional</span>
+    }
+  </label>
+
+  <ng-content />
+
+  @if (error()) {
+    <p [id]="inputId() + '-error'" class="text-sm text-danger" role="alert">
+      {{ error() }}
+    </p>
+  }
+</div>

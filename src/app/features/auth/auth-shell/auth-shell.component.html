@@ -1,0 +1,16 @@
+<app-header [showMenuToggle]="false" />
+
+<main
+  class="grid min-h-screen place-items-center bg-ink px-md pb-xl pt-28 text-paper"
+>
+  <section
+    class="w-full max-w-[28rem] rounded-md border border-outline bg-surface p-lg"
+  >
+    <h1 class="font-display text-3xl font-bold">{{ title() }}</h1>
+    <p class="mt-xs text-warm-grey">{{ subtitle() }}</p>
+
+    <div class="mt-lg">
+      <ng-content />
+    </div>
+  </section>
+</main>
