@@ -64,7 +64,7 @@
     [disabled]="subtotal() <= 0"
     (click)="confirmed.emit()"
   >
-    Confirm &amp; Dispatch
+    Confirm
     <span class="tabular-nums">{{ totals().total | number: "1.0-2" }} EGP</span>
     <svg
       class="size-5 rtl:-scale-x-100"
@@ -79,7 +79,7 @@
     @for (text of assurances; track text) {
       <li class="flex items-center gap-xs">
         <svg
-          class="size-4 shrink-0 text-accent-soft"
+          class="size-4 shrink-0 text-signature-soft"
           lucideCheck
           [strokeWidth]="1.6"
         >

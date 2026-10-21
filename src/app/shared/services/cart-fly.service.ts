@@ -33,7 +33,7 @@ export class CartFlyService {
 
     const dot = document.createElement('span');
     dot.className =
-      'fixed z-[200] size-5 rounded-full bg-accent-soft pointer-events-none';
+      'fixed z-[200] size-5 rounded-full bg-flame pointer-events-none';
     dot.style.left = `${startX - 10}px`;
     dot.style.top = `${startY - 10}px`;
     document.body.appendChild(dot);
