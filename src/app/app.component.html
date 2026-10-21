@@ -1,3 +1,10 @@
 <router-outlet />
-<app-footer />
+@switch (footer()) {
+  @case ("full") {
+    <app-footer />
+  }
+  @case ("compact") {
+    <app-footer-compact />
+  }
+}
 <app-back-to-top />
