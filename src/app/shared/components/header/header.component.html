@@ -10,10 +10,11 @@
     <div class="relative z-10 flex items-center gap-md lg:order-2">
       <button
         type="button"
-        aria-label="Switch language"
+        (click)="language.toggle()"
+        [attr.aria-label]="'header.switchLanguage' | transloco"
         class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 font-body-en text-xs font-semibold text-paper transition-colors hover:border-amber hover:text-amber"
       >
-        AR
+        {{ language.lang() === "ar" ? "EN" : "AR" }}
       </button>
 
       <a

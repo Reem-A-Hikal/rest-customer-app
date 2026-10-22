@@ -1,7 +1,9 @@
 import { Component, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-form-field',
+  imports: [TranslocoPipe],
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.css'],
 })

@@ -1,7 +1,10 @@
+import { TranslocoHttpLoader } from './core/i18n/transloco-http.loader';
 import {
   ApplicationConfig,
   provideZoneChangeDetection,
   isDevMode,
+  provideAppInitializer,
+  inject,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
@@ -18,6 +21,8 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { provideTransloco } from '@jsverse/transloco';
+import { LanguageService } from './core/i18n/language.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,5 +50,15 @@ export const appConfig: ApplicationConfig = {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'ar'],
+        defaultLang: 'en',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader,
+    }),
+    provideAppInitializer(() => inject(LanguageService).init())
   ],
 };

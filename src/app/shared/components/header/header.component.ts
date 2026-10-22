@@ -14,6 +14,8 @@ import { RouterLink } from '@angular/router';
 import { LucideMenu, LucideShoppingCart, LucideX } from '@lucide/angular';
 import { CartFacade } from '../../../features/cart/services/cart.facade';
 import { CartFlyService } from '../../services/cart-fly.service';
+import { LanguageService } from '../../../core/i18n/language.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-header',
@@ -23,11 +25,13 @@ import { CartFlyService } from '../../services/cart-fly.service';
     LucideMenu,
     LucideShoppingCart,
     LucideX,
+    TranslocoPipe
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class AppHeaderComponent {
+  protected readonly language = inject(LanguageService);
   private readonly cartFly = inject(CartFlyService);
   private readonly cartLink = viewChild<ElementRef<HTMLElement>>('cartLink');
 

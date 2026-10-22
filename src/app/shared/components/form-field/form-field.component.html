@@ -5,9 +5,11 @@
     [attr.for]="inputId()"
     class="flex items-baseline justify-between text-sm font-semibold"
   >
-    {{ label() }}
+    {{ label() | transloco }}
     @if (optional()) {
-      <span class="font-normal text-warm-grey">Optional</span>
+      <span class="font-normal text-warm-grey">{{
+        "common.optional" | transloco
+      }}</span>
     }
   </label>
 
@@ -15,7 +17,7 @@
 
   @if (error()) {
     <p [id]="inputId() + '-error'" class="text-sm text-danger" role="alert">
-      {{ error() }}
+      {{ error() | transloco  }}
     </p>
   }
 </div>

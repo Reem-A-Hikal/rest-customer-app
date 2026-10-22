@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { AppHeaderComponent } from '../../../shared/components/header/header.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-auth-shell',
-  imports: [AppHeaderComponent],
+  imports: [AppHeaderComponent, TranslocoPipe],
   templateUrl: './auth-shell.component.html',
   styleUrls: ['./auth-shell.component.css'],
 })

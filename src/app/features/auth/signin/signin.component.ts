@@ -12,6 +12,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { EMAIL_PATTERN } from '../../../shared/validators/form-validators';
 import { finalize } from 'rxjs';
 import { extractErrorMessage, safeReturnUrl } from '../utils/auth.utils';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-signin',
@@ -21,6 +22,7 @@ import { extractErrorMessage, safeReturnUrl } from '../utils/auth.utils';
     AuthShellComponent,
     FormFieldComponent,
     PasswordFieldComponent,
+    TranslocoPipe,
   ],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
@@ -30,6 +32,7 @@ export class SigninComponent {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly transloco = inject(TranslocoService);
 
   private readonly returnUrl =
     this.route.snapshot.queryParamMap.get('returnUrl');
@@ -51,14 +54,14 @@ export class SigninComponent {
     if (!control.touched || !control.errors) return null;
 
     return control.hasError('required')
-      ? 'Email is required'
-      : 'Enter a valid email address';
+      ? 'auth.errors.emailRequired'
+      : 'auth.errors.emailInvalid';
   }
 
   protected passwordError(): string | null {
     const control = this.form.controls.password;
     return control.touched && control.hasError('required')
-      ? 'Password is required'
+      ? 'auth.errors.passwordRequired'
       : null;
   }
 
@@ -80,7 +83,7 @@ export class SigninComponent {
           this.serverError.set(
             extractErrorMessage(
               err,
-              'Could not sign you in. Please try again.',
+              this.transloco.translate('auth.signin.failed')
             ),
           ),
       });

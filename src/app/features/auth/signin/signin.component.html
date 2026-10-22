@@ -1,11 +1,18 @@
-<app-auth-shell title="Welcome back" subtitle="Sign in to confirm your order.">
+<app-auth-shell
+  [title]="'auth.signin.title' | transloco"
+  [subtitle]="'auth.signin.subtitle' | transloco"
+>
   <form
     [formGroup]="form"
     (ngSubmit)="submit()"
     novalidate
     class="flex flex-col gap-md"
   >
-    <app-form-field label="Email" inputId="signin-email" [error]="emailError()">
+    <app-form-field
+      label="auth.fields.email"
+      inputId="signin-email"
+      [error]="emailError()"
+    >
       <input
         id="signin-email"
         type="email"
@@ -33,17 +40,20 @@
       class="cursor-pointer min-h-12 w-full rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
       [disabled]="submitting()"
     >
-      {{ submitting() ? "Signing in…" : "Sign in" }}
+      {{
+        (submitting() ? "auth.signin.submitting" : "auth.signin.submit")
+          | transloco
+      }}
     </button>
 
     <p class="text-center text-sm text-warm-grey">
-      New to REST?
+      {{ "auth.signin.newPrompt" | transloco }}
       <a
         routerLink="/register"
         [queryParams]="returnQuery"
         class="font-semibold text-accent-soft hover:underline"
       >
-        Create an account
+        {{ "auth.signin.createAccount" | transloco }}
       </a>
     </p>
   </form>
