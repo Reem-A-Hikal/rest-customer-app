@@ -1,0 +1,90 @@
+@let address = selected();
+<section aria-labelledby="delivery-address-title" class="mt-md">
+  <h3
+    id="delivery-address-title"
+    class="text-xs font-semibold uppercase tracking-widest text-warm-grey"
+  >
+    Delivery address
+  </h3>
+
+  @if (loading()) {
+    <output class="mt-xs block h-16 animate-pulse rounded-sm bg-ink/40">
+      <span class="sr-only">Loading your addresses…</span>
+    </output>
+  } @else if (address) {
+    <div class="mt-xs flex items-start gap-sm rounded-sm bg-ink/40 p-sm">
+      <svg
+        lucideMapPin
+        class="mt-0.5 size-5 shrink-0 text-accent-soft"
+        [strokeWidth]="1.75"
+        aria-hidden="true"
+      ></svg>
+
+      <div class="min-w-0 flex-1 text-sm">
+        <p class="font-semibold">{{ typeLabel(address) }}</p>
+        <p class="text-warm-grey">{{ line(address) }}</p>
+      </div>
+
+      <button
+        type="button"
+        class="cursor-pointer min-h-11 shrink-0 px-xs text-sm font-semibold text-accent-soft hover:underline"
+        aria-controls="address-options"
+        [attr.aria-expanded]="expanded()"
+        (click)="expanded.set(!expanded())"
+      >
+        {{ expanded() ? "Close" : "Change" }}
+      </button>
+    </div>
+
+    @if (expanded()) {
+      <fieldset id="address-options" class="mt-xs flex flex-col gap-xs">
+        <legend class="sr-only">Choose a delivery address</legend>
+
+        @for (option of addresses(); track option.addressId) {
+          <label
+            class="flex cursor-pointer items-start gap-sm rounded-sm bg-ink/40 p-sm has-[:checked]:ring-1 has-[:checked]:ring-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent-soft"
+          >
+            <input
+              type="radio"
+              name="delivery-address"
+              class="mt-1 accent-accent-soft"
+              [value]="option.addressId"
+              [checked]="option.addressId === selectedId()"
+              (change)="pick(option.addressId)"
+            />
+            <span class="min-w-0 text-sm">
+              <span class="block font-semibold">
+                {{ typeLabel(option) }}
+                @if (option.isDefault) {
+                  <span class="ms-xs text-xs font-normal text-warm-grey"
+                    >Default</span
+                  >
+                }
+              </span>
+              <span class="block text-warm-grey">{{ line(option) }}</span>
+            </span>
+          </label>
+        }
+      </fieldset>
+
+      <a
+        routerLink="/addresses/new"
+        [queryParams]="returnQuery"
+        class="mt-xs inline-flex min-h-11 items-center text-sm font-semibold text-accent-soft hover:underline"
+      >
+        Add a new address
+      </a>
+    }
+  } @else {
+    <div class="mt-xs rounded-sm bg-ink/40 p-sm">
+      <p class="text-sm text-warm-grey">Where should we deliver?</p>
+      <a
+        routerLink="/addresses/new"
+        [queryParams]="returnQuery"
+        class="mt-xs inline-flex min-h-11 items-center font-semibold text-accent-soft hover:underline"
+      >
+        Add a delivery address
+      </a>
+    </div>
+  }
+</section>

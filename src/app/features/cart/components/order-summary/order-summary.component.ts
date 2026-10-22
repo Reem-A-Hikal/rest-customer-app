@@ -13,6 +13,7 @@ export class OrderSummaryComponent {
   readonly subtotal = input.required<number>();
   readonly discount = input(0);
   readonly itemCount = input.required<number>();
+  readonly blockedReason = input<string | null>(null);
 
   readonly confirmed = output<void>();
 

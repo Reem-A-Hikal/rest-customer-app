@@ -5,6 +5,7 @@
   <h2 id="summary-title" class="font-display text-2xl font-bold">
     Order Summary
   </h2>
+  <ng-content />
 
   <dl class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-sm">
     <div class="flex justify-between gap-sm">
@@ -61,7 +62,8 @@
   <button
     type="button"
     class="cursor-pointer mt-md flex min-h-12 w-full items-center justify-center gap-sm rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
-    [disabled]="subtotal() <= 0"
+    [disabled]="subtotal() <= 0 || !!blockedReason()"
+    [attr.aria-describedby]="blockedReason() ? 'confirm-hint' : null"
     (click)="confirmed.emit()"
   >
     Confirm
@@ -72,6 +74,12 @@
       [strokeWidth]="1.6"
     ></svg>
   </button>
+
+  @if (blockedReason(); as reason) {
+    <p id="confirm-hint" class="mt-xs text-center text-sm text-warm-grey">
+      {{ reason }}
+    </p>
+  }
 
   <ul
     class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-xs text-warm-grey"

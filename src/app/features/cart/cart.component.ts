@@ -9,6 +9,8 @@ import { AddOnsComponent } from './components/add-ons/add-ons.component';
 import { MenuService } from '../menu/services/menu.service';
 import { AddOnProduct, pickAddOns } from './utils/pick-add-ons';
 import { AuthService } from '../../core/services/auth.service';
+import { DeliveryAddressComponent } from './components/delivery-address/delivery-address.component';
+import { AddressService } from '../address/services/address.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,6 +19,7 @@ import { AuthService } from '../../core/services/auth.service';
     AppHeaderComponent,
     AddOnsComponent,
     CartItemCardComponent,
+    DeliveryAddressComponent,
     OrderNotesComponent,
     OrderSummaryComponent,
   ],
@@ -29,6 +32,7 @@ export class CartComponent {
 
   protected readonly cart = inject(CartFacade);
   private readonly menu = inject(MenuService);
+  private readonly addressService = inject(AddressService);
 
   protected readonly items = this.cart.items;
   protected readonly count = this.cart.count;
@@ -37,25 +41,47 @@ export class CartComponent {
 
   protected readonly notes = signal('');
 
+  protected readonly isSignedIn = this.auth.isSignedIn;
+  protected readonly addresses = this.addressService.addresses;
+  protected readonly addressesLoading = this.addressService.loading;
+  protected readonly selectedAddress = this.addressService.selectedAddress;
+
   protected readonly addOns = computed(() =>
     pickAddOns(this.menu.menuGroups(), this.items()),
   );
 
+  protected readonly blockedReason = computed(() => {
+    if (!this.isSignedIn()) return null;
+    if (this.addressesLoading()) return 'Loading your addresses';
+    if (this.addressService.error()) {
+      return "We couldn't load your addresses. Refresh to try again.";
+    }
+
+    return this.selectedAddress()
+      ? null
+      : 'Add a delivery address to continue.';
+  });
+
   constructor() {
     this.menu.loadMenu();
+    this.addressService.load();
   }
 
   protected onAddOn(product: AddOnProduct): void {
     this.cart.addItem(product, 1);
   }
 
+  protected onAddressSelected(addressId: number): void {
+    this.addressService.select(addressId);
+  }
+
   protected onConfirm(): void {
     if (!this.auth.isSignedIn()) {
-      this.router.navigate(['/signin'], {
+      void this.router.navigate(['/signin'], {
         queryParams: { returnUrl: '/cart' },
       });
       return;
     }
-    //
+    if (this.blockedReason()) return;
   }
 }

@@ -54,3 +54,13 @@ export function matchValidator(
       ? null
       : { mismatch: true };
 }
+
+export function firstError(
+  control: AbstractControl,
+  messages: Record<string, string>,
+): string | null {
+  if (!control.touched || !control.errors) return null;
+
+  const [key] = Object.keys(control.errors);
+  return messages[key] ?? 'Invalid value';
+}

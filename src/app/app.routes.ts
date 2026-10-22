@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -34,5 +35,14 @@ export const routes: Routes = [
     data: { footer: 'compact' },
     loadComponent: () =>
       import('./features/cart/cart.component').then((m) => m.CartComponent),
+  },
+  {
+    path: 'addresses/new',
+    canActivate: [authGuard],
+    data: { footer: 'none' },
+    loadComponent: () =>
+      import('./features/address/pages/address-add/address-add.component').then(
+        (m) => m.AddressAddComponent,
+      ),
   },
 ];

@@ -1,0 +1,109 @@
+<app-auth-shell
+  title="Where should we deliver?"
+  subtitle="We deliver within Cairo."
+>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+    class="flex flex-col gap-md"
+  >
+    <fieldset>
+      <legend class="mb-xs text-sm font-semibold">Address type</legend>
+
+      <div class="grid grid-cols-3 gap-2xs rounded-sm bg-ink/40 p-2xs">
+        @for (type of addressTypes; track type.value) {
+          <label
+            class="flex min-h-11 cursor-pointer items-center justify-center rounded-sm text-sm font-semibold text-warm-grey transition-colors has-[:checked]:bg-paper/10 has-[:checked]:text-paper has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent-soft"
+          >
+            <input
+              type="radio"
+              class="sr-only"
+              formControlName="addressType"
+              [value]="type.value"
+            />
+            {{ type.label }}
+          </label>
+        }
+      </div>
+    </fieldset>
+
+    <app-form-field
+      label="Street address"
+      inputId="address-line1"
+      [error]="fieldError('addressLine1')"
+    >
+      <input
+        id="address-line1"
+        type="text"
+        formControlName="addressLine1"
+        aria-label="Street address"
+        autocomplete="address-line1"
+        [attr.aria-invalid]="!!fieldError('addressLine1')"
+        [attr.aria-describedby]="
+          fieldError('addressLine1') ? 'address-line1-error' : null
+        "
+      />
+    </app-form-field>
+
+    <app-form-field
+      label="Apartment, floor, landmark"
+      inputId="address-line2"
+      [optional]="true"
+      [error]="fieldError('addressLine2')"
+    >
+      <input
+        id="address-line2"
+        type="text"
+        formControlName="addressLine2"
+        aria-label="Apartment, floor, landmark"
+        autocomplete="address-line2"
+        [attr.aria-invalid]="!!fieldError('addressLine2')"
+        [attr.aria-describedby]="
+          fieldError('addressLine2') ? 'address-line2-error' : null
+        "
+      />
+    </app-form-field>
+
+    <app-form-field
+      label="Area"
+      inputId="address-city"
+      [error]="fieldError('city')"
+    >
+      <select
+        class="cursor-pointer bg-ink"
+        id="address-city"
+        formControlName="city"
+        [attr.aria-invalid]="!!fieldError('city')"
+        [attr.aria-describedby]="
+          fieldError('city') ? 'address-city-error' : null
+        "
+      >
+        <option value="" disabled>Choose your area</option>
+        @for (area of areas; track area) {
+          <option [value]="area">{{ area }}</option>
+        }
+      </select>
+    </app-form-field>
+
+    @if (serverError(); as message) {
+      <p class="text-sm text-danger" role="alert">{{ message }}</p>
+    }
+
+    <button
+      type="submit"
+      class="cursor-pointer min-h-12 w-full rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
+      [disabled]="submitting()"
+    >
+      {{ submitting() ? "Saving…" : "Save address" }}
+    </button>
+
+    <button
+      type="button"
+      class="cursor-pointer min-h-11 text-sm font-semibold text-warm-grey transition-colors hover:text-paper"
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+  </form>
+</app-auth-shell>
