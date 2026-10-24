@@ -5,17 +5,17 @@
 >
   <div class="container">
     <p class="mb-xs font-display text-lead font-semibold text-accent-soft">
-      Course Four
+      {{ "home.reviews.marker" | transloco }}
     </p>
 
     <div class="max-w-[42rem] mb-xl">
       <h2 class="font-display text-h2 font-semibold" id="reviews-heading">
-        From the last table we don't have
+        {{ "home.reviews.heading" | transloco }}
       </h2>
     </div>
 
     <div class="grid gap-xl lg:grid-cols-3">
-      @for (review of reviews; track review.author) {
+      @for (review of reviews; track review.authorKey) {
         <figure
           class="mx-lg mt-sm max-w-[26rem] lg:[&:nth-child(2)]:mt-xl lg:[&:nth-child(3)]:mt-2xl"
         >
@@ -25,12 +25,12 @@
             >"</span
           >
           <blockquote>
-            <p class="font-display text-xl italic leading-[1.4]">
-              {{ review.quote }}
+            <p class="font-display text-xl italic rtl:not-italic leading-[1.4]">
+              {{ review.quoteKey | transloco }}
             </p>
           </blockquote>
           <figcaption class="mt-sm text-sm text-warm-grey">
-            {{ review.author }}
+            {{ review.authorKey | transloco }}
           </figcaption>
         </figure>
       }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 interface Step {
   readonly title: string;
   readonly description: string;
@@ -6,25 +7,23 @@ interface Step {
 
 @Component({
   selector: 'app-how-it-works-section',
+  imports: [TranslocoPipe],
   templateUrl: './how-it-works-section.component.html',
   styleUrls: ['./how-it-works-section.component.css'],
 })
 export class HowItWorksSectionComponent {
-  readonly steps: readonly Step[] = [
+  protected readonly steps = [
     {
-      title: 'Choose your evening',
-      description:
-        "Browse tonight's menu, set fresh each day, and order any time before 9pm.",
+      titleKey: 'home.howItWorks.steps.choose.title',
+      descriptionKey: 'home.howItWorks.steps.choose.description',
     },
     {
-      title: 'Plated to order',
-      description:
-        "Nothing sits pre-made. Your dish is cooked and finished the moment it's placed.",
+      titleKey: 'home.howItWorks.steps.plated.title',
+      descriptionKey: 'home.howItWorks.steps.plated.description',
     },
     {
-      title: 'Arrives dining-ready',
-      description:
-        'Sealed in insulated, course-separated packaging so it reaches you as the chef meant it.',
+      titleKey: 'home.howItWorks.steps.arrives.title',
+      descriptionKey: 'home.howItWorks.steps.arrives.description',
     },
   ];
 }

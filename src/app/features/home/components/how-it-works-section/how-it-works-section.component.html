@@ -5,17 +5,19 @@
 >
   <div class="container">
     <p class="mb-xs font-display text-lead font-semibold text-accent-soft">
-      Course Two
+      {{ "home.howItWorks.marker" | transloco }}
     </p>
     <div class="mb-xl max-w-[42rem]">
-      <h2 class="font-display text-h2 font-semibold">Order to doorstep</h2>
+      <h2 id="how-it-works-heading" class="font-display text-h2 font-semibold">
+        {{ "home.howItWorks.heading" | transloco }}
+      </h2>
       <p class="mt-sm text-lead text-warm-grey">
-        Three steps, same as any kitchen — you just don't have to sit in it.
+        {{ "home.howItWorks.sub" | transloco }}
       </p>
     </div>
 
     <ol class="grid gap-xl min-[56rem]:grid-cols-3 ps-lg">
-      @for (step of steps; track step.title; let i = $index) {
+      @for (step of steps; track step.titleKey; let i = $index) {
         <li class="flex gap-md">
           <span
             aria-hidden="true"
@@ -23,9 +25,11 @@
             >{{ i + 1 }}</span
           >
           <div>
-            <h3 class="text-xl font-semibold">{{ step.title }}</h3>
+            <h3 class="text-xl font-semibold">
+              {{ step.titleKey | transloco }}
+            </h3>
             <p class="mt-[0.4rem] max-w-[30rem] leading-[1.6] text-warm-grey">
-              {{ step.description }}
+              {{ step.descriptionKey | transloco }}
             </p>
           </div>
         </li>

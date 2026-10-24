@@ -5,17 +5,17 @@
 >
   <div class="container">
     <h2 class="font-display text-h2 font-semibold" id="menu-heading">
-      Tonight's kitchen opens at 6:00 PM.
+      {{ "home.menuCta.heading" | transloco }}
     </h2>
     <p class="mt-sm text-lead text-muted-on-light">
-      Delivering across Cairo Governorate, 6pm until midnight.
+      {{ "home.menuCta.sub" | transloco }}
     </p>
 
     <a
       routerLink="/menu"
       class="mt-md inline-block rounded-sm bg-accent-soft py-xs px-md text-sm font-semibold text-ink transition-colors hover:bg-amber"
     >
-      See Tonight's Menu
+      {{ "home.cta.menu" | transloco }}
     </a>
   </div>
 </section>
