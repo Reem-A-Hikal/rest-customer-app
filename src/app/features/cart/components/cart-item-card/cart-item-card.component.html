@@ -9,18 +9,18 @@
 
       <div class="shrink-0 text-end">
         <p class="font-display text-xl text-accent-soft tabular-nums">
-          {{ lineTotal() | number: "1.0-2" }} EGP
+          <app-price [amount]="lineTotal()" />
         </p>
         @if (discounted()) {
           <p class="text-sm text-warm-grey line-through tabular-nums">
-            {{ originalLineTotal() | number: "1.0-2" }} EGP
+            <app-price [amount]="originalLineTotal()" />
           </p>
         }
       </div>
     </div>
 
     <p class="w-fit rounded-sm bg-paper/10 px-xs py-2xs text-xs">
-      Cooked to fire upon order
+      {{ "cart.item.cookedToOrder" | transloco }}
     </p>
 
     <div
@@ -35,11 +35,13 @@
       <button
         type="button"
         class="cursor-pointer inline-flex min-h-11 items-center gap-2xs px-xs text-sm text-warm-grey transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-soft"
-        [attr.aria-label]="'Remove ' + item().name"
+        [attr.aria-label]="
+          'cart.item.removeLabel' | transloco: { name: item().name }
+        "
         (click)="remove.emit()"
       >
         <svg lucideTrash class="size-4" [strokeWidth]="1.6"></svg>
-        Remove
+        {{ "cart.item.remove" | transloco }}
       </button>
     </div>
   </div>

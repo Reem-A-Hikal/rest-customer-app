@@ -4,12 +4,12 @@
     id="delivery-address-title"
     class="text-xs font-semibold uppercase tracking-widest text-warm-grey"
   >
-    Delivery address
+    {{ "cart.address.title" | transloco }}
   </h3>
 
   @if (loading()) {
     <output class="mt-xs block h-16 animate-pulse rounded-sm bg-ink/40">
-      <span class="sr-only">Loading your addresses…</span>
+      <span class="sr-only">{{ "cart.address.loading" | transloco }}</span>
     </output>
   } @else if (address) {
     <div class="mt-xs flex items-start gap-sm rounded-sm bg-ink/40 p-sm">
@@ -21,7 +21,7 @@
       ></svg>
 
       <div class="min-w-0 flex-1 text-sm">
-        <p class="font-semibold">{{ typeLabel(address) }}</p>
+        <p class="font-semibold">{{ typeLabel(address) | transloco }}</p>
         <p class="text-warm-grey">{{ line(address) }}</p>
       </div>
 
@@ -32,13 +32,18 @@
         [attr.aria-expanded]="expanded()"
         (click)="expanded.set(!expanded())"
       >
-        {{ expanded() ? "Close" : "Change" }}
+        {{
+          (expanded() ? "cart.address.close" : "cart.address.change")
+            | transloco
+        }}
       </button>
     </div>
 
     @if (expanded()) {
       <fieldset id="address-options" class="mt-xs flex flex-col gap-xs">
-        <legend class="sr-only">Choose a delivery address</legend>
+        <legend class="sr-only">
+          {{ "cart.address.choose" | transloco }}<
+        </legend>
 
         @for (option of addresses(); track option.addressId) {
           <label
@@ -54,10 +59,10 @@
             />
             <span class="min-w-0 text-sm">
               <span class="block font-semibold">
-                {{ typeLabel(option) }}
+                {{ typeLabel(option) | transloco }}
                 @if (option.isDefault) {
-                  <span class="ms-xs text-xs font-normal text-warm-grey"
-                    >Default</span
+                  <span class="ms-xs text-xs font-normal text-warm-grey">
+                    {{ "cart.address.default" | transloco }}</span
                   >
                 }
               </span>
@@ -72,18 +77,20 @@
         [queryParams]="returnQuery"
         class="mt-xs inline-flex min-h-11 items-center text-sm font-semibold text-accent-soft hover:underline"
       >
-        Add a new address
+        {{ "cart.address.addNew" | transloco }}
       </a>
     }
   } @else {
     <div class="mt-xs rounded-sm bg-ink/40 p-sm">
-      <p class="text-sm text-warm-grey">Where should we deliver?</p>
+      <p class="text-sm text-warm-grey">
+        {{ "cart.address.where" | transloco }}
+      </p>
       <a
         routerLink="/addresses/new"
         [queryParams]="returnQuery"
         class="mt-xs inline-flex min-h-11 items-center font-semibold text-accent-soft hover:underline"
       >
-        Add a delivery address
+        {{ "cart.address.add" | transloco }}
       </a>
     </div>
   }

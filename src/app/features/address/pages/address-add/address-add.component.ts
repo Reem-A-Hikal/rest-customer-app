@@ -19,6 +19,7 @@ import {
   DELIVERY_AREAS,
   DELIVERY_GOVERNORATE,
 } from '../../constants/delivery-area';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 const MESSAGES = {
   addressLine1: {
@@ -33,7 +34,7 @@ type MessageField = keyof typeof MESSAGES;
 
 @Component({
   selector: 'app-address-add',
-  imports: [ReactiveFormsModule, AuthShellComponent, FormFieldComponent],
+  imports: [ReactiveFormsModule, AuthShellComponent, FormFieldComponent, TranslocoPipe],
   templateUrl: './address-add.component.html',
   styleUrls: ['./address-add.component.css'],
 })

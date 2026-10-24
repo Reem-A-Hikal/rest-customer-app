@@ -23,6 +23,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideTransloco } from '@jsverse/transloco';
 import { LanguageService } from './core/i18n/language.service';
+import { provideTranslocoMessageformat } from '@jsverse/transloco-messageformat';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -59,6 +60,7 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
-    provideAppInitializer(() => inject(LanguageService).init())
+    provideAppInitializer(() => inject(LanguageService).init()),
+    provideTranslocoMessageformat({ locales: ['en', 'ar'] }),
   ],
 };

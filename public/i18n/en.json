@@ -1,9 +1,13 @@
 {
   "common": {
-    "optional": "Optional"
+    "optional": "Optional",
+    "egp": "EGP"
   },
   "header": {
     "switchLanguage": "Switch language"
+  },
+  "address": {
+    "type": { "home": "Home", "work": "Work", "other": "Other" }
   },
   "auth": {
     "fields": {
@@ -27,6 +31,64 @@
       "failed": "Could not sign you in. Please try again.",
       "newPrompt": "New to REST?",
       "createAccount": "Create an account"
+    }
+  },
+  "cart": {
+    "eyebrow": "Your Order",
+    "title": "Review your selection",
+    "subtitle": "Cooked to fire upon dispatch. Plated strictly in climate-calibrated packaging.",
+    "coursesSelected": "{count, plural, one {{count} course selected} other {{count} courses selected}}",
+    "itemsLabel": "Order items",
+    "backToMnu": "Back To Menu",
+    "empty": {
+      "title": "Your order is empty",
+      "text": "Pick a dish from tonight's menu and it will show up here.",
+      "cta": "See Tonight's Menu"
+    },
+    "item": {
+      "cookedToOrder": "Cooked to fire upon order",
+      "remove": "Remove",
+      "removeLabel": "Remove {name}"
+    },
+    "notes": {
+      "title": "Chef & Delivery Directives",
+      "placeholder": "Specific dietary alerts, sauces packed separately, or building gate access pin…",
+      "hint": "Notes are passed to the kitchen with your order."
+    },
+    "address": {
+      "title": "Delivery address",
+      "loading": "Loading your addresses…",
+      "change": "Change",
+      "close": "Close",
+      "choose": "Choose a delivery address",
+      "default": "Default",
+      "addNew": "Add a new address",
+      "where": "Where should we deliver?",
+      "add": "Add a delivery address"
+    },
+    "addOns": {
+      "title": "From the Patisserie & Press",
+      "badge": "Kitchen Complement"
+    },
+    "summary": {
+      "title": "Order Summary",
+      "subtotal": "Dishes Subtotal ({count, plural, one {{count} item} other {{count} items}})",
+      "discount": "Discount",
+      "delivery": "Delivery Fee",
+      "total": "Total",
+      "arrival": "Target Arrival: 35–50 minutes",
+      "arrivalNote": "Fire ticket generated upon confirmation.",
+      "confirm": "Confirm",
+      "assurances": {
+        "haccp": "HACCP Certified Precision Kitchen",
+        "sealed": "Tamper-evident heat-welded packaging",
+        "fresh": "Never reheated · Plated directly from pan to seal"
+      }
+    },
+    "blocked": {
+      "loading": "Loading your addresses…",
+      "error": "We couldn't load your addresses. Refresh to try again.",
+      "noAddress": "Add a delivery address to continue."
     }
   }
 }

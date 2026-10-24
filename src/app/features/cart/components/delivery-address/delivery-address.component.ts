@@ -5,10 +5,11 @@ import {
   ADDRESS_TYPE_LABELS,
 } from '../../../address/model/address.model';
 import { LucideMapPin } from '@lucide/angular';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-delivery-address',
-  imports: [RouterLink, LucideMapPin],
+  imports: [RouterLink, LucideMapPin, TranslocoPipe],
   templateUrl: './delivery-address.component.html',
   styleUrls: ['./delivery-address.component.css'],
 })

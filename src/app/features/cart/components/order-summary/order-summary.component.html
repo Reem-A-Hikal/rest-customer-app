@@ -3,32 +3,35 @@
   class="rounded-md border border-outline bg-surface p-md lg:sticky lg:top-28"
 >
   <h2 id="summary-title" class="font-display text-2xl font-bold">
-    Order Summary
+    {{ "cart.summary.title" | transloco }}
   </h2>
   <ng-content />
 
   <dl class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-sm">
     <div class="flex justify-between gap-sm">
       <dt>
-        Dishes Subtotal ({{ itemCount() }}
-        {{ itemCount() === 1 ? "item" : "items" }})
+        <!-- Dishes Subtotal ({{ itemCount() }}
+        {{ itemCount() === 1 ? "item" : "items" }}) -->
+        {{ "cart.summary.subtotal" | transloco: { count: itemCount() } }}
       </dt>
       <dd class="tabular-nums">
-        {{ originalSubtotal() | number: "1.2-2" }} EGP
+        <app-price [amount]="originalSubtotal()" format="1.2-2" />
       </dd>
     </div>
 
     @if (discount() > 0) {
       <div class="flex justify-between gap-sm text-signature-soft">
-        <dt>Discount</dt>
-        <dd class="tabular-nums">−{{ discount() | number: "1.2-2" }} EGP</dd>
+        <dt>{{ "cart.summary.discount" | transloco }}</dt>
+        <dd class="tabular-nums">
+          −<app-price [amount]="discount()" format="1.2-2" />
+        </dd>
       </div>
     }
 
     <div class="flex justify-between gap-sm">
-      <dt>Delivery Fee</dt>
+      <dt>{{ "cart.summary.delivery" | transloco }}</dt>
       <dd class="tabular-nums">
-        {{ totals().delivery | number: "1.2-2" }} EGP
+        <app-price [amount]="totals().delivery" format="1.2-2" />
       </dd>
     </div>
   </dl>
@@ -36,12 +39,14 @@
   <div
     class="mt-md flex items-end justify-between gap-sm border-t border-outline pt-md"
   >
-    <p class="font-display text-xl font-bold">Total</p>
+    <p class="font-display text-xl font-bold">
+      {{ "cart.summary.total" | transloco }}
+    </p>
     <p
       class="font-display text-3xl font-bold text-accent-soft tabular-nums"
       aria-live="polite"
     >
-      {{ totals().total | number: "1.0-2" }} EGP
+      <app-price [amount]="totals().total" />
     </p>
   </div>
 
@@ -52,9 +57,11 @@
       <svg class="size-5" lucideClock [strokeWidth]="1.6"></svg>
     </span>
     <div>
-      <p class="text-sm font-semibold">Target Arrival: 35–50 minutes</p>
+      <p class="text-sm font-semibold">
+        {{ "cart.summary.arrival" | transloco }}
+      </p>
       <p class="text-xs text-warm-grey">
-        Fire ticket generated upon confirmation.
+        {{ "cart.summary.arrivalNote" | transloco }}
       </p>
     </div>
   </div>
@@ -66,8 +73,8 @@
     [attr.aria-describedby]="blockedReason() ? 'confirm-hint' : null"
     (click)="confirmed.emit()"
   >
-    Confirm
-    <span class="tabular-nums">{{ totals().total | number: "1.0-2" }} EGP</span>
+    {{ "cart.summary.confirm" | transloco }}
+    <app-price [amount]="totals().total" />
     <svg
       class="size-5 rtl:-scale-x-100"
       lucideMoveRight
@@ -77,14 +84,14 @@
 
   @if (blockedReason(); as reason) {
     <p id="confirm-hint" class="mt-xs text-center text-sm text-warm-grey">
-      {{ reason }}
+      {{ reason | transloco }}
     </p>
   }
 
   <ul
     class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-xs text-warm-grey"
   >
-    @for (text of assurances; track text) {
+    @for (key of assurances; track key) {
       <li class="flex items-center gap-xs">
         <svg
           class="size-4 shrink-0 text-signature-soft"
@@ -93,7 +100,7 @@
         >
           <path d="M20 6 9 17l-5-5" />
         </svg>
-        {{ text }}
+        {{ key | transloco }}
       </li>
     }
   </ul>

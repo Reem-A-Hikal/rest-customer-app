@@ -11,6 +11,7 @@ import { AddOnProduct, pickAddOns } from './utils/pick-add-ons';
 import { AuthService } from '../../core/services/auth.service';
 import { DeliveryAddressComponent } from './components/delivery-address/delivery-address.component';
 import { AddressService } from '../address/services/address.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cart',
@@ -22,6 +23,7 @@ import { AddressService } from '../address/services/address.service';
     DeliveryAddressComponent,
     OrderNotesComponent,
     OrderSummaryComponent,
+    TranslocoPipe
   ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
@@ -52,14 +54,12 @@ export class CartComponent {
 
   protected readonly blockedReason = computed(() => {
     if (!this.isSignedIn()) return null;
-    if (this.addressesLoading()) return 'Loading your addresses';
+    if (this.addressesLoading()) return 'cart.blocked.loading';
     if (this.addressService.error()) {
-      return "We couldn't load your addresses. Refresh to try again.";
+      return 'cart.blocked.error';
     }
 
-    return this.selectedAddress()
-      ? null
-      : 'Add a delivery address to continue.';
+    return this.selectedAddress() ? null : 'cart.blocked.noAddress';
   });
 
   constructor() {
@@ -83,5 +83,6 @@ export class CartComponent {
       return;
     }
     if (this.blockedReason()) return;
+    // TODO: POST /Order
   }
 }

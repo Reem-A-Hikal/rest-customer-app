@@ -1,11 +1,12 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 import { calculateOrderTotals } from '../../../../shared/utils/order-pricing';
 import { LucideMoveRight, LucideClock, LucideCheck } from '@lucide/angular';
+import { PriceComponent } from '../../../../shared/components/price/price.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-order-summary',
-  imports: [DecimalPipe, LucideMoveRight, LucideClock, LucideCheck],
+  imports: [PriceComponent,TranslocoPipe, LucideMoveRight, LucideClock, LucideCheck],
   templateUrl: './order-summary.component.html',
   styleUrls: ['./order-summary.component.css'],
 })
@@ -26,8 +27,8 @@ export class OrderSummaryComponent {
   );
 
   protected readonly assurances = [
-    'HACCP Certified Precision Kitchen',
-    'Tamper-evident heat-welded packaging',
-    'Never reheated · Plated directly from pan to seal',
+    'cart.summary.assurances.haccp',
+    'cart.summary.assurances.sealed',
+    'cart.summary.assurances.fresh',
   ];
 }

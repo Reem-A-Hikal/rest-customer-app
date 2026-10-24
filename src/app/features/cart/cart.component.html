@@ -7,14 +7,13 @@
         <p
           class="font-display text-lead uppercase tracking-widest text-accent-soft"
         >
-          Your Order
+          {{ "cart.eyebrow" | transloco }}
         </p>
         <h1 class="mt-2xs font-display text-h1 font-bold">
-          Review your selection
+          {{ "cart.title" | transloco }}
         </h1>
         <p class="mt-xs text-warm-grey text-lead">
-          Cooked to fire upon dispatch. Plated strictly in climate-calibrated
-          packaging.
+          {{ "cart.subtitle" | transloco }}
         </p>
       </div>
 
@@ -23,14 +22,15 @@
           <p
             class="rounded-md border border-outline bg-surface px-sm py-xs text-sm font-semibold"
           >
-            {{ items().length }}
-            {{ items().length === 1 ? "course" : "courses" }} selected
+            <!-- {{ items().length }}
+            {{ items().length === 1 ? "course" : "courses" }} selected -->
+            {{ "cart.coursesSelected" | transloco: { count: items().length } }}
           </p>
           <a
             routerLink="/menu"
             class="inline-flex min-h-11 items-center rounded-sm border border-outline px-md text-sm font-bold text-paper transition-colors hover:border-accent-soft hover:text-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
           >
-            Back to Menu
+            {{ "cart.backToMnu" | transloco }}
           </a>
         </div>
       }
@@ -38,7 +38,10 @@
 
     @if (items().length) {
       <div class="mt-lg grid items-start gap-lg lg:grid-cols-[1fr_24rem]">
-        <section aria-label="Order items" class="flex flex-col gap-md">
+        <section
+          [attr.aria-label]="'cart.itemsLabel' | transloco"
+          class="flex flex-col gap-md"
+        >
           <ul class="flex flex-col gap-md">
             @for (item of items(); track item.productId) {
               <li>
@@ -78,15 +81,17 @@
       <div
         class="mt-xl flex flex-col items-center gap-md rounded-md border border-outline bg-surface px-md py-xl text-center"
       >
-        <h2 class="font-display text-2xl font-bold">Your order is empty</h2>
+        <h2 class="font-display text-2xl font-bold">
+          {{ "cart.empty.title" | transloco }}
+        </h2>
         <p class="text-warm-grey">
-          Pick a dish from tonight's menu and it will show up here.
+          {{ "cart.empty.text" | transloco }}
         </p>
         <a
           routerLink="/menu"
           class="inline-flex min-h-11 items-center rounded-sm bg-accent-soft px-md font-display font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
         >
-          See Tonight's Menu
+          {{ "cart.empty.cta" | transloco }}
         </a>
       </div>
     }

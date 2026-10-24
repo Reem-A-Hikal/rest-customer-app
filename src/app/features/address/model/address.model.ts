@@ -5,9 +5,9 @@ export enum AddressType {
 }
 
 export const ADDRESS_TYPE_LABELS: Record<AddressType, string> = {
-  [AddressType.Home]: 'Home',
-  [AddressType.Work]: 'Work',
-  [AddressType.Other]: 'Other',
+  [AddressType.Home]: 'address.type.home',
+  [AddressType.Work]: 'address.type.work',
+  [AddressType.Other]: 'address.type.other',
 };
 
 export interface Address {

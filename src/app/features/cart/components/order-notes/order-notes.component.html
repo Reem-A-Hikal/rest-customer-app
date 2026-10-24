@@ -1,16 +1,18 @@
 <section class="rounded-md border border-outline bg-surface p-md">
   <div class="flex items-baseline justify-between gap-sm">
     <label for="order-notes" class="font-display text-lg font-bold">
-      Chef &amp; Delivery Directives
+      {{ "cart.notes.title" | transloco }}
     </label>
-    <span class="text-sm text-warm-grey">Optional</span>
+    <span class="text-sm text-warm-grey">{{
+      "common.optional" | transloco
+    }}</span>
   </div>
 
   <textarea
     id="order-notes"
     rows="3"
     class="mt-sm w-full resize-none rounded-sm border border-outline bg-ink/40 p-sm text-paper placeholder:text-warm-grey focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-soft"
-    placeholder="Specific dietary alerts, sauces packed separately, or building gate access pin…"
+    [placeholder]="'cart.notes.placeholder' | transloco"
     aria-describedby="order-notes-hint"
     [attr.maxlength]="maxLength"
     [value]="value()"
@@ -19,7 +21,7 @@
 
   <div class="mt-xs flex justify-between gap-sm text-sm text-warm-grey">
     <p id="order-notes-hint">
-      Notes are passed to the kitchen with your order.
+      {{ "cart.notes.hint" | transloco }}
     </p>
     <p class="tabular-nums">{{ value().length }}/{{ maxLength }}</p>
   </div>

@@ -2,12 +2,19 @@ import { Component, computed, input, output } from '@angular/core';
 import { CartItem } from '../../../../shared/models/cart-item.model';
 import { QtyControlComponent } from '../../../menu/components/qty-control/qty-control.component';
 import { DishImageComponent } from '../../../menu/components/dish-image/dish-image.component';
-import { DecimalPipe } from '@angular/common';
 import { LucideTrash } from '@lucide/angular';
+import { PriceComponent } from '../../../../shared/components/price/price.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cart-item-card',
-  imports: [QtyControlComponent, DishImageComponent, DecimalPipe, LucideTrash],
+  imports: [
+    QtyControlComponent,
+    DishImageComponent,
+    TranslocoPipe,
+    PriceComponent,
+    LucideTrash,
+  ],
   templateUrl: './cart-item-card.component.html',
   styleUrls: ['./cart-item-card.component.css'],
 })

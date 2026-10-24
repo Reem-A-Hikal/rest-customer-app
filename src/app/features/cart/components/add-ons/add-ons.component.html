@@ -2,12 +2,12 @@
   <section aria-labelledby="add-ons-title">
     <div class="flex flex-wrap items-baseline justify-between gap-sm">
       <h2 id="add-ons-title" class="font-display text-h3 font-bold">
-        From the Patisserie &amp; Press
+        {{ "cart.addOns.title" | transloco }}
       </h2>
       <p
         class="font-display text-xs uppercase tracking-widest text-accent-soft"
       >
-        Kitchen Complement
+        {{ "cart.addOns.badge" | transloco }}
       </p>
     </div>
 
@@ -23,7 +23,7 @@
           <div class="min-w-0 flex-1">
             <p class="truncate font-display font-bold">{{ product.name }}</p>
             <p class="text-sm text-warm-grey tabular-nums">
-              +{{ product.discountedPrice | number: "1.0-2" }} EGP
+              +<app-price [amount]="product.discountedPrice" />
             </p>
           </div>
 
