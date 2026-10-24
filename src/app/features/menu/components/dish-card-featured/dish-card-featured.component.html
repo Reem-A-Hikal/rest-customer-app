@@ -7,14 +7,14 @@
     >
       <app-dish-image [product]="product" />
       <div
-        class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-surface via-transparent to-transparent"
+        class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r md:rtl:bg-gradient-to-l from-surface via-transparent to-transparent"
       ></div>
-      <div class="absolute top-3 left-3 z-10">
+      <div class="absolute top-3 start-3 z-10">
         <span
           class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink/90 border border-accent-soft/40 text-accent-soft text-[10px] sm:text-xs font-medium tracking-wide"
         >
-          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span> Chef's
-          Pick
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span>
+          {{ "menu.chefsPick" | transloco }}
         </span>
       </div>
     </div>
@@ -29,10 +29,7 @@
           >
             {{ product.name }}
           </h3>
-          <div
-            class="flex items-baseline gap-1.5 font-display flex-none"
-            dir="ltr"
-          >
+          <div class="flex items-baseline gap-1.5 font-display flex-none">
             @if (hasDiscount) {
               <span class="text-xs line-through text-warm-grey">{{
                 product.price | number: "1.0-2"
@@ -43,7 +40,7 @@
             }}</span>
             <span
               class="text-[10px] text-warm-grey uppercase tracking-wider font-body-en font-medium"
-              >EGP</span
+              >{{ "common.egp" | transloco }}</span
             >
           </div>
         </div>
@@ -59,9 +56,9 @@
       <div
         class="pt-3 border-t border-outline flex items-center justify-between"
       >
-        <span class="text-[10px] sm:text-xs text-warm-grey"
-          >Cooked to fire upon order</span
-        >
+        <span class="text-[10px] sm:text-xs text-warm-grey">{{
+          "common.cookedToOrder" | transloco
+        }}</span>
         <app-qty-control
           [quantity]="quantity"
           [name]="product.name"
@@ -81,18 +78,17 @@
       <div
         class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/40"
       ></div>
-      <div class="absolute top-3 left-3 z-10">
+      <div class="absolute top-3 start-3 z-10">
         <span
           class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-ink/90 border border-accent-soft/40 text-accent-soft text-[10px] sm:text-xs font-medium tracking-wide"
         >
-          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span> Chef's
-          Pick
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-soft"></span>
+          {{ "menu.chefsPick" | transloco }}
         </span>
       </div>
 
       <div
-        class="absolute bottom-4 right-4 z-10 bg-ink/95 border border-white/10 px-3.5 py-1.5 rounded flex items-baseline gap-2"
-        dir="ltr"
+        class="absolute bottom-4 end-4 z-10 bg-ink/95 border border-white/10 px-3.5 py-1.5 rounded flex items-baseline gap-2"
       >
         @if (hasDiscount) {
           <span class="text-xs line-through text-warm-grey">{{
@@ -102,9 +98,9 @@
         <span class="font-display text-2xl font-bold text-accent-soft">{{
           displayPrice | number: "1.0-2"
         }}</span>
-        <span class="text-[11px] font-body-en text-warm-grey font-medium"
-          >EGP</span
-        >
+        <span class="text-[11px] font-body-en text-warm-grey font-medium">{{
+          "common.egp" | transloco
+        }}</span>
       </div>
     </div>
 
@@ -125,7 +121,9 @@
       <div
         class="pt-4 border-t border-outline flex items-center justify-between"
       >
-        <span class="text-xs text-warm-grey">Cooked to fire upon order</span>
+        <span class="text-xs text-warm-grey">{{
+          "common.cookedToOrder" | transloco
+        }}</span>
         <app-qty-control
           [quantity]="quantity"
           [name]="product.name"

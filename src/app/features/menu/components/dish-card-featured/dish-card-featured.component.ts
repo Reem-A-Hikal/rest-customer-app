@@ -3,6 +3,7 @@ import { QtyControlComponent } from '../qty-control/qty-control.component';
 import { CommonModule } from '@angular/common';
 import { DishImageComponent } from '../dish-image/dish-image.component';
 import { BaseDishCardComponent } from '../base-dish-card/base-dish-card.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-dish-card-featured',
@@ -11,6 +12,7 @@ import { BaseDishCardComponent } from '../base-dish-card/base-dish-card.componen
     CommonModule,
     DishImageComponent,
     DishImageComponent,
+    TranslocoPipe
   ],
   templateUrl: './dish-card-featured.component.html',
   styleUrls: ['./dish-card-featured.component.css'],

@@ -2,7 +2,9 @@
   "common": {
     "optional": "اختياري",
     "egp": "ج.م",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "tryAgain": "حاول مرة أخرى",
+    "cookedToOrder": "يُطهى فور طلبه"
   },
   "header": {
     "switchLanguage": "تغيير اللغة",
@@ -233,7 +235,6 @@
       "cta": "تصفّح قائمة الليلة"
     },
     "item": {
-      "cookedToOrder": "يُطهى فور طلبه",
       "remove": "حذف",
       "removeLabel": "حذف {name}"
     },
@@ -285,6 +286,15 @@
     "increaseNamed": "زيادة كمية {name}",
     "decrease": "تقليل الكمية",
     "decreaseNamed": "تقليل كمية {name}"
+  },
+  "menu": {
+    "loading": "جارٍ تحميل القائمة…",
+    "error": "تعذّر تحميل القائمة. حاول مرة أخرى.",
+    "heading": "قائمة الليلة",
+    "subheading": "يحددها الشيف المناوب يوميًا. اطلب قبل التاسعة مساءً للتوصيل الليلة.",
+    "itemsCount": "{count, plural, zero {لا أصناف} one {صنف واحد} two {صنفان} few {{count} أصناف} many {{count} صنفًا} other {{count} صنف}}",
+    "chefsPick": "اختيار الشيف",
+    "categoriesLabel": "تصنيفات القائمة"
   },
   "errors": {
     "network": "تعذّر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وحاول مرة أخرى."

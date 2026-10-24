@@ -25,7 +25,7 @@
   <div
     class="flex justify-between w-full sm:w-auto sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5 flex-none"
   >
-    <div class="flex items-baseline gap-1.5 font-display flex-none" dir="ltr">
+    <div class="flex items-baseline gap-1.5 font-display flex-none">
       @if (hasDiscount) {
         <span class="text-xs line-through text-warm-grey">{{
           product.price | number: "1.0-2"
@@ -36,7 +36,7 @@
       }}</span>
       <span
         class="text-[10px] text-warm-grey uppercase font-body-en tracking-wider font-medium"
-        >EGP</span
+        >{{ "common.egp" | transloco }}</span
       >
     </div>
 

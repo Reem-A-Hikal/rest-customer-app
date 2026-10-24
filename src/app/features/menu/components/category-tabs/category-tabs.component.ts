@@ -7,12 +7,14 @@ import {
   output,
   viewChild,
 } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 export interface CategoryTab {
   id: number;
   name: string;
 }
 @Component({
   selector: 'app-category-tabs',
+  imports: [TranslocoPipe],
   templateUrl: './category-tabs.component.html',
 })
 export class CategoryTabsComponent {

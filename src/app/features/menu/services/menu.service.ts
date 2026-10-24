@@ -51,7 +51,7 @@ export class MenuService {
         this.loadingSignal.set(false);
       },
       error: () => {
-        this.errorSignal.set('Failed to load menu. Please try again.');
+        this.errorSignal.set('menu.error');
         this.loadingSignal.set(false);
       },
     });

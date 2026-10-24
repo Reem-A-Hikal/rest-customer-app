@@ -1,35 +1,34 @@
+@let errorKey = error();
+
+<app-header [showMenuToggle]="false" />
+
 @if (loading()) {
-  <div
+  <output
     class="flex min-h-[50vh] items-center justify-center bg-ink text-warm-grey"
   >
-    Loading menu...
-  </div>
-} @else if (error()) {
+    {{ "menu.loading" | transloco }}
+  </output>
+} @else if (errorKey) {
   <div
     class="flex min-h-[50vh] flex-col items-center justify-center gap-sm bg-ink text-paper"
   >
-    <p>{{ error() }}</p>
+    <p role="alert">{{ errorKey | transloco }}</p>
     <button
+      type="button"
       (click)="retry()"
-      class="rounded-sm bg-accent-soft px-md py-xs font-semibold text-ink transition-colors hover:bg-amber"
+      class="cursor-pointer rounded-sm bg-accent-soft px-md py-xs font-semibold text-ink transition-colors hover:bg-amber"
     >
-      Try again
+      {{ "common.tryAgain" | transloco }}
     </button>
   </div>
 } @else {
-  <app-header [showMenuToggle]="false"> </app-header>
-
   <main>
     <div class="container pt-2xl pb-lg">
-      <h1
-        class="text-h1 font-bold text-paper"
-        id="menu-heading"
-        data-i18n="menu.heading"
-      >
-        Tonight's menu
+      <h1 class="text-h1 font-bold text-paper" id="menu-heading">
+        {{ "menu.heading" | transloco }}
       </h1>
-      <p data-i18n="menu.subheading" class="text-lead text-warm-grey mt-sm">
-        Set daily by the chef on duty. Order by 9pm for delivery tonight.
+      <p class="text-lead text-warm-grey mt-sm">
+        {{ "menu.subheading" | transloco }}
       </p>
     </div>
 
@@ -50,11 +49,13 @@
             <h2 class="text-h2 sm:text-3xl font-semibold text-paper">
               {{ group.category.name }}
             </h2>
-            <span
-              class="text-xs text-warm-grey font-display"
-              data-i18n="menu.items-count"
-              >{{ group.featured.length + group.regular.length }} Items</span
-            >
+            <span class="text-xs text-warm-grey font-display">
+              {{
+                "menu.itemsCount"
+                  | transloco
+                    : { count: group.featured.length + group.regular.length }
+              }}
+            </span>
           </div>
 
           @if (group.featured.length > 0) {

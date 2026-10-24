@@ -2,7 +2,9 @@
   "common": {
     "optional": "Optional",
     "egp": "EGP",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "tryAgain": "Try again",
+    "cookedToOrder": "Cooked to fire upon order"
   },
   "header": {
     "switchLanguage": "Switch language",
@@ -233,7 +235,6 @@
       "cta": "See Tonight's Menu"
     },
     "item": {
-      "cookedToOrder": "Cooked to fire upon order",
       "remove": "Remove",
       "removeLabel": "Remove {name}"
     },
@@ -285,6 +286,15 @@
     "increaseNamed": "Increase quantity of {name}",
     "decrease": "Decrease quantity",
     "decreaseNamed": "Decrease quantity of {name}"
+  },
+  "menu": {
+    "loading": "Loading menu…",
+    "error": "Failed to load menu. Please try again.",
+    "heading": "Tonight's menu",
+    "subheading": "Set daily by the chef on duty. Order by 9pm for delivery tonight.",
+    "itemsCount": "{count, plural, one {{count} Item} other {{count} Items}}",
+    "chefsPick": "Chef's Pick",
+    "categoriesLabel": "Menu categories"
   },
   "errors": {
     "network": "We can't reach the server. Check your connection and try again."

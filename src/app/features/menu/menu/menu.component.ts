@@ -13,6 +13,7 @@ import { DishCardFeaturedComponent } from '../components/dish-card-featured/dish
 import { DishCardItemComponent } from '../components/dish-card-item/dish-card-item.component';
 import { AppHeaderComponent } from '../../../shared/components/header/header.component';
 import { CategoryTabsComponent } from '../components/category-tabs/category-tabs.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-menu',
@@ -21,6 +22,7 @@ import { CategoryTabsComponent } from '../components/category-tabs/category-tabs
     DishCardFeaturedComponent,
     AppHeaderComponent,
     CategoryTabsComponent,
+    TranslocoPipe,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
