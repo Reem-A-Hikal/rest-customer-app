@@ -2,7 +2,10 @@
   <div
     class="container flex flex-wrap items-center justify-between gap-sm py-md text-sm"
   >
-    <p>A delivery-only kitchen — no walk-ins.</p>
-    <p>Daily 6:00 PM – 12:00 AM · Orders close at 9:00 PM</p>
+    <p>{{ "footer.hours.deliveryOnly" | transloco }}</p>
+    <p>
+      {{ "footer.hours.open" | transloco }} ·
+      {{ "footer.hours.cutoff" | transloco }}
+    </p>
   </div>
 </footer>

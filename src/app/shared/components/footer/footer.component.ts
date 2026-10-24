@@ -2,15 +2,16 @@ import { Component, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 interface FooterLink {
-  readonly label: string;
+  readonly labelKey: string;
   readonly route: string;
   readonly fragment?: string;
 }
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, BrandLogoComponent],
+  imports: [RouterLink, BrandLogoComponent, TranslocoPipe],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
 })
@@ -18,27 +19,19 @@ export class FooterComponent {
   readonly year = new Date().getFullYear();
 
   readonly exploreLinks: readonly FooterLink[] = [
-    { label: 'The Kitchen', route: '/', fragment: 'kitchen' },
-    { label: "Tonight's Menu", route: '/menu' },
-    { label: 'How It Works', route: '/', fragment: 'how-it-works' },
-    { label: 'Reviews', route: '/', fragment: 'reviews' },
+    { labelKey: 'footer.links.kitchen', route: '/', fragment: 'kitchen' },
+    { labelKey: 'footer.links.menu', route: '/menu' },
+    {
+      labelKey: 'footer.links.howItWorks',
+      route: '/',
+      fragment: 'how-it-works',
+    },
+    { labelKey: 'footer.links.reviews', route: '/', fragment: 'reviews' },
   ];
 
-  readonly hours: readonly string[] = [
-    '6:00 PM – 12:00 AM daily',
-    'Orders close at 9:00 PM',
-    'Delivery only — no walk-ins',
+  protected readonly hours = [
+    'footer.hours.open',
+    'footer.hours.cutoff',
+    'footer.hours.deliveryOnly',
   ];
-
-  readonly email = new FormControl('', { nonNullable: true });
-  readonly note = signal('');
-
-  subscribe(event: Event): void {
-    event.preventDefault();
-    if (!this.email.value.trim()) return;
-    this.note.set(
-      "You're on the list — tomorrow's menu lands in your inbox before it's posted.",
-    );
-    this.email.reset();
-  }
 }

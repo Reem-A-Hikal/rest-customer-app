@@ -20,8 +20,8 @@
       <a
         #cartLink
         routerLink="/cart"
-        [attr.aria-label]="'Open cart, ' + shownCount() + ' items'"
-        class="position-relative grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
+        [attr.aria-label]="'header.cart' | transloco: { count: shownCount() }"
+        class="relative grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
       >
         <svg lucideShoppingCart class="size-5" [strokeWidth]="1.6"></svg>
         @if (shownCount() > 0) {
@@ -42,7 +42,7 @@
         class="relative z-10 grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber lg:hidden"
         aria-controls="header-panel"
         [attr.aria-expanded]="isOpen()"
-        [attr.aria-label]="isOpen() ? 'Close menu' : 'Open menu'"
+        [attr.aria-label]="(isOpen() ? 'header.menu.close' : 'header.menu.open') | transloco"
         (click)="toggle()"
       >
         @if (isOpen()) {

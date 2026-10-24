@@ -4,7 +4,31 @@
     "egp": "EGP"
   },
   "header": {
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "cart": "{count, plural, =0 {Open cart} one {Open cart, {count} item} other {Open cart, {count} items}}",
+    "menu": { "open": "Open menu", "close": "Close menu" }
+  },
+  "footer": {
+    "homeLabel": "REST home",
+    "tagline": "A delivery-only kitchen. No walk-ins, no dining room — just food finished the moment it's ordered.",
+    "explore": "Explore",
+    "links": {
+      "kitchen": "The Kitchen",
+      "menu": "Tonight's Menu",
+      "howItWorks": "How It Works",
+      "reviews": "Reviews"
+    },
+    "hoursTitle": "Hours",
+    "hours": {
+      "open": "6:00 PM – 12:00 AM daily",
+      "cutoff": "Orders close at 9:00 PM",
+      "deliveryOnly": "Delivery only — no walk-ins"
+    },
+    "rights": "© {year} REST. All rights reserved.",
+    "social": {
+      "instagram": "REST on Instagram",
+      "facebook": "REST on Facebook"
+    }
   },
   "address": {
     "type": { "home": "Home", "work": "Work", "other": "Other" }
