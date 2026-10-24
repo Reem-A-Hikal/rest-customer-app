@@ -6,6 +6,7 @@ import {
 } from '../../../address/model/address.model';
 import { LucideMapPin } from '@lucide/angular';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { AREA_LABEL_KEYS } from '../../../address/constants/delivery-area';
 
 @Component({
   selector: 'app-delivery-address',
@@ -36,15 +37,13 @@ export class DeliveryAddressComponent {
   protected typeLabel(address: Address): string {
     return ADDRESS_TYPE_LABELS[address.addressType];
   }
-
-  protected line(address: Address): string {
-    return [
-      address.addressLine1,
-      address.addressLine2,
-      address.city,
-      address.governorate,
-    ]
+  protected street(address: Address): string {
+    return [address.addressLine1, address.addressLine2]
       .filter(Boolean)
       .join(', ');
+  }
+
+  protected areaKey(address: Address): string | null {
+    return AREA_LABEL_KEYS.get(address.city) ?? null;
   }
 }

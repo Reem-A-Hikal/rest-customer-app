@@ -83,7 +83,8 @@ export class SigninComponent {
           this.serverError.set(
             extractErrorMessage(
               err,
-              this.transloco.translate('auth.signin.failed')
+              (key) => this.transloco.translate(key),
+              'auth.signin.failed',
             ),
           ),
       });

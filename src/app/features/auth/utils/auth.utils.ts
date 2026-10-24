@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-export function extractErrorMessage(error: unknown, fallback: string): string {
-  if (!(error instanceof HttpErrorResponse)) return fallback;
-
-  if (error.status === 0)
-    return "We can't reach the server. Check your connection and try again.";
+export function extractErrorMessage(
+  error: unknown,
+  translate: (key: string) => string,
+  fallbackKey: string,
+): string {
+  if (!(error instanceof HttpErrorResponse)) return translate(fallbackKey);
+  if (error.status === 0) return translate('errors.network');
 
   const body = error.error as { message?: unknown; errors?: unknown } | null;
   const errors = body?.errors;
@@ -13,9 +15,8 @@ export function extractErrorMessage(error: unknown, fallback: string): string {
   if (typeof firstError === 'string' && firstError) return firstError;
   if (typeof body?.message === 'string' && body.message) return body.message;
 
-  return fallback;
+  return translate(fallbackKey);
 }
-
 export function safeReturnUrl(url: string | null, fallback = '/'): string {
   return url && url.startsWith('/') && !url.startsWith('//') ? url : fallback;
 }

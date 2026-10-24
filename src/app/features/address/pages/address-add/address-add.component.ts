@@ -19,22 +19,27 @@ import {
   DELIVERY_AREAS,
   DELIVERY_GOVERNORATE,
 } from '../../constants/delivery-area';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 const MESSAGES = {
   addressLine1: {
-    required: 'Street address is required',
-    maxlength: 'Keep it under 255 characters',
+    required: 'address.errors.line1Required',
+    maxlength: 'address.errors.line1Max',
   },
-  addressLine2: { maxlength: 'Keep it under 255 characters' },
-  city: { required: 'Choose your area' },
+  addressLine2: { maxlength: 'address.errors.line2Max' },
+  city: { required: 'address.errors.areaRequired' },
 } as const;
 
 type MessageField = keyof typeof MESSAGES;
 
 @Component({
   selector: 'app-address-add',
-  imports: [ReactiveFormsModule, AuthShellComponent, FormFieldComponent, TranslocoPipe],
+  imports: [
+    ReactiveFormsModule,
+    AuthShellComponent,
+    FormFieldComponent,
+    TranslocoPipe,
+  ],
   templateUrl: './address-add.component.html',
   styleUrls: ['./address-add.component.css'],
 })
@@ -44,6 +49,7 @@ export class AddressAddComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   protected readonly areas = DELIVERY_AREAS;
+  private readonly transloco = inject(TranslocoService);
 
   private readonly returnUrl = safeReturnUrl(
     this.route.snapshot.queryParamMap.get('returnUrl'),
@@ -54,7 +60,7 @@ export class AddressAddComponent {
     AddressType.Home,
     AddressType.Work,
     AddressType.Other,
-  ].map((value) => ({ value, label: ADDRESS_TYPE_LABELS[value] }));
+  ].map((value) => ({ value, labelKey: ADDRESS_TYPE_LABELS[value] }));
 
   protected readonly form = this.fb.group({
     addressType: [AddressType.Home],
@@ -102,7 +108,8 @@ export class AddressAddComponent {
           this.serverError.set(
             extractErrorMessage(
               err,
-              'Could not save the address. Please try again.',
+              (key) => this.transloco.translate(key),
+              'address.add.failed',
             ),
           ),
       });

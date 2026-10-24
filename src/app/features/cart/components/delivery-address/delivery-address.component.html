@@ -22,7 +22,14 @@
 
       <div class="min-w-0 flex-1 text-sm">
         <p class="font-semibold">{{ typeLabel(address) | transloco }}</p>
-        <p class="text-warm-grey">{{ line(address) }}</p>
+        <p class="text-warm-grey">
+          {{ street(address) }},
+          @if (areaKey(address); as key) {
+            {{ key | transloco }}
+          } @else {
+            {{ address.city }}
+          }
+        </p>
       </div>
 
       <button
@@ -66,7 +73,14 @@
                   >
                 }
               </span>
-              <span class="block text-warm-grey">{{ line(option) }}</span>
+              <span class="block text-warm-grey">
+                {{ street(option) }},
+                @if (areaKey(option); as key) {
+                  {{ key | transloco }}
+                } @else {
+                  {{ option.city }}
+                }
+              </span>
             </span>
           </label>
         }

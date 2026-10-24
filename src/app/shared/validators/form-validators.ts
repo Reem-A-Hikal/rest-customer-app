@@ -66,5 +66,5 @@ export function firstError(
   if (!control.touched || !control.errors) return null;
 
   const [key] = Object.keys(control.errors);
-  return messages[key] ?? 'Invalid value';
+  return messages[key] ?? null;
 }

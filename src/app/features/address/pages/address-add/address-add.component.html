@@ -1,7 +1,4 @@
-<app-auth-shell
-  title="Where should we deliver?"
-  subtitle="We deliver within Cairo."
->
+<app-auth-shell title="address.add.title" subtitle="address.add.subtitle">
   <form
     [formGroup]="form"
     (ngSubmit)="submit()"
@@ -9,7 +6,9 @@
     class="flex flex-col gap-md"
   >
     <fieldset>
-      <legend class="mb-xs text-sm font-semibold">Address type</legend>
+      <legend class="mb-xs text-sm font-semibold">
+        {{ "address.fields.type" | transloco }}
+      </legend>
 
       <div class="grid grid-cols-3 gap-2xs rounded-sm bg-ink/40 p-2xs">
         @for (type of addressTypes; track type.value) {
@@ -22,23 +21,24 @@
               formControlName="addressType"
               [value]="type.value"
             />
-            {{ type.label | transloco }}
+            {{ type.labelKey | transloco }}
           </label>
         }
       </div>
     </fieldset>
 
     <app-form-field
-      label="Street address"
+      label="address.fields.line1"
       inputId="address-line1"
       [error]="fieldError('addressLine1')"
     >
       <input
         id="address-line1"
         type="text"
+        dir="auto"
         formControlName="addressLine1"
-        aria-label="Street address"
         autocomplete="address-line1"
+        [attr.aria-label]="'address.fields.line1' | transloco"
         [attr.aria-invalid]="!!fieldError('addressLine1')"
         [attr.aria-describedby]="
           fieldError('addressLine1') ? 'address-line1-error' : null
@@ -47,7 +47,7 @@
     </app-form-field>
 
     <app-form-field
-      label="Apartment, floor, landmark"
+      label="address.fields.line2"
       inputId="address-line2"
       [optional]="true"
       [error]="fieldError('addressLine2')"
@@ -55,9 +55,10 @@
       <input
         id="address-line2"
         type="text"
+        dir="auto"
         formControlName="addressLine2"
-        aria-label="Apartment, floor, landmark"
         autocomplete="address-line2"
+        [attr.aria-label]="'address.fields.line2' | transloco"
         [attr.aria-invalid]="!!fieldError('addressLine2')"
         [attr.aria-describedby]="
           fieldError('addressLine2') ? 'address-line2-error' : null
@@ -66,22 +67,24 @@
     </app-form-field>
 
     <app-form-field
-      label="Area"
+      label="address.fields.area"
       inputId="address-city"
       [error]="fieldError('city')"
     >
       <select
-        class="cursor-pointer bg-ink"
         id="address-city"
         formControlName="city"
+        [attr.aria-label]="'address.fields.area' | transloco"
         [attr.aria-invalid]="!!fieldError('city')"
         [attr.aria-describedby]="
           fieldError('city') ? 'address-city-error' : null
         "
       >
-        <option value="" disabled>Choose your area</option>
-        @for (area of areas; track area) {
-          <option [value]="area">{{ area }}</option>
+        <option value="" disabled>
+          {{ "address.fields.areaPlaceholder" | transloco }}
+        </option>
+        @for (area of areas; track area.value) {
+          <option [value]="area.value">{{ area.labelKey | transloco }}</option>
         }
       </select>
     </app-form-field>
@@ -92,18 +95,21 @@
 
     <button
       type="submit"
-      class="cursor-pointer min-h-12 w-full rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
+      class="min-h-12 w-full cursor-pointer rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
       [disabled]="submitting()"
     >
-      {{ submitting() ? "Saving…" : "Save address" }}
+      {{
+        (submitting() ? "address.add.submitting" : "address.add.submit")
+          | transloco
+      }}
     </button>
 
     <button
       type="button"
-      class="cursor-pointer min-h-11 text-sm font-semibold text-warm-grey transition-colors hover:text-paper"
+      class="min-h-11 cursor-pointer text-sm font-semibold text-warm-grey transition-colors hover:text-paper"
       (click)="cancel()"
     >
-      Cancel
+      {{ "common.cancel" | transloco }}
     </button>
   </form>
 </app-auth-shell>

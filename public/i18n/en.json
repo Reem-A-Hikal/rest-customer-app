@@ -1,7 +1,8 @@
 {
   "common": {
     "optional": "Optional",
-    "egp": "EGP"
+    "egp": "EGP",
+    "cancel": "Cancel"
   },
   "header": {
     "switchLanguage": "Switch language",
@@ -31,7 +32,41 @@
     }
   },
   "address": {
-    "type": { "home": "Home", "work": "Work", "other": "Other" }
+    "type": { "home": "Home", "work": "Work", "other": "Other" },
+    "fields": {
+      "type": "Address type",
+      "line1": "Street address",
+      "line2": "Apartment, floor, landmark",
+      "area": "Area",
+      "areaPlaceholder": "Choose your area"
+    },
+    "errors": {
+      "line1Required": "Street address is required",
+      "line1Max": "Keep it under 255 characters",
+      "line2Max": "Keep it under 255 characters",
+      "areaRequired": "Choose your area"
+    },
+    "add": {
+      "title": "Where should we deliver?",
+      "subtitle": "We deliver within Cairo.",
+      "submit": "Save address",
+      "submitting": "Saving…",
+      "failed": "Could not save the address. Please try again."
+    },
+    "areas": {
+      "abbasia": "Abbasia",
+      "downtown": "Downtown",
+      "gardenCity": "Garden City",
+      "heliopolis": "Heliopolis",
+      "maadi": "Maadi",
+      "mokattam": "Mokattam",
+      "nasrCity": "Nasr City",
+      "oldCairo": "Old Cairo",
+      "sayedaZeinab": "Sayeda Zeinab",
+      "shubra": "Shubra",
+      "zamalek": "Zamalek",
+      "zeitoun": "Zeitoun"
+    }
   },
   "auth": {
     "fields": {
@@ -142,5 +177,8 @@
       "error": "We couldn't load your addresses. Refresh to try again.",
       "noAddress": "Add a delivery address to continue."
     }
+  },
+  "errors": {
+    "network": "We can't reach the server. Check your connection and try again."
   }
 }

@@ -161,7 +161,8 @@ export class RegisterComponent {
           this.serverError.set(
             extractErrorMessage(
               err,
-              this.transloco.translate('auth.register.failed'),
+              (key) => this.transloco.translate(key),
+              'auth.register.failed',
             ),
           ),
       });
