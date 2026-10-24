@@ -64,6 +64,7 @@
         >
         <app-qty-control
           [quantity]="quantity"
+          [name]="product.name"
           (add)="onAdd()"
           (increment)="onIncrement()"
           (decrement)="onDecrement()"
@@ -127,6 +128,7 @@
         <span class="text-xs text-warm-grey">Cooked to fire upon order</span>
         <app-qty-control
           [quantity]="quantity"
+          [name]="product.name"
           (add)="onAdd()"
           (increment)="onIncrement()"
           (decrement)="onDecrement()"

@@ -28,6 +28,7 @@
     >
       <app-qty-control
         [quantity]="item().quantity"
+        [name]="item().name"
         (increment)="increment.emit()"
         (decrement)="decrement.emit()"
       />

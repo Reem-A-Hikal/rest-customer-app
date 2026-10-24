@@ -27,7 +27,11 @@
             </p>
           </div>
 
-          <app-qty-control [quantity]="0" (add)="add.emit(product)" />
+          <app-qty-control
+            [quantity]="0"
+            [name]="product.name"
+            (add)="add.emit(product)"
+          />
         </li>
       }
     </ul>

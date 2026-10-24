@@ -178,6 +178,14 @@
       "noAddress": "Add a delivery address to continue."
     }
   },
+  "qty": {
+    "add": "Add to cart",
+    "addNamed": "Add {name} to cart",
+    "increase": "Increase quantity",
+    "increaseNamed": "Increase quantity of {name}",
+    "decrease": "Decrease quantity",
+    "decreaseNamed": "Decrease quantity of {name}"
+  },
   "errors": {
     "network": "We can't reach the server. Check your connection and try again."
   }
