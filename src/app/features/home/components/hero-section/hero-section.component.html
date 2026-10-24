@@ -17,22 +17,21 @@
           [class.is-live]="kitchenOpen()"
         ></span>
         {{
-          kitchenOpen() ? "Kitchen's live right now" : "Kitchen opens at 6 PM"
+          (kitchenOpen() ? "home.hero.statusLive" : "home.hero.statusClosed")
+            | transloco
         }}
       </p>
 
       <p class="mb-sm font-display text-lg text-accent-soft">
-        A cloud kitchen, plated properly
+        {{ "home.hero.eyebrow" | transloco }}
       </p>
 
       <h1 class="font-display text-h1 font-bold text-paper">
-        You'll never see our kitchen. Only taste what leaves it.
+        {{ "home.hero.headline" | transloco }}
       </h1>
 
       <p class="mt-md max-w-[32rem] text-warm-grey">
-        No dining room, no hostess stand, no rent for a room you'd sit in for an
-        hour. One commercial kitchen, a small team of chefs, and every plate
-        finished the moment your order arrives.
+        {{ "home.hero.sub" | transloco }}
       </p>
 
       <div class="mt-lg flex flex-wrap gap-md">
@@ -40,32 +39,40 @@
           routerLink="/menu"
           class="cursor-pointer rounded-sm bg-accent-soft py-xs px-md text-sm font-semibold text-ink transition-colors hover:bg-amber active:translate-y-px"
         >
-          See Tonight's Menu
+          {{ "home.cta.menu" | transloco }}
         </a>
         <a
           href="#kitchen"
           class="rounded-sm border border-paper/30 py-xs px-md text-sm font-semibold text-paper transition-colors hover:border-accent-soft"
         >
-          How a cloud kitchen works
+          {{ "home.hero.ctaSecondary" | transloco }}
         </a>
       </div>
 
       <dl class="mt-lg flex flex-wrap gap-lg border-t border-paper/16 pt-md">
         <div>
-          <strong dir="ltr" class="block font-display text-lg text-paper"
-            >6:00 PM</strong
-          >
-          <span class="text-xs text-warm-grey">Kitchen opens</span>
+          <strong class="block font-display text-lg text-paper">
+            {{ "home.hero.meta.timeValue" | transloco }}
+          </strong>
+          <span class="text-xs text-warm-grey">{{
+            "home.hero.meta.timeLabel" | transloco
+          }}</span>
         </div>
         <div>
-          <strong dir="ltr" class="block font-display text-lg text-paper"
-            >35–50 min</strong
-          >
-          <span class="text-xs text-warm-grey">To your door</span>
+          <strong class="block font-display text-lg text-paper">
+            {{ "home.hero.meta.durationValue" | transloco }}
+          </strong>
+          <span class="text-xs text-warm-grey">{{
+            "home.hero.meta.durationLabel" | transloco
+          }}</span>
         </div>
         <div>
-          <strong class="block font-display text-lg text-paper">Cairo</strong>
-          <span class="text-xs text-warm-grey">Delivery only</span>
+          <strong class="block font-display text-lg text-paper">
+            {{ "home.hero.meta.areaValue" | transloco }}
+          </strong>
+          <span class="text-xs text-warm-grey">{{
+            "home.hero.meta.areaLabel" | transloco
+          }}</span>
         </div>
       </dl>
     </div>

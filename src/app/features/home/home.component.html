@@ -2,16 +2,24 @@
   <nav headerLinks class="flex flex-col gap-md lg:flex-row lg:items-center">
     <ul class="nav flex flex-col lg:flex-row lg:items-center lg:gap-lg">
       <li class="border-b border-paper/10 lg:border-0">
-        <a href="#kitchen" class="nav-link">The Kitchen</a>
+        <a href="#kitchen" class="nav-link">{{
+          "home.nav.kitchen" | transloco
+        }}</a>
       </li>
       <li class="border-b border-paper/10 lg:border-0">
-        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#how-it-works" class="nav-link">{{
+          "home.nav.howItWorks" | transloco
+        }}</a>
       </li>
       <li class="border-b border-paper/10 lg:border-0">
-        <a href="#standards" class="nav-link">Standards</a>
+        <a href="#standards" class="nav-link">{{
+          "home.nav.standards" | transloco
+        }}</a>
       </li>
       <li class="border-b border-paper/10 lg:border-0">
-        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#reviews" class="nav-link">{{
+          "home.nav.reviews" | transloco
+        }}</a>
       </li>
     </ul>
   </nav>
@@ -21,7 +29,7 @@
     routerLink="/menu"
     class="block flex-none rounded-sm bg-accent-soft px-md py-sm text-center text-base font-semibold text-ink transition-colors hover:bg-amber lg:inline-block lg:py-xs lg:text-sm"
   >
-    See Tonight's Menu
+    {{ "home.cta.menu" | transloco }}
   </a>
 </app-header>
 

@@ -6,6 +6,8 @@
   },
   "header": {
     "switchLanguage": "Switch language",
+    "switchToAr": "Switch to Arabic",
+    "switchToEn": "Switch to English",
     "cart": "{count, plural, =0 {Open cart} one {Open cart, {count} item} other {Open cart, {count} items}}",
     "menu": { "open": "Open menu", "close": "Close menu" }
   },
@@ -29,6 +31,31 @@
     "social": {
       "instagram": "REST on Instagram",
       "facebook": "REST on Facebook"
+    }
+  },
+  "home": {
+    "nav": {
+      "kitchen": "The Kitchen",
+      "howItWorks": "How It Works",
+      "standards": "Standards",
+      "reviews": "Reviews"
+    },
+    "cta": { "menu": "See Tonight's Menu" },
+    "hero": {
+      "statusLive": "Kitchen's live right now",
+      "statusClosed": "Kitchen opens at 6 PM",
+      "eyebrow": "A cloud kitchen, plated properly",
+      "headline": "You'll never see our kitchen. Only taste what leaves it.",
+      "sub": "No dining room, no hostess stand, no rent for a room you'd sit in for an hour. One commercial kitchen, a small team of chefs, and every plate finished the moment your order arrives.",
+      "ctaSecondary": "How a cloud kitchen works",
+      "meta": {
+        "timeValue": "6:00 PM",
+        "timeLabel": "Kitchen opens",
+        "durationValue": "35–50 min",
+        "durationLabel": "To your door",
+        "areaValue": "Cairo",
+        "areaLabel": "Delivery only"
+      }
     }
   },
   "address": {

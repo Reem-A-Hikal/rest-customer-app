@@ -7,6 +7,7 @@ import { HowItWorksSectionComponent } from './components/how-it-works-section/ho
 import { MenuCtaSectionComponent } from './components/menu-cta-section/menu-cta-section.component';
 import { StandardsSectionComponent } from './components/standards-section/standards-section.component';
 import { ReviewsSectionComponent } from './components/reviews-section/reviews-section.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ import { ReviewsSectionComponent } from './components/reviews-section/reviews-se
     MenuCtaSectionComponent,
     StandardsSectionComponent,
     ReviewsSectionComponent,
+    TranslocoPipe
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],

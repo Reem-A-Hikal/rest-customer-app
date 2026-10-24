@@ -11,7 +11,10 @@
       <button
         type="button"
         (click)="language.toggle()"
-        [attr.aria-label]="'header.switchLanguage' | transloco"
+        [attr.aria-label]="
+          (language.lang() === 'ar' ? 'header.switchToEn' : 'header.switchToAr')
+            | transloco
+        "
         class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 font-body-en text-xs font-semibold text-paper transition-colors hover:border-amber hover:text-amber"
       >
         {{ language.lang() === "ar" ? "EN" : "AR" }}
@@ -42,7 +45,9 @@
         class="relative z-10 grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber lg:hidden"
         aria-controls="header-panel"
         [attr.aria-expanded]="isOpen()"
-        [attr.aria-label]="(isOpen() ? 'header.menu.close' : 'header.menu.open') | transloco"
+        [attr.aria-label]="
+          (isOpen() ? 'header.menu.close' : 'header.menu.open') | transloco
+        "
         (click)="toggle()"
       >
         @if (isOpen()) {
