@@ -1,6 +1,6 @@
 <app-auth-shell
-  [title]="'Create your account'"
-  [subtitle]="'One minute, then your order is on its way.'"
+  [title]="'auth.register.title'"
+  [subtitle]="'auth.register.subtitle'"
 >
   <form
     [formGroup]="form"
@@ -9,16 +9,17 @@
     class="flex flex-col gap-md"
   >
     <app-form-field
-      label="Full name"
+      label="auth.fields.fullName"
       inputId="register-name"
       [error]="fieldError('fullName')"
     >
       <input
         id="register-name"
         type="text"
+        dir="auto"
         formControlName="fullName"
         autocomplete="name"
-        aria-label="Full name"
+        [attr.aria-label]="'auth.fields.fullName' | transloco"
         [attr.aria-invalid]="!!fieldError('fullName')"
         [attr.aria-describedby]="
           fieldError('fullName') ? 'register-name-error' : null
@@ -27,17 +28,18 @@
     </app-form-field>
 
     <app-form-field
-      label="Email"
+      label="auth.fields.email"
       inputId="register-email"
       [error]="fieldError('email')"
     >
       <input
         id="register-email"
         type="email"
+        dir="ltr"
         formControlName="email"
         autocomplete="email"
         inputmode="email"
-        aria-label="Email"
+        [attr.aria-label]="'auth.fields.email' | transloco"
         [attr.aria-invalid]="!!fieldError('email')"
         [attr.aria-describedby]="
           fieldError('email') ? 'register-email-error' : null
@@ -46,7 +48,7 @@
     </app-form-field>
 
     <app-form-field
-      label="Phone number"
+      label="auth.fields.phone"
       inputId="register-phone"
       [optional]="true"
       [error]="fieldError('phoneNumber')"
@@ -54,12 +56,13 @@
       <input
         id="register-phone"
         type="tel"
+        dir="ltr"
         formControlName="phoneNumber"
         autocomplete="tel"
         inputmode="numeric"
         maxlength="11"
         placeholder="01012345678"
-        aria-label="Phone number"
+        [attr.aria-label]="'auth.fields.phone' | transloco"
         [attr.aria-invalid]="!!fieldError('phoneNumber')"
         [attr.aria-describedby]="
           fieldError('phoneNumber') ? 'register-phone-error' : null
@@ -75,7 +78,10 @@
         [error]="passwordError()"
       />
 
-      <ul class="grid gap-2xs text-sm" aria-label="Password requirements">
+      <ul
+        class="grid gap-2xs text-sm"
+        [attr.aria-label]="'auth.password.rules.title' | transloco"
+      >
         @for (rule of passwordRules; track rule.key) {
           @let met = ruleMet(rule);
           <li class="flex items-center gap-xs" [class.text-warm-grey]="!met">
@@ -88,19 +94,26 @@
             } @else {
               <svg
                 lucideDot
-                class="size-5 text-danger"
+                class="size-5 text-warm-grey"
                 [strokeWidth]="1.6"
               ></svg>
             }
-            <span class="sr-only">{{ met ? "Met:" : "Required:" }}</span>
-            {{ rule.label }}
+            <span class="sr-only">
+              {{
+                (met
+                  ? "auth.password.rules.met"
+                  : "auth.password.rules.required"
+                ) | transloco
+              }}</span
+            >
+            {{ rule.labelKey | transloco }}
           </li>
         }
       </ul>
     </div>
 
     <app-password-field
-      label="Confirm password"
+      label="auth.fields.confirmPassword"
       inputId="register-confirm"
       autocomplete="new-password"
       [control]="form.controls.confirmPassword"
@@ -116,17 +129,20 @@
       class="cursor-pointer min-h-12 w-full rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
       [disabled]="submitting()"
     >
-      {{ submitting() ? "Creating your account…" : "Create account" }}
+      {{
+        (submitting() ? "auth.register.submitting" : "auth.register.submit")
+          | transloco
+      }}
     </button>
 
     <p class="text-center text-sm text-warm-grey">
-      Already have an account?
+      {{ "auth.register.havePrompt" | transloco }}
       <a
         routerLink="/signin"
         [queryParams]="returnQuery"
         class="font-semibold text-accent-soft hover:underline"
       >
-        Sign in
+        {{ "auth.register.signIn" | transloco }}
       </a>
     </p>
   </form>

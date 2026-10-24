@@ -6,30 +6,34 @@ export const PHONE_PATTERN = /^01[0125]\d{8}$/;
 
 export interface PasswordRule {
   key: string;
-  label: string;
+  labelKey: string;
   test: (value: string) => boolean;
 }
 
 export const PASSWORD_RULES: readonly PasswordRule[] = [
   {
     key: 'minLength',
-    label: 'At least 8 characters',
+    labelKey: 'auth.password.rules.minLength',
     test: (v) => v.length >= 8,
   },
   {
     key: 'lowercase',
-    label: 'A lowercase letter',
+    labelKey: 'auth.password.rules.lowercase',
     test: (v) => /[a-z]/.test(v),
   },
   {
     key: 'uppercase',
-    label: 'An uppercase letter',
+    labelKey: 'auth.password.rules.uppercase',
     test: (v) => /[A-Z]/.test(v),
   },
-  { key: 'number', label: 'A number', test: (v) => /\d/.test(v) },
+  {
+    key: 'number',
+    labelKey: 'auth.password.rules.number',
+    test: (v) => /\d/.test(v),
+  },
   {
     key: 'symbol',
-    label: 'A symbol, like ! @ # $',
+    labelKey: 'auth.password.rules.symbol',
     test: (v) => /[^A-Za-z0-9]/.test(v),
   },
 ];

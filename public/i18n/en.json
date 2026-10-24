@@ -11,17 +11,36 @@
   },
   "auth": {
     "fields": {
+      "fullName": "Full name",
       "email": "Email",
-      "password": "Password"
+      "phone": "Phone number",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
     },
     "password": {
       "show": "Show password",
-      "hide": "Hide password"
+      "hide": "Hide password",
+      "rules": {
+        "title": "Password requirements",
+        "met": "Met:",
+        "required": "Required:",
+        "minLength": "At least 8 characters",
+        "lowercase": "A lowercase letter",
+        "uppercase": "An uppercase letter",
+        "number": "A number",
+        "symbol": "A symbol, like ! @ # $"
+      }
     },
     "errors": {
+      "nameRequired": "Full name is required",
+      "nameMin": "Enter at least 3 characters",
+      "nameMax": "Keep it under 100 characters",
       "emailRequired": "Email is required",
       "emailInvalid": "Enter a valid email address",
-      "passwordRequired": "Password is required"
+      "phoneInvalid": "Enter an 11-digit mobile number, e.g. 01012345678",
+      "passwordRequired": "Password is required",
+      "confirmRequired": "Please confirm your password",
+      "passwordMismatch": "Passwords do not match"
     },
     "signin": {
       "title": "Welcome back",
@@ -31,6 +50,15 @@
       "failed": "Could not sign you in. Please try again.",
       "newPrompt": "New to REST?",
       "createAccount": "Create an account"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "One minute, then your order is on its way.",
+      "submit": "Create account",
+      "submitting": "Creating your account…",
+      "failed": "Could not create your account. Please try again.",
+      "havePrompt": "Already have an account?",
+      "signIn": "Sign in"
     }
   },
   "cart": {

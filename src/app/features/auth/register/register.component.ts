@@ -20,19 +20,20 @@ import { AuthService } from '../../../core/services/auth.service';
 import { catchError, EMPTY, finalize, switchMap } from 'rxjs';
 import { extractErrorMessage, safeReturnUrl } from '../utils/auth.utils';
 import { LucideCheck, LucideDot } from '@lucide/angular';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 const MESSAGES = {
   fullName: {
-    required: 'Full name is required',
-    minlength: 'Enter at least 3 characters',
-    maxlength: 'Keep it under 100 characters',
+    required: 'auth.errors.nameRequired',
+    minlength: 'auth.errors.nameMin',
+    maxlength: 'auth.errors.nameMax',
   },
   email: {
-    required: 'Email is required',
-    pattern: 'Enter a valid email address',
+    required: 'auth.errors.emailRequired',
+    pattern: 'auth.errors.emailInvalid',
   },
   phoneNumber: {
-    pattern: 'Enter an 11-digit mobile number, e.g. 01012345678',
+    pattern: 'auth.errors.phoneInvalid',
   },
 } as const;
 
@@ -48,6 +49,7 @@ type MessageField = keyof typeof MESSAGES;
     PasswordFieldComponent,
     LucideCheck,
     LucideDot,
+    TranslocoPipe,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
@@ -57,6 +59,7 @@ export class RegisterComponent {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly transloco = inject(TranslocoService);
 
   private readonly returnUrl =
     this.route.snapshot.queryParamMap.get('returnUrl');
@@ -101,16 +104,18 @@ export class RegisterComponent {
   protected passwordError(): string | null {
     const control = this.form.controls.password;
     return control.touched && control.hasError('required')
-      ? 'Password is required'
+      ? 'auth.errors.passwordRequired'
       : null;
   }
 
   protected confirmError(): string | null {
     const control = this.form.controls.confirmPassword;
     if (!control.touched) return null;
-    if (control.hasError('required')) return 'Please confirm your password';
+    if (control.hasError('required')) return 'auth.errors.confirmRequired';
 
-    return this.form.hasError('mismatch') ? 'Passwords do not match' : null;
+    return this.form.hasError('mismatch')
+      ? 'auth.errors.passwordMismatch'
+      : null;
   }
 
   protected ruleMet(rule: PasswordRule): boolean {
@@ -138,11 +143,9 @@ export class RegisterComponent {
         confirmPassword,
       })
       .pipe(
-        // Register doesn't return a token, so sign the new customer in right away
         switchMap(() =>
           this.auth.login({ email, password }).pipe(
             catchError(() => {
-              // Account exists but the automatic sign-in failed: let them sign in manually
               this.router.navigate(['/signin'], {
                 queryParams: this.returnQuery,
               });
@@ -158,7 +161,7 @@ export class RegisterComponent {
           this.serverError.set(
             extractErrorMessage(
               err,
-              'Could not create your account. Please try again.',
+              this.transloco.translate('auth.register.failed'),
             ),
           ),
       });

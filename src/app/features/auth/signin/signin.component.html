@@ -16,6 +16,7 @@
       <input
         id="signin-email"
         type="email"
+        dir="ltr"
         formControlName="email"
         autocomplete="email"
         inputmode="email"
@@ -27,6 +28,7 @@
 
     <app-password-field
       inputId="signin-password"
+      autocomplete="new-password"
       [control]="form.controls.password"
       [error]="passwordError()"
     />
