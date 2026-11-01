@@ -12,6 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { DeliveryAddressComponent } from './components/delivery-address/delivery-address.component';
 import { AddressService } from '../address/services/address.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { withLiveNames } from './utils/with-live-names';
 
 @Component({
   selector: 'app-cart',
@@ -23,7 +24,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     DeliveryAddressComponent,
     OrderNotesComponent,
     OrderSummaryComponent,
-    TranslocoPipe
+    TranslocoPipe,
   ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
@@ -50,6 +51,10 @@ export class CartComponent {
 
   protected readonly addOns = computed(() =>
     pickAddOns(this.menu.menuGroups(), this.items()),
+  );
+
+  protected readonly displayItems = computed(() =>
+    withLiveNames(this.items(), this.menu.menuGroups()),
   );
 
   protected readonly blockedReason = computed(() => {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { toAssetUrl } from '../../../../shared/helpers/url.helper';
+import { LocalizedNamePipe } from '../../../../core/i18n/localized';
 
 export interface DishImageSource {
   name: string;
@@ -9,6 +10,7 @@ export interface DishImageSource {
 
 @Component({
   selector: 'app-dish-image',
+  imports: [LocalizedNamePipe],
   templateUrl: './dish-image.component.html',
   styleUrls: ['./dish-image.component.css'],
 })

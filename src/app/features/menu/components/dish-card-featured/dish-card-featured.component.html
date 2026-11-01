@@ -27,7 +27,7 @@
           <h3
             class="font-display text-xl sm:text-2xl font-semibold text-paper group-hover:text-accent-soft transition-colors truncate"
           >
-            {{ product.name }}
+            {{ product | localizedName }}
           </h3>
           <div class="flex items-baseline gap-1.5 font-display flex-none">
             @if (hasDiscount) {
@@ -44,11 +44,12 @@
             >
           </div>
         </div>
-        @if (product.description) {
+        @let description = product | localizedDescription;
+        @if (description) {
           <p
             class="text-xs sm:text-sm text-warm-grey max-w-full leading-relaxed"
           >
-            {{ product.description }}
+            {{ description }}
           </p>
         }
       </div>
@@ -61,7 +62,7 @@
         }}</span>
         <app-qty-control
           [quantity]="quantity"
-          [name]="product.name"
+          [name]="product | localizedName"
           (add)="onAdd()"
           (increment)="onIncrement()"
           (decrement)="onDecrement()"
@@ -109,11 +110,12 @@
         <h3
           class="font-display text-2xl font-semibold text-paper group-hover:text-accent-soft transition-colors"
         >
-          {{ product.name }}
+          {{ product | localizedName }}
         </h3>
-        @if (product.description) {
+        @let description = product | localizedDescription;
+        @if (description) {
           <p class="text-sm text-warm-grey leading-relaxed">
-            {{ product.description }}
+            {{ description }}
           </p>
         }
       </div>
@@ -126,7 +128,7 @@
         }}</span>
         <app-qty-control
           [quantity]="quantity"
-          [name]="product.name"
+          [name]="product | localizedName"
           (add)="onAdd()"
           (increment)="onIncrement()"
           (decrement)="onDecrement()"

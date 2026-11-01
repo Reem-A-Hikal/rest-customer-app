@@ -14,7 +14,13 @@ import { DishCardItemComponent } from '../components/dish-card-item/dish-card-it
 import { AppHeaderComponent } from '../../../shared/components/header/header.component';
 import { CategoryTabsComponent } from '../components/category-tabs/category-tabs.component';
 import { TranslocoPipe } from '@jsverse/transloco';
-
+import { LanguageService } from '../../../core/i18n/language.service';
+import {
+  localizedName,
+  LocalizedNamePipe,
+  LocalizedDescriptionPipe,
+} from '../../../core/i18n/localized';
+import { toCartItem } from '../../cart/utils/to-cart-item';
 @Component({
   selector: 'app-menu',
   imports: [
@@ -23,6 +29,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
     AppHeaderComponent,
     CategoryTabsComponent,
     TranslocoPipe,
+    LocalizedNamePipe,
+    LocalizedDescriptionPipe,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
@@ -30,6 +38,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 export class MenuComponent implements OnInit, OnDestroy {
   private readonly menuService = inject(MenuService);
   private readonly cartFacade = inject(CartFacade);
+  private readonly lang = inject(LanguageService).lang;
 
   private observer?: IntersectionObserver;
   private ignoreSpyUntil = 0;
@@ -68,7 +77,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   protected readonly categoryTabs = computed(() =>
     this.menuGroups().map((group) => ({
       id: group.category.categoryId,
-      name: group.category.name,
+      name: localizedName(group.category, this.lang()),
     })),
   );
 
@@ -136,7 +145,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   protected onCartIntent(intent: DishCartIntent): void {
     switch (intent.type) {
       case 'add':
-        return this.cartFacade.addItem(intent.product, 1);
+        return this.cartFacade.addItem(toCartItem(intent.product), 1);
 
       case 'increment':
         return this.cartFacade.increment(intent.productId);

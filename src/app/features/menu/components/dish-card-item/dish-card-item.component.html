@@ -12,11 +12,12 @@
 
     <div class="flex-1 min-w-0 space-y-1">
       <h3 class="font-display text-xl sm:text-2xl font-semibold text-paper">
-        {{ product.name }}
+        {{ product | localizedName }}
       </h3>
-      @if (product.description) {
+      @let description = product | localizedDescription;
+      @if (description) {
         <p class="text-sm text-warm-grey leading-relaxed max-w-full">
-          {{ product.description }}
+          {{ description }}
         </p>
       }
     </div>
@@ -42,7 +43,7 @@
 
     <app-qty-control
       [quantity]="quantity"
-      [name]="product.name"
+      [name]="product | localizedName"
       (add)="onAdd()"
       (increment)="onIncrement()"
       (decrement)="onDecrement()"

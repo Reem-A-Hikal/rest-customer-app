@@ -236,7 +236,8 @@
     },
     "item": {
       "remove": "حذف",
-      "removeLabel": "حذف {name}"
+      "removeLabel": "حذف {name}",
+      "cookedToOrder": "يُطهى فور طلبه"
     },
     "notes": {
       "title": "ملاحظات للمطبخ والتوصيل",

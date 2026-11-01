@@ -13,6 +13,7 @@ export enum ProductStatus {
 export interface Category {
   categoryId: number;
   name: string;
+  nameAr?: string | null;
   status: CategoryStatus;
   totalItems: number;
   displayOrder: number;
@@ -21,8 +22,10 @@ export interface Category {
 export interface Product {
   productId: number;
   name: string;
+  nameAr?: string | null;
   price: number;
   description: string | null;
+  descriptionAr?: string | null;
   imageUrl: string | null;
   preparationTime: number;
   calories: number | null;

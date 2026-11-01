@@ -43,7 +43,7 @@
           class="flex flex-col gap-md"
         >
           <ul class="flex flex-col gap-md">
-            @for (item of items(); track item.productId) {
+            @for (item of displayItems(); track item.productId) {
               <li>
                 <app-cart-item-card
                   [item]="item"

@@ -1,7 +1,7 @@
 @if (product.imageUrl && !imageFailed) {
   <img
     [src]="toAssetUrl(product.imageUrl, 'assets/images/placeholder.png')"
-    [alt]="product.name"
+    [alt]="product | localizedName"
     class="h-full w-full object-cover object-center brightness-90 contrast-105 transition-transform duration-700 ease-in-out group-hover:scale-[1.02]"
     (error)="onImageError()"
   />

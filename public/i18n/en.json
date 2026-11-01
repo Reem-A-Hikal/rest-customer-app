@@ -236,7 +236,8 @@
     },
     "item": {
       "remove": "Remove",
-      "removeLabel": "Remove {name}"
+      "removeLabel": "Remove {name}",
+      "cookedToOrder": "Cooked to fire upon order"
     },
     "notes": {
       "title": "Chef & Delivery Directives",
