@@ -22,8 +22,6 @@
           <p
             class="rounded-md border border-outline bg-surface px-sm py-xs text-sm font-semibold"
           >
-            <!-- {{ items().length }}
-            {{ items().length === 1 ? "course" : "courses" }} selected -->
             {{ "cart.coursesSelected" | transloco: { count: items().length } }}
           </p>
           <a
@@ -36,7 +34,34 @@
       }
     </header>
 
-    @if (items().length) {
+    @let placed = placedOrder();
+    @if (placed) {
+      <section
+        class="mt-lg rounded-md border border-outline bg-surface p-lg"
+        aria-live="polite"
+      >
+        <h2 class="font-display text-3xl font-bold text-accent-soft">
+          {{ "cart.placed.title" | transloco }}
+        </h2>
+        <p class="mt-xs text-lead">
+          {{ "cart.placed.number" | transloco }}
+          <bdi class="font-semibold">{{ placed.orderNumber }}</bdi>
+        </p>
+        <p class="mt-sm flex items-baseline gap-xs">
+          {{ "cart.placed.total" | transloco }}
+          <app-price [amount]="placed.totalAmount" />
+        </p>
+        <p class="mt-sm text-warm-grey">
+          {{ "cart.placed.payment" | transloco }}
+        </p>
+        <a
+          routerLink="/menu"
+          class="mt-md inline-flex min-h-11 items-center rounded-sm border border-outline px-md text-sm font-bold text-paper transition-colors hover:border-accent-soft hover:text-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+        >
+          {{ "cart.placed.back" | transloco }}
+        </a>
+      </section>
+    } @else if (items().length) {
       <div class="mt-lg grid items-start gap-lg lg:grid-cols-[1fr_24rem]">
         <section
           [attr.aria-label]="'cart.itemsLabel' | transloco"
@@ -74,6 +99,16 @@
               [loading]="addressesLoading()"
               (addressSelected)="onAddressSelected($event)"
             />
+          }
+
+          @if (submitError(); as message) {
+            <p
+              role="alert"
+              data-summary-error
+              class="mt-sm rounded-sm border border-danger/40 bg-danger/10 p-sm text-sm text-danger"
+            >
+              {{ message }}
+            </p>
           }
         </app-order-summary>
       </div>

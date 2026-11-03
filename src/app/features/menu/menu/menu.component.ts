@@ -15,11 +15,7 @@ import { AppHeaderComponent } from '../../../shared/components/header/header.com
 import { CategoryTabsComponent } from '../components/category-tabs/category-tabs.component';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LanguageService } from '../../../core/i18n/language.service';
-import {
-  localizedName,
-  LocalizedNamePipe,
-  LocalizedDescriptionPipe,
-} from '../../../core/i18n/localized';
+import { localizedName, LocalizedNamePipe } from '../../../core/i18n/localized';
 import { toCartItem } from '../../cart/utils/to-cart-item';
 @Component({
   selector: 'app-menu',
@@ -30,7 +26,7 @@ import { toCartItem } from '../../cart/utils/to-cart-item';
     CategoryTabsComponent,
     TranslocoPipe,
     LocalizedNamePipe,
-    LocalizedDescriptionPipe,
+    // LocalizedDescriptionPipe,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],

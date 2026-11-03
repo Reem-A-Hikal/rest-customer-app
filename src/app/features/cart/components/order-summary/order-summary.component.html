@@ -10,8 +10,6 @@
   <dl class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-sm">
     <div class="flex justify-between gap-sm">
       <dt>
-        <!-- Dishes Subtotal ({{ itemCount() }}
-        {{ itemCount() === 1 ? "item" : "items" }}) -->
         {{ "cart.summary.subtotal" | transloco: { count: itemCount() } }}
       </dt>
       <dd class="tabular-nums">
@@ -31,7 +29,11 @@
     <div class="flex justify-between gap-sm">
       <dt>{{ "cart.summary.delivery" | transloco }}</dt>
       <dd class="tabular-nums">
-        <app-price [amount]="totals().delivery" format="1.2-2" />
+        @if (feeKnown()) {
+          <app-price [amount]="totals().delivery" format="1.2-2" />
+        } @else {
+          -
+        }
       </dd>
     </div>
   </dl>
@@ -46,35 +48,50 @@
       class="font-display text-3xl font-bold text-accent-soft tabular-nums"
       aria-live="polite"
     >
-      <app-price [amount]="totals().total" />
+      @if (feeKnown()) {
+        <app-price [amount]="totals().total" />
+      } @else {
+        -
+      }
     </p>
   </div>
 
-  <div class="mt-md flex items-center gap-sm rounded-sm bg-ink/40 p-sm">
-    <span
-      class="grid size-10 shrink-0 place-items-center rounded-full bg-flame/25 text-signature-soft"
-    >
-      <svg class="size-5" lucideClock [strokeWidth]="1.6"></svg>
-    </span>
-    <div>
-      <p class="text-sm font-semibold">
-        {{ "cart.summary.arrival" | transloco }}
-      </p>
-      <p class="text-xs text-warm-grey">
-        {{ "cart.summary.arrivalNote" | transloco }}
-      </p>
+  <p class="mt-xs text-xs text-warm-grey">
+    {{ "cart.summary.payment" | transloco }}
+  </p>
+
+  @if (estimate(); as eta) {
+    <div class="mt-md flex items-center gap-sm rounded-sm bg-ink/40 p-sm">
+      <span
+        class="grid size-10 shrink-0 place-items-center rounded-full bg-flame/25 text-signature-soft"
+      >
+        <svg class="size-5" lucideClock [strokeWidth]="1.6"></svg>
+      </span>
+      <div>
+        <p class="text-sm font-semibold">
+          {{
+            "cart.summary.arrival"
+              | transloco: { min: eta.minMinutes, max: eta.maxMinutes }
+          }}
+        </p>
+        <p class="text-xs text-warm-grey">
+          {{ "cart.summary.arrivalNote" | transloco }}
+        </p>
+      </div>
     </div>
-  </div>
+  }
 
   <button
     type="button"
     class="cursor-pointer mt-md flex min-h-12 w-full items-center justify-center gap-sm rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
-    [disabled]="subtotal() <= 0 || !!blockedReason()"
+    [disabled]="subtotal() <= 0 || !feeKnown() || !!blockedReason()"
     [attr.aria-describedby]="blockedReason() ? 'confirm-hint' : null"
     (click)="confirmed.emit()"
   >
     {{ "cart.summary.confirm" | transloco }}
-    <app-price [amount]="totals().total" />
+    @if (feeKnown()) {
+      <app-price [amount]="totals().total" />
+    }
     <svg
       class="size-5 rtl:-scale-x-100"
       lucideMoveRight
@@ -87,6 +104,14 @@
       {{ reason | transloco }}
     </p>
   }
+
+  @if (hoursParams(); as hours) {
+    <p class="mt-xs text-center text-xs text-warm-grey">
+      {{ "cart.summary.hours" | transloco: hours }}
+    </p>
+  }
+
+  <ng-content select="[data-summary-error]" />
 
   <ul
     class="mt-md flex flex-col gap-xs border-t border-outline pt-md text-xs text-warm-grey"

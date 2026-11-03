@@ -15,10 +15,7 @@ import { firstError } from '../../../../shared/validators/form-validators';
 import { finalize } from 'rxjs';
 import { AuthShellComponent } from '../../../auth/auth-shell/auth-shell.component';
 import { FormFieldComponent } from '../../../../shared/components/form-field/form-field.component';
-import {
-  DELIVERY_AREAS,
-  DELIVERY_GOVERNORATE,
-} from '../../constants/delivery-area';
+import { DeliveryZoneService } from '../../services/delivery-zone.service';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 const MESSAGES = {
@@ -48,8 +45,20 @@ export class AddressAddComponent {
   private readonly addresses = inject(AddressService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  protected readonly areas = DELIVERY_AREAS;
+  private readonly zone = inject(DeliveryZoneService);
+
   private readonly transloco = inject(TranslocoService);
+
+  protected readonly areas = this.zone.areas;
+  protected readonly zoneError = this.zone.error;
+
+  constructor() {
+    this.zone.load();
+  }
+
+  protected retryZone(): void {
+    this.zone.load();
+  }
 
   private readonly returnUrl = safeReturnUrl(
     this.route.snapshot.queryParamMap.get('returnUrl'),
@@ -93,13 +102,19 @@ export class AddressAddComponent {
     this.submitting.set(true);
     this.serverError.set(null);
 
+    const governorate = this.zone.governorate();
+    if (this.form.invalid || !governorate) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     this.addresses
       .create({
         addressType,
         addressLine1: addressLine1.trim(),
         addressLine2: addressLine2.trim() || undefined,
         city: city.trim(),
-        governorate: DELIVERY_GOVERNORATE,
+        governorate,
       })
       .pipe(finalize(() => this.submitting.set(false)))
       .subscribe({

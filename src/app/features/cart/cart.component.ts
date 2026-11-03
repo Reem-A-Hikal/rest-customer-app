@@ -11,9 +11,17 @@ import { AddOnProduct, pickAddOns } from './utils/pick-add-ons';
 import { AuthService } from '../../core/services/auth.service';
 import { DeliveryAddressComponent } from './components/delivery-address/delivery-address.component';
 import { AddressService } from '../address/services/address.service';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { withLiveNames } from './utils/with-live-names';
-
+import { finalize } from 'rxjs';
+import { extractErrorMessage } from '../auth/utils/auth.utils';
+import { PriceComponent } from '../../shared/components/price/price.component';
+import { OrderService } from '../order/services/order.service';
+import { PlacedOrder } from '../order/models/order.model';
+import { LanguageService } from '../../core/i18n/language.service';
+import { localizedName } from '../../core/i18n/localized';
+import { formatClock } from '../../shared/utils/format-clock';
+import { CheckoutConfigService } from './services/checkout-config.service';
 @Component({
   selector: 'app-cart',
   imports: [
@@ -25,17 +33,23 @@ import { withLiveNames } from './utils/with-live-names';
     OrderNotesComponent,
     OrderSummaryComponent,
     TranslocoPipe,
+    PriceComponent,
   ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
+  private readonly checkout = inject(CheckoutConfigService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly lang = inject(LanguageService).lang;
 
   protected readonly cart = inject(CartFacade);
   private readonly menu = inject(MenuService);
   private readonly addressService = inject(AddressService);
+
+  private readonly orders = inject(OrderService);
+  private readonly transloco = inject(TranslocoService);
 
   protected readonly items = this.cart.items;
   protected readonly count = this.cart.count;
@@ -43,6 +57,10 @@ export class CartComponent {
   protected readonly discount = this.cart.discount;
 
   protected readonly notes = signal('');
+
+  protected readonly submitting = signal(false);
+  protected readonly submitError = signal<string | null>(null);
+  protected readonly placedOrder = signal<PlacedOrder | null>(null);
 
   protected readonly isSignedIn = this.auth.isSignedIn;
   protected readonly addresses = this.addressService.addresses;
@@ -58,6 +76,16 @@ export class CartComponent {
   );
 
   protected readonly blockedReason = computed(() => {
+    if (this.submitting()) return 'cart.blocked.submitting';
+
+    if (this.checkout.deliveryFee() === null) {
+      return this.checkout.error()
+        ? 'cart.blocked.configError'
+        : 'cart.blocked.configLoading';
+    }
+    
+    if (this.checkout.acceptingOrders() === false) return 'cart.blocked.closed';
+
     if (!this.isSignedIn()) return null;
     if (this.addressesLoading()) return 'cart.blocked.loading';
     if (this.addressService.error()) {
@@ -70,6 +98,7 @@ export class CartComponent {
   constructor() {
     this.menu.loadMenu();
     this.addressService.load();
+    this.checkout.refresh();
   }
 
   protected onAddOn(product: AddOnProduct): void {
@@ -88,6 +117,63 @@ export class CartComponent {
       return;
     }
     if (this.blockedReason()) return;
-    // TODO: POST /Order
+
+    const address = this.selectedAddress();
+    if (!address) return;
+
+    this.submitting.set(true);
+    this.submitError.set(null);
+
+    this.orders
+      .create({
+        deliveryAddressId: address.addressId,
+        customerNotes: this.notes().trim() || undefined,
+        orderDetails: this.items().map(({ productId, quantity }) => ({
+          productId,
+          quantity,
+        })),
+      })
+      .pipe(
+        finalize(() => {
+          this.submitting.set(false);
+        }),
+      )
+      .subscribe({
+        next: (order) => {
+          this.cart.clear();
+          this.notes.set('');
+          this.placedOrder.set(order);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        error: (err: unknown) => this.submitError.set(this.toErrorMessage(err)),
+      });
+  }
+
+  private toErrorMessage(err: unknown): string {
+    return extractErrorMessage(
+      err,
+      (key, params) => this.transloco.translate(key, params),
+      'cart.errors.submit',
+      (code, params) => {
+        switch (code) {
+          case 'KITCHEN_CLOSED':
+            return {
+              ...params,
+              opensAt: formatClock(String(params['opensAt']), this.lang()),
+              closesAt: formatClock(String(params['closesAt']), this.lang()),
+            };
+          case 'PRODUCT_UNAVAILABLE': {
+            const item = this.displayItems().find(
+              (i) => i.productId === params['productId'],
+            );
+            return item
+              ? { ...params, productName: localizedName(item, this.lang()) }
+              : params;
+          }
+          default:
+            return params;
+        }
+      },
+    );
   }
 }

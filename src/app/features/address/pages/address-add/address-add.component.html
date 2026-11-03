@@ -83,11 +83,29 @@
         <option value="" disabled>
           {{ "address.fields.areaPlaceholder" | transloco }}
         </option>
-        @for (area of areas; track area.value) {
-          <option [value]="area.value">{{ area.labelKey | transloco }}</option>
+        @for (area of areas(); track area.value) {
+          <option [value]="area.value">
+            {{ area.labelKey ? (area.labelKey | transloco) : area.value }}
+          </option>
         }
       </select>
     </app-form-field>
+
+    @if (zoneError()) {
+      <p
+        role="alert"
+        class="flex flex-wrap items-center gap-xs text-sm text-danger"
+      >
+        {{ "address.zone.loadFailed" | transloco }}
+        <button
+          type="button"
+          class="inline-flex min-h-11 cursor-pointer items-center font-semibold underline"
+          (click)="retryZone()"
+        >
+          {{ "address.zone.retry" | transloco }}
+        </button>
+      </p>
+    }
 
     @if (serverError(); as message) {
       <p class="text-sm text-danger" role="alert">{{ message }}</p>
@@ -96,7 +114,7 @@
     <button
       type="submit"
       class="min-h-12 w-full cursor-pointer rounded-sm bg-accent-soft px-md font-display text-lg font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper disabled:cursor-not-allowed disabled:opacity-50"
-      [disabled]="submitting()"
+      [disabled]="submitting() || !areas().length"
     >
       {{
         (submitting() ? "address.add.submitting" : "address.add.submit")

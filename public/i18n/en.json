@@ -15,7 +15,7 @@
   },
   "footer": {
     "homeLabel": "REST home",
-    "tagline": "A delivery-only kitchen. No walk-ins, no dining room — just food finished the moment it's ordered.",
+    "tagline": "A delivery-only kitchen. No walk-ins, no dining room - just food finished the moment it's ordered.",
     "explore": "Explore",
     "links": {
       "kitchen": "The Kitchen",
@@ -27,7 +27,7 @@
     "hours": {
       "open": "6:00 PM – 12:00 AM daily",
       "cutoff": "Orders close at 9:00 PM",
-      "deliveryOnly": "Delivery only — no walk-ins"
+      "deliveryOnly": "Delivery only - no walk-ins"
     },
     "rights": "© {year} REST. All rights reserved.",
     "social": {
@@ -62,15 +62,15 @@
     "kitchen": {
       "marker": "Course One",
       "heading": "The kitchen you'll never stand in",
-      "p1": "A cloud kitchen has no dining room, so nothing about your evening is spent on one. No printed menus left on a table for the next four guests, no hostess stand, no square footage sitting empty at 3pm. That budget goes into the kitchen instead — better cuts, tighter sourcing, a smaller menu done properly.",
+      "p1": "A cloud kitchen has no dining room, so nothing about your evening is spent on one. No printed menus left on a table for the next four guests, no hostess stand, no square footage sitting empty at 3pm. That budget goes into the kitchen instead - better cuts, tighter sourcing, a smaller menu done properly.",
       "p2": "Every order is cooked to fire, not held warm under a lamp waiting for a table to be ready. You're not seated near the kitchen. You're the only reason it's running tonight.",
       "stat1Label": "Dishes on rotation, changed weekly",
-      "stat2Label": "Seats — delivery only, always"
+      "stat2Label": "Seats - delivery only, always"
     },
     "howItWorks": {
       "marker": "Course Two",
       "heading": "Order to doorstep",
-      "sub": "Three steps, same as any kitchen — you just don't have to sit in it.",
+      "sub": "Three steps, same as any kitchen - you just don't have to sit in it.",
       "steps": {
         "choose": {
           "title": "Choose your evening",
@@ -90,7 +90,7 @@
       "marker": "Course Three",
       "heading": "Our standards",
       "quote": "“I never plated a dish for someone I couldn’t see. Now every plate has to speak for itself.”",
-      "attribution": "— Youssef Naguib, Head Chef",
+      "attribution": "- Youssef Naguib, Head Chef",
       "items": {
         "sourcing": {
           "title": "Sourcing",
@@ -106,7 +106,7 @@
         },
         "consistency": {
           "title": "Consistency",
-          "description": "Every plate finished by the chef on duty — never assembled by a courier."
+          "description": "Every plate finished by the chef on duty - never assembled by a courier."
         }
       }
     },
@@ -168,6 +168,10 @@
       "shubra": "Shubra",
       "zamalek": "Zamalek",
       "zeitoun": "Zeitoun"
+    },
+    "zone": {
+      "loadFailed": "We couldn't load the delivery areas.",
+      "retry": "Try again"
     }
   },
   "auth": {
@@ -265,19 +269,33 @@
       "discount": "Discount",
       "delivery": "Delivery Fee",
       "total": "Total",
-      "arrival": "Target Arrival: 35–50 minutes",
       "arrivalNote": "Fire ticket generated upon confirmation.",
       "confirm": "Confirm",
       "assurances": {
         "haccp": "HACCP Certified Precision Kitchen",
         "sealed": "Tamper-evident heat-welded packaging",
         "fresh": "Never reheated · Plated directly from pan to seal"
-      }
+      },
+      "payment": "Payment: cash on delivery",
+      "arrival": "Target Arrival: {min}–{max} minutes",
+      "hours": "Orders daily {opensAt} – {closesAt} (Cairo time)"
     },
     "blocked": {
+      "submitting": "Placing your order…",
       "loading": "Loading your addresses…",
       "error": "We couldn't load your addresses. Refresh to try again.",
-      "noAddress": "Add a delivery address to continue."
+      "noAddress": "Add a delivery address to continue.",
+      "configLoading": "Loading order details…",
+      "configError": "We couldn't load the order details. Please refresh the page.",
+      "closed": "The kitchen isn't taking orders right now."
+    },
+    "errors": { "submit": "We couldn't place your order. Please try again." },
+    "placed": {
+      "title": "Order received",
+      "number": "Order number",
+      "total": "Total",
+      "payment": "Pay in cash when your order arrives.",
+      "back": "Back to the menu"
     }
   },
   "qty": {
@@ -298,6 +316,15 @@
     "categoriesLabel": "Menu categories"
   },
   "errors": {
-    "network": "We can't reach the server. Check your connection and try again."
+    "network": "We can't reach the server. Check your connection and try again.",
+    "codes": {
+      "KITCHEN_CLOSED": "We take orders daily between {opensAt} and {closesAt} (Cairo time).",
+      "PRODUCT_UNAVAILABLE": "“{productName}” is no longer available. Please remove it from your cart and try again.",
+      "NO_SAVED_ADDRESS": "Please add a delivery address before placing your order.",
+      "ADDRESS_NOT_OWNED": "That address isn't available. Please choose another one.",
+      "ORDER_EMPTY": "Your order has no items.",
+      "ORDER_CANCEL_NOT_ALLOWED": "This order can no longer be cancelled online. Please contact the restaurant.",
+      "ADDRESS_OUTSIDE_DELIVERY_AREA": "We don't deliver to this address yet. Please choose an address inside our delivery areas."
+    }
   }
 }
