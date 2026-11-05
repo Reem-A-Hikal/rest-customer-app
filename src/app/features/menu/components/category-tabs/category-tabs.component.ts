@@ -7,7 +7,6 @@ import {
   output,
   viewChild,
 } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
 export interface CategoryTab<T extends string | number = number> {
   id: T;
   name: string;
@@ -15,13 +14,13 @@ export interface CategoryTab<T extends string | number = number> {
 }
 @Component({
   selector: 'app-category-tabs',
-  imports: [TranslocoPipe],
   templateUrl: './category-tabs.component.html',
 })
 export class CategoryTabsComponent<T extends string | number = number> {
   readonly tabs = input.required<CategoryTab<T>[]>();
   readonly activeId = input<T | null>(null);
   readonly tabSelected = output<T>();
+  readonly label = input('Menu Categories');
 
   private readonly list = viewChild<ElementRef<HTMLElement>>('list');
 
