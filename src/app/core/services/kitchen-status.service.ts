@@ -1,17 +1,22 @@
-import { computed, Injectable, OnDestroy, signal } from '@angular/core';
-import { isKitchenOpen } from '../../shared/utils/kitchen-hours';
+import { computed, inject, Injectable, OnDestroy } from '@angular/core';
+import { CheckoutConfigService } from '../../features/cart/services/checkout-config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KitchenStatusService implements OnDestroy {
-  private readonly now = signal(new Date());
+  private readonly checkout = inject(CheckoutConfigService);
+
   private readonly intervalId = setInterval(
-    () => this.now.set(new Date()),
+    () => this.checkout.refresh(),
     60_000,
   );
 
-  readonly isOpen = computed(() => isKitchenOpen(this.now()));
+  readonly isOpen = computed(() => this.checkout.acceptingOrders() === true);
+
+  constructor() {
+    this.checkout.refresh();
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);

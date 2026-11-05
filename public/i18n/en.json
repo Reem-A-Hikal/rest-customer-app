@@ -315,6 +315,54 @@
     "chefsPick": "Chef's Pick",
     "categoriesLabel": "Menu categories"
   },
+  "orders": {
+    "title": "My orders",
+    "loading": "Loading your orders…",
+    "loadFailed": "We couldn't load your orders.",
+    "retry": "Try again",
+    "number": "Order",
+    "total": "Total",
+    "empty": {
+      "title": "No orders yet",
+      "text": "Your orders will show up here once you place one.",
+      "cta": "Browse the menu",
+      "active": "No orders in progress.",
+      "past": "No past orders yet."
+    },
+    "status": {
+      "New": "Received",
+      "Confirmed": "Confirmed",
+      "Preparing": "Being prepared",
+      "Ready": "Ready",
+      "OutForDelivery": "On its way",
+      "Delivered": "Delivered",
+      "Cancelled": "Cancelled"
+    },
+    "cancel": {
+      "open": "Cancel order",
+      "reasonLabel": "Reason (optional)",
+      "confirm": "Yes, cancel it",
+      "cancelling": "Cancelling…",
+      "keep": "Keep my order",
+      "failed": "We couldn't cancel the order. Please try again."
+    },
+    "subtitle": "Follow your current order or look back at past ones.",
+    "tabsLabel": "Filter orders",
+    "tabs": { "all": "All", "active": "In progress", "past": "Past" },
+    "sections": { "active": "In progress", "past": "Past orders" },
+    "progress": "Order progress",
+    "expectedBy": "Expected by",
+    "deliveringTo": "Delivering to",
+    "deliveredTo": "Delivered to",
+    "notes": "Your note",
+    "itemCount": "{count, plural, one {# item} other {# items}}",
+    "reorder": {
+      "button": "Order again",
+      "added": "{count, plural, =0 {Nothing was added.} one {# item added to your cart.} other {# items added to your cart.}}",
+      "missing": "{count, plural, one {# item is no longer available.} other {# items are no longer available.}}",
+      "goToCart": "Go to cart"
+    }
+  },
   "errors": {
     "network": "We can't reach the server. Check your connection and try again.",
     "codes": {

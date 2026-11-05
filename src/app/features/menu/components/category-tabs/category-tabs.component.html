@@ -1,6 +1,6 @@
 <nav
   [attr.aria-label]="'menu.categoriesLabel' | transloco"
-  class="sticky top-[4.75rem] z-50 border-b border-outline bg-ink/92 backdrop-blur-[10px] mb-md"
+  class="mb-xl sticky top-[4.75rem] z-50 border-b border-outline bg-ink/92 backdrop-blur-[10px] mb-md"
 >
   <ul
     #list
@@ -21,6 +21,12 @@
           (click)="tabSelected.emit(tab.id)"
         >
           {{ tab.name }}
+          @if (tab.count !== undefined) {
+            <span
+              class="ms-xs rounded-full bg-surface px-xs text-sm tabular-nums text-warm-grey"
+              >{{ tab.count }}</span
+            >
+          }
         </button>
       </li>
     }

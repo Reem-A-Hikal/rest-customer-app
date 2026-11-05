@@ -1,0 +1,444 @@
+<app-header class="mb-lg" [showMenuToggle]="false" />
+
+<main class="min-h-screen bg-ink pb-2xl pt-28 text-paper">
+  <div class="container">
+    <header class="pb-lg">
+      <h1 class="font-display text-h1 font-bold">
+        {{ "orders.title" | transloco }}
+      </h1>
+      <p class="mt-xs text-lead text-warm-grey">
+        {{ "orders.subtitle" | transloco }}
+      </p>
+    </header>
+
+    @if (loading()) {
+      <output class="mt-lg block text-warm-grey">
+        {{ "orders.loading" | transloco }}
+      </output>
+    } @else if (loadFailed()) {
+      <div
+        class="mt-lg flex flex-wrap items-center gap-sm rounded-md border border-danger/40 bg-danger/10 p-md"
+        role="alert"
+      >
+        <p class="text-danger">{{ "orders.loadFailed" | transloco }}</p>
+        <button
+          type="button"
+          class="inline-flex min-h-11 cursor-pointer items-center rounded-sm border border-outline px-md text-sm font-bold transition-colors hover:border-accent-soft hover:text-accent-soft"
+          (click)="load()"
+        >
+          {{ "orders.retry" | transloco }}
+        </button>
+      </div>
+    } @else if (!hasOrders()) {
+      <div
+        class="mt-xl flex flex-col items-center gap-md rounded-md border border-outline bg-surface px-md py-xl text-center"
+      >
+        <h2 class="font-display text-2xl font-bold">
+          {{ "orders.empty.title" | transloco }}
+        </h2>
+        <p class="text-warm-grey">{{ "orders.empty.text" | transloco }}</p>
+        <a
+          routerLink="/menu"
+          class="inline-flex min-h-11 items-center rounded-sm bg-accent-soft px-md font-display font-bold text-ink transition-colors hover:bg-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+        >
+          {{ "orders.empty.cta" | transloco }}
+        </a>
+      </div>
+    } @else {
+      <!-- Tabs -->
+      <app-category-tabs
+        [label]="'orders.tabsLabel' | transloco"
+        [tabs]="tabItems()"
+        [activeId]="tab()"
+        (tabSelected)="tab.set($event)"
+      />
+
+      <!-- In progress -->
+      @if (showActive()) {
+        <section aria-labelledby="active-title">
+          <h2 id="active-title" class="font-display text-2xl font-bold">
+            {{ "orders.sections.active" | transloco }}
+          </h2>
+
+          @if (!activeOrders().length) {
+            <p class="mt-sm text-warm-grey">
+              {{ "orders.empty.active" | transloco }}
+            </p>
+          }
+
+          <ul class="mt-md flex flex-col gap-md">
+            @for (order of activeOrders(); track order.orderId) {
+              <li class="rounded-md border border-outline bg-surface">
+                <div
+                  class="flex flex-wrap items-start justify-between gap-sm p-md"
+                >
+                  <div>
+                    <span
+                      class="inline-flex items-center rounded-full border px-sm py-2xs text-sm font-semibold"
+                      [class]="statusTone(order)"
+                    >
+                      {{ statusKey(order) | transloco }}
+                    </span>
+                    <p class="mt-xs font-display text-xl font-bold">
+                      {{ "orders.number" | transloco }}
+                      <bdi>{{ order.orderNumber }}</bdi>
+                    </p>
+                    <p class="text-sm text-warm-grey">{{ placedAt(order) }}</p>
+                  </div>
+
+                  @if (expectedBy(order); as eta) {
+                    <div
+                      class="flex items-center gap-sm rounded-sm bg-ink/40 p-sm"
+                    >
+                      <svg
+                        class="size-5 text-accent-soft"
+                        lucideClock
+                        [strokeWidth]="1.6"
+                      ></svg>
+                      <div>
+                        <p class="text-xs text-warm-grey">
+                          {{ "orders.expectedBy" | transloco }}
+                        </p>
+                        <p class="font-display text-lg font-bold tabular-nums">
+                          {{ eta }}
+                        </p>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <ol
+                  class="grid gap-sm border-y border-outline bg-ink/30 p-md sm:grid-cols-5"
+                  [attr.aria-label]="'orders.progress' | transloco"
+                >
+                  @for (step of steps; track step) {
+                    @let state = stepState(order, step);
+                    <li
+                      class="flex items-center gap-sm sm:flex-col sm:text-center"
+                      [attr.aria-current]="state === 'current' ? 'step' : null"
+                    >
+                      <span
+                        class="grid size-9 shrink-0 place-items-center rounded-full border"
+                        [class]="stepTone(state)"
+                      >
+                        @if (state === "done") {
+                          <svg
+                            class="size-4"
+                            lucideCheck
+                            [strokeWidth]="2"
+                          ></svg>
+                        } @else {
+                          <span class="text-sm font-semibold">{{
+                            $index + 1
+                          }}</span>
+                        }
+                      </span>
+                      <span
+                        class="text-sm"
+                        [class]="
+                          state === 'upcoming'
+                            ? 'text-warm-grey'
+                            : 'font-semibold'
+                        "
+                      >
+                        {{ stepKey(step) | transloco }}
+                      </span>
+                    </li>
+                  }
+                </ol>
+
+                <div class="grid gap-md p-md lg:grid-cols-[1fr_20rem]">
+                  <ul class="flex flex-col gap-sm">
+                    @for (item of order.orderDetails; track item.productId) {
+                      <li
+                        class="flex items-center gap-sm rounded-sm bg-ink/30 p-sm"
+                      >
+                        @if (item.productImageUrl) {
+                          <img
+                            [src]="toAssetUrl(item.productImageUrl)"
+                            alt=""
+                            loading="lazy"
+                            class="size-14 shrink-0 rounded-sm object-cover"
+                          />
+                        }
+                        <div class="min-w-0 flex-1">
+                          <p class="truncate font-display font-semibold">
+                            {{ itemName(item) }}
+                          </p>
+                          <p class="text-sm text-warm-grey">
+                            × {{ item.quantity }}
+                          </p>
+                        </div>
+                        <span class="tabular-nums">
+                          <app-price
+                            [amount]="item.totalPrice"
+                            format="1.2-2"
+                          />
+                        </span>
+                      </li>
+                    }
+                  </ul>
+
+                  <div class="rounded-sm border border-outline p-md text-sm">
+                    @if (order.customerAddress) {
+                      <p class="font-semibold">
+                        {{ "orders.deliveringTo" | transloco }}
+                      </p>
+                      <p class="mt-2xs text-warm-grey">
+                        {{ order.customerAddress }}
+                      </p>
+                    }
+                    @if (order.customerNotes) {
+                      <p class="mt-sm text-warm-grey">
+                        <span class="font-semibold text-paper"
+                          >{{ "orders.notes" | transloco }}:</span
+                        >
+                        {{ order.customerNotes }}
+                      </p>
+                    }
+
+                    <dl
+                      class="mt-md flex flex-col gap-xs border-t border-outline pt-md"
+                    >
+                      <div class="flex justify-between gap-sm">
+                        <dt>
+                          {{
+                            "cart.summary.subtotal"
+                              | transloco: { count: itemCount(order) }
+                          }}
+                        </dt>
+                        <dd class="tabular-nums">
+                          <app-price [amount]="order.subTotal" format="1.2-2" />
+                        </dd>
+                      </div>
+                      @if (order.discount > 0) {
+                        <div
+                          class="flex justify-between gap-sm text-signature-soft"
+                        >
+                          <dt>{{ "cart.summary.discount" | transloco }}</dt>
+                          <dd class="tabular-nums">
+                            −<app-price
+                              [amount]="order.discount"
+                              format="1.2-2"
+                            />
+                          </dd>
+                        </div>
+                      }
+                      <div class="flex justify-between gap-sm">
+                        <dt>{{ "cart.summary.delivery" | transloco }}</dt>
+                        <dd class="tabular-nums">
+                          <app-price
+                            [amount]="order.deliveryFee"
+                            format="1.2-2"
+                          />
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <div
+                      class="mt-sm flex items-end justify-between gap-sm border-t border-outline pt-sm"
+                    >
+                      <p class="font-display text-lg font-bold">
+                        {{ "orders.total" | transloco }}
+                      </p>
+                      <p
+                        class="font-display text-2xl font-bold text-accent-soft tabular-nums"
+                      >
+                        <app-price
+                          [amount]="order.totalAmount"
+                          format="1.2-2"
+                        />
+                      </p>
+                    </div>
+                    <p class="mt-xs text-xs text-warm-grey">
+                      {{ "cart.summary.payment" | transloco }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="px-md pb-md">
+                  @if (cancellingId() === order.orderId) {
+                    <div class="rounded-sm border border-outline p-sm">
+                      <label
+                        class="text-sm font-semibold"
+                        [for]="'cancel-reason-' + order.orderId"
+                      >
+                        {{ "orders.cancel.reasonLabel" | transloco }}
+                      </label>
+                      <textarea
+                        [id]="'cancel-reason-' + order.orderId"
+                        rows="2"
+                        maxlength="300"
+                        dir="auto"
+                        class="mt-xs w-full rounded-sm border border-outline bg-ink/40 p-sm text-sm"
+                        [value]="reason()"
+                        (input)="reason.set($any($event.target).value)"
+                      ></textarea>
+
+                      @if (cancelError(); as message) {
+                        <p
+                          role="alert"
+                          class="mt-xs rounded-sm border border-danger/40 bg-danger/10 p-sm text-sm text-danger"
+                        >
+                          {{ message }}
+                        </p>
+                      }
+
+                      <div class="mt-sm flex flex-wrap gap-sm">
+                        <button
+                          type="button"
+                          class="inline-flex min-h-11 cursor-pointer items-center rounded-sm bg-danger px-md text-sm font-bold text-ink transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                          [disabled]="cancelBusy()"
+                          (click)="confirmCancel(order)"
+                        >
+                          {{
+                            (cancelBusy()
+                              ? "orders.cancel.cancelling"
+                              : "orders.cancel.confirm"
+                            ) | transloco
+                          }}
+                        </button>
+                        <button
+                          type="button"
+                          class="inline-flex min-h-11 cursor-pointer items-center rounded-sm border border-outline px-md text-sm font-bold transition-colors hover:border-accent-soft hover:text-accent-soft"
+                          (click)="closeCancel()"
+                        >
+                          {{ "orders.cancel.keep" | transloco }}
+                        </button>
+                      </div>
+                    </div>
+                  } @else if (canCancel(order)) {
+                    <button
+                      type="button"
+                      class="inline-flex min-h-11 cursor-pointer items-center rounded-sm border border-outline px-md text-sm font-bold transition-colors hover:border-danger hover:text-danger"
+                      (click)="openCancel(order)"
+                    >
+                      {{ "orders.cancel.open" | transloco }}
+                    </button>
+                  } @else {
+                    <p class="text-sm text-warm-grey">
+                      {{ "errors.codes.ORDER_CANCEL_NOT_ALLOWED" | transloco }}
+                    </p>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      <!-- Past orders -->
+      @if (showPast()) {
+        <section class="mt-xl" aria-labelledby="past-title">
+          <h2 id="past-title" class="font-display text-2xl font-bold">
+            {{ "orders.sections.past" | transloco }}
+          </h2>
+
+          @if (!pastOrders().length) {
+            <p class="mt-sm text-warm-grey">
+              {{ "orders.empty.past" | transloco }}
+            </p>
+          }
+
+          <ul class="mt-md grid gap-md md:grid-cols-2">
+            @for (order of pastOrders(); track order.orderId) {
+              <li
+                class="flex flex-col rounded-md border border-outline bg-surface"
+              >
+                <div
+                  class="flex flex-wrap items-start justify-between gap-sm p-md"
+                >
+                  <div>
+                    <p class="font-display text-lg font-bold">
+                      {{ "orders.number" | transloco }}
+                      <bdi>{{ order.orderNumber }}</bdi>
+                    </p>
+                    <p class="text-sm text-warm-grey">{{ placedAt(order) }}</p>
+                  </div>
+                  <span
+                    class="inline-flex items-center rounded-full border px-sm py-2xs text-sm font-semibold"
+                    [class]="statusTone(order)"
+                  >
+                    {{ statusKey(order) | transloco }}
+                  </span>
+                </div>
+
+                @if (
+                  order.status === OrderStatus.Delivered &&
+                  order.customerAddress
+                ) {
+                  <p class="px-md text-sm text-warm-grey">
+                    {{ "orders.deliveredTo" | transloco }}
+                    {{ order.customerAddress }}
+                  </p>
+                }
+
+                <ul
+                  class="mt-md flex flex-col gap-xs border-t border-outline p-md text-sm"
+                >
+                  @for (item of order.orderDetails; track item.productId) {
+                    <li class="flex justify-between gap-sm">
+                      <span>{{ item.quantity }} × {{ itemName(item) }}</span>
+                      <span class="tabular-nums">
+                        <app-price [amount]="item.totalPrice" format="1.2-2" />
+                      </span>
+                    </li>
+                  }
+                </ul>
+
+                <div
+                  class="mt-auto flex items-end justify-between gap-sm border-t border-outline p-md"
+                >
+                  <p class="text-sm text-warm-grey">
+                    {{
+                      "orders.itemCount"
+                        | transloco: { count: itemCount(order) }
+                    }}
+                  </p>
+                  <p
+                    class="font-display text-xl font-bold text-accent-soft tabular-nums"
+                  >
+                    <app-price [amount]="order.totalAmount" format="1.2-2" />
+                  </p>
+                </div>
+
+                <div class="px-md pb-md">
+                  <button
+                    type="button"
+                    class="inline-flex min-h-11 w-full cursor-pointer items-center justify-center rounded-sm border border-accent-soft/40 px-md text-sm font-bold text-accent-soft transition-colors hover:bg-accent-soft hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+                    [disabled]="!menuReady()"
+                    (click)="reorder(order)"
+                  >
+                    {{ "orders.reorder.button" | transloco }}
+                  </button>
+
+                  @if (reorderResult(); as result) {
+                    @if (result.orderId === order.orderId) {
+                      <output class="mt-sm text-sm">
+                        {{
+                          "orders.reorder.added"
+                            | transloco: { count: result.added }
+                        }}
+                        @if (result.missing) {
+                          {{
+                            "orders.reorder.missing"
+                              | transloco: { count: result.missing }
+                          }}
+                        }
+                        <a
+                          routerLink="/cart"
+                          class="font-semibold text-accent-soft underline"
+                          >{{ "orders.reorder.goToCart" | transloco }}</a
+                        >
+                      </output>
+                    }
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    }
+  </div>
+</main>

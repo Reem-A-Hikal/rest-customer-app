@@ -1,7 +1,11 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { Category, MenuGroup, Product } from '../models/menu.model';
-import { forkJoin } from 'rxjs';
+
+interface MenuCategoryResponse extends Category {
+  products: Product[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,11 +42,11 @@ export class MenuService {
     this.loadingSignal.set(true);
     this.errorSignal.set(null);
 
-    forkJoin({
-      categories: this.api.get<Category[]>(`/Category/all`),
-      products: this.api.get<Product[]>(`/Product/all`),
-    }).subscribe({
-      next: ({ categories, products }) => {
+    this.api.get<MenuCategoryResponse[]>('/Menu').subscribe({
+      next: (menu) => {
+        const categories = menu.map(({ products, ...category }) => category);
+        const products = menu.flatMap((section) => section.products);
+        
         this.categoriesSignal.set(categories);
         this.productsSignal.set(products);
         if (categories.length && !this.selectedCategoryIdSignal()) {
