@@ -11,7 +11,13 @@
     "switchToAr": "Switch to Arabic",
     "switchToEn": "Switch to English",
     "cart": "{count, plural, =0 {Open cart} one {Open cart, {count} item} other {Open cart, {count} items}}",
-    "menu": { "open": "Open menu", "close": "Close menu" }
+    "menu": { "open": "Open menu", "close": "Close menu" },
+    "account": {
+      "menu": "Account menu",
+      "signIn": "Sign in",
+      "orders": "My orders",
+      "signOut": "Sign out"
+    }
   },
   "footer": {
     "homeLabel": "REST home",

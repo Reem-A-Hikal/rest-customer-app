@@ -2,12 +2,12 @@
   [class]="headerStateClasses"
   class="fixed start-0 end-0 top-0 z-[100] transition-[background-color,padding,box-shadow] duration-300"
 >
-  <div class="container flex items-center gap-md">
+  <div class="container flex items-center gap-sm">
     <a routerLink="/" class="relative z-10 me-auto flex items-center gap-2xs">
       <app-brand-logo></app-brand-logo>
     </a>
 
-    <div class="relative z-10 flex items-center gap-md lg:order-2">
+    <div class="relative z-10 flex items-center gap-xs lg:order-2">
       <button
         type="button"
         (click)="language.toggle()"
@@ -19,6 +19,67 @@
       >
         {{ language.lang() === "ar" ? "EN" : "AR" }}
       </button>
+
+      @if (isSignedIn()) {
+        <div #accountWrap>
+          <button
+            type="button"
+            class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
+            aria-controls="account-menu"
+            [attr.aria-expanded]="accountOpen()"
+            [attr.aria-label]="'header.account.menu' | transloco"
+            (click)="toggleAccount()"
+          >
+            <svg lucideUser class="size-5" [strokeWidth]="1.6"></svg>
+          </button>
+
+          @if (accountOpen()) {
+            <div
+              id="account-menu"
+              class="absolute end-0 top-full mt-xs w-64 max-w-[calc(100vw-2rem)] overflow-hidden rounded-md border border-outline bg-ink shadow-lg"
+            >
+              <div class="border-b border-outline p-md">
+                <p class="truncate font-display font-semibold">
+                  {{ user()?.fullName }}
+                </p>
+                <p class="truncate text-sm text-warm-grey">
+                  <bdi>{{ user()?.email }}</bdi>
+                </p>
+              </div>
+
+              <a
+                routerLink="/orders"
+                class="flex min-h-11 items-center gap-sm px-md text-sm font-semibold transition-colors hover:bg-paper/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent-soft"
+                (click)="accountOpen.set(false)"
+              >
+                <svg lucidePaperBag class="size-5" [strokeWidth]="1.6"></svg>
+                {{ "header.account.orders" | transloco }}
+              </a>
+
+              <button
+                type="button"
+                class="flex min-h-11 w-full cursor-pointer items-center gap-sm px-md text-start text-sm font-semibold transition-colors hover:bg-paper/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent-soft"
+                (click)="signOut()"
+              >
+                <svg
+                  lucideLogOut
+                  class="size-5 rtl:-scale-x-100"
+                  [strokeWidth]="1.6"
+                ></svg>
+                {{ "header.account.signOut" | transloco }}
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <a
+          routerLink="/signin"
+          [attr.aria-label]="'header.account.signIn' | transloco"
+          class="grid size-11 flex-none cursor-pointer place-items-center rounded-full border border-paper/30 text-paper transition-colors hover:border-amber hover:text-amber"
+        >
+          <svg lucideUser class="size-5" [strokeWidth]="1.6"></svg>
+        </a>
+      }
 
       <a
         #cartLink
