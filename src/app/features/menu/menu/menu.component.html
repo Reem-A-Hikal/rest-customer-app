@@ -35,6 +35,7 @@
     <div class="container space-y-16 pb-md">
       <app-category-tabs
         [tabs]="categoryTabs()"
+        [isSticky]="true"
         [label]="'menu.categoriesLabel' | transloco"
         [activeId]="selectedCategoryId()"
         (tabSelected)="selectCategory($event)"

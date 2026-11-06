@@ -15,7 +15,6 @@ import {
   LucideLogOut,
   LucideMenu,
   LucidePaperBag,
-  LucideReceipt,
   LucideShoppingCart,
   LucideUser,
   LucideX,

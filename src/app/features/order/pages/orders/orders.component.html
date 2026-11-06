@@ -49,6 +49,7 @@
       <app-category-tabs
         [label]="'orders.tabsLabel' | transloco"
         [tabs]="tabItems()"
+        [isSticky]="false"
         [activeId]="tab()"
         (tabSelected)="tab.set($event)"
       />

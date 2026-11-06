@@ -27,7 +27,7 @@ export class BackToTopComponent {
 
   get buttonClasses(): string {
     const base =
-      'fixed bottom-2xl end-md lg:bottom-md z-40 grid size-11 cursor-pointer place-items-center rounded-full ' +
+      'fixed end-md bottom-md z-40 grid size-11 cursor-pointer place-items-center rounded-full ' +
       'border border-paper/30 bg-ink/92 text-paper backdrop-blur-[10px] ' +
       'transition-[opacity,translate,visibility,color,border-color] duration-300 ' +
       'hover:border-amber hover:text-amber ' +

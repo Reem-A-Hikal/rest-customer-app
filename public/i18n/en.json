@@ -36,9 +36,10 @@
       "deliveryOnly": "Delivery only - no walk-ins"
     },
     "rights": "© {year} REST. All rights reserved.",
+    "demoNote": "Portfolio project, not a real business. Reviews, quotes and certifications are placeholders.",
     "social": {
-      "instagram": "REST on Instagram",
-      "facebook": "REST on Facebook"
+      "github": "Source code on GitHub",
+      "linkedin": "LinkedIn profile"
     }
   },
   "home": {
@@ -80,7 +81,7 @@
       "steps": {
         "choose": {
           "title": "Choose your evening",
-          "description": "Browse tonight's menu, set fresh each day, and order any time before 9pm."
+          "description": "Browse tonight's menu and order between 6:00 PM and 9:00 PM."
         },
         "plated": {
           "title": "Plated to order",
@@ -130,13 +131,13 @@
         },
         "t3": {
           "quote": "The lamb shoulder shows up at our table more reliably than most of our dinner guests.",
-          "author": "Salma, New Cairo"
+          "author": "Salma, Heliopolis"
         }
       }
     },
     "menuCta": {
       "heading": "Tonight's kitchen opens at 6:00 PM.",
-      "sub": "Delivering across Cairo Governorate, 6pm until midnight."
+      "sub": "Delivering to select areas across Cairo, 6pm until midnight."
     }
   },
   "address": {

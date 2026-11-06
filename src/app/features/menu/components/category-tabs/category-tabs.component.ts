@@ -21,6 +21,7 @@ export class CategoryTabsComponent<T extends string | number = number> {
   readonly activeId = input<T | null>(null);
   readonly tabSelected = output<T>();
   readonly label = input('Menu Categories');
+  readonly isSticky = input(true);
 
   private readonly list = viewChild<ElementRef<HTMLElement>>('list');
 

@@ -1,6 +1,7 @@
 <nav
   [attr.aria-label]="label()"
-  class="mb-xl sticky top-[4.75rem] z-50 border-b border-outline bg-ink/92 backdrop-blur-[10px] mb-md"
+  [class]="isSticky() ? 'sticky top-[4.75rem] z-50' : ''"
+  class="mb-xl border-b border-outline bg-ink/92 backdrop-blur-[10px] mb-md"
 >
   <ul
     #list

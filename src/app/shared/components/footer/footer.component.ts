@@ -1,5 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BrandLogoComponent } from '../brand-logo/brand-logo.component';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -17,6 +16,9 @@ interface FooterLink {
 })
 export class FooterComponent {
   readonly year = new Date().getFullYear();
+  protected readonly githubUrl =
+    'https://github.com/Reem-A-Hikal/rest-customer-app';
+  protected readonly linkedinUrl = 'https://www.linkedin.com/in/reem-heikal';
 
   readonly exploreLinks: readonly FooterLink[] = [
     { labelKey: 'footer.links.kitchen', route: '/', fragment: 'kitchen' },
