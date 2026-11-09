@@ -4,6 +4,7 @@ import { DishImageComponent } from '../../../menu/components/dish-image/dish-ima
 import { AddOnProduct } from '../../utils/pick-add-ons';
 import { PriceComponent } from '../../../../shared/components/price/price.component';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { LocalizedNamePipe } from '../../../../core/i18n/localized';
 
 @Component({
   selector: 'app-add-ons',
@@ -12,6 +13,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     PriceComponent,
     DishImageComponent,
     QtyControlComponent,
+    LocalizedNamePipe,
   ],
   templateUrl: './add-ons.component.html',
   styleUrls: ['./add-ons.component.css'],

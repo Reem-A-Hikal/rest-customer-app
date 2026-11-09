@@ -5,6 +5,7 @@ import { DishImageComponent } from '../../../menu/components/dish-image/dish-ima
 import { LucideTrash } from '@lucide/angular';
 import { PriceComponent } from '../../../../shared/components/price/price.component';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { LocalizedNamePipe } from '../../../../core/i18n/localized';
 
 @Component({
   selector: 'app-cart-item-card',
@@ -14,6 +15,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     TranslocoPipe,
     PriceComponent,
     LucideTrash,
+    LocalizedNamePipe
   ],
   templateUrl: './cart-item-card.component.html',
   styleUrls: ['./cart-item-card.component.css'],

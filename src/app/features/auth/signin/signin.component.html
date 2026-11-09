@@ -1,6 +1,6 @@
 <app-auth-shell
-  [title]="'auth.signin.title' | transloco"
-  [subtitle]="'auth.signin.subtitle' | transloco"
+  [title]="'auth.signin.title'"
+  [subtitle]="'auth.signin.subtitle'"
 >
   <form
     [formGroup]="form"
@@ -20,7 +20,7 @@
         formControlName="email"
         autocomplete="email"
         inputmode="email"
-        aria-label="Email"
+        [attr.aria-label]="'auth.fields.email' | transloco"
         [attr.aria-invalid]="!!emailError()"
         [attr.aria-describedby]="emailError() ? 'signin-email-error' : null"
       />
@@ -28,7 +28,7 @@
 
     <app-password-field
       inputId="signin-password"
-      autocomplete="new-password"
+      autocomplete="current-password"
       [control]="form.controls.password"
       [error]="passwordError()"
     />

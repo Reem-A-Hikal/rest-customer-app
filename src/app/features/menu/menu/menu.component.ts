@@ -5,6 +5,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  untracked,
 } from '@angular/core';
 import { MenuService } from '../services/menu.service';
 import { CartFacade } from '../../cart/services/cart.facade';
@@ -26,7 +27,6 @@ import { toCartItem } from '../../cart/utils/to-cart-item';
     CategoryTabsComponent,
     TranslocoPipe,
     LocalizedNamePipe,
-    // LocalizedDescriptionPipe,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
@@ -37,6 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private readonly lang = inject(LanguageService).lang;
 
   private observer?: IntersectionObserver;
+  private observeTimeoutId?: ReturnType<typeof setTimeout>;
   private ignoreSpyUntil = 0;
 
   readonly loading = this.menuService.loading;
@@ -77,25 +78,30 @@ export class MenuComponent implements OnInit, OnDestroy {
     })),
   );
 
+  private readonly hasCategories = computed(
+    () => this.menuService.menuGroups().length > 0,
+  );
+
   constructor() {
     effect(() => {
-      const ready =
-        !this.loading() && !this.error() && this.menuGroups().length > 0;
+      const ready = !this.loading() && !this.error() && this.hasCategories();
 
       if (!ready) return;
 
-      this.observeCategories();
+      untracked(() => this.observeCategories());
     });
   }
 
   private observeCategories(): void {
     this.observer?.disconnect();
+    clearTimeout(this.observeTimeoutId);
+
     this.observer = new IntersectionObserver(
       (entries) => this.selectLastVisibleCategory(entries),
       { rootMargin: '-50% 0px -50% 0px' },
     );
 
-    setTimeout(() => this.observeCategorySections());
+    this.observeTimeoutId = setTimeout(() => this.observeCategorySections());
   }
 
   private selectLastVisibleCategory(
@@ -114,7 +120,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   private observeCategorySections(): void {
-    this.menuGroups().forEach((group) => {
+    this.menuService.menuGroups().forEach((group) => {
       const section = document.getElementById(
         `category-${group.category.categoryId}`,
       );
@@ -157,6 +163,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearTimeout(this.observeTimeoutId);
     this.observer?.disconnect();
   }
 }

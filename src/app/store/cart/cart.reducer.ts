@@ -1,6 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { CartState, initialCartState } from './cart.state';
 import { CartActions } from './cart.actions';
+import { MAX_QUANTITY_PER_ITEM } from '../../shared/constants/cart.constants';
+
+const clampQuantity = (quantity: number): number =>
+  Math.min(quantity, MAX_QUANTITY_PER_ITEM);
 
 export const cartReducer = createReducer(
   initialCartState,
@@ -11,14 +15,14 @@ export const cartReducer = createReducer(
       return {
         items: state.items.map((i) =>
           i.productId === item.productId
-            ? { ...i, quantity: i.quantity + quantity }
+            ? { ...i, quantity: clampQuantity(i.quantity + quantity) }
             : i,
         ),
       };
     }
 
     return {
-      items: [...state.items, { ...item, quantity }],
+      items: [...state.items, { ...item, quantity: clampQuantity(quantity) }],
     };
   }),
 
@@ -26,7 +30,9 @@ export const cartReducer = createReducer(
     CartActions.incrementQuantity,
     (state, { productId }): CartState => ({
       items: state.items.map((i) =>
-        i.productId === productId ? { ...i, quantity: i.quantity + 1 } : i,
+        i.productId === productId
+          ? { ...i, quantity: clampQuantity(i.quantity + 1) }
+          : i,
       ),
     }),
   ),
@@ -64,7 +70,10 @@ export const cartReducer = createReducer(
   on(
     CartActions.cartLoaded,
     (_, action): CartState => ({
-      items: action.items,
+      items: action.items.map((i) => ({
+        ...i,
+        quantity: clampQuantity(i.quantity),
+      })),
     }),
   ),
 );

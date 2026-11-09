@@ -28,11 +28,13 @@
     <button
       type="button"
       appFlyToCart
+      [disabled]="atMax"
       (click)="increment.emit()"
       [attr.aria-label]="
         (name ? 'qty.increaseNamed' : 'qty.increase') | transloco: { name }
       "
-      class="h-6 w-6 rounded-full text-signature-soft"
+      [attr.title]="atMax ? ('qty.max' | transloco: { max }) : null"
+      class="h-6 w-6 rounded-full text-signature-soft disabled:cursor-not-allowed disabled:opacity-40"
     >
       <span aria-hidden="true">+</span>
     </button>

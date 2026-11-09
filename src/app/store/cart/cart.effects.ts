@@ -5,18 +5,32 @@ import { CartActions } from './cart.actions';
 import { map, tap, withLatestFrom } from 'rxjs';
 import { selectCartItems } from './cart.selectors';
 import { CartItem } from '../../shared/models/cart-item.model';
+import { isCartItem } from './cart-item.guard';
 
-const STORAGE_kEY = 'cart';
+const STORAGE_KEY = 'cart';
 
 function readStoredCart(): CartItem[] {
   try {
-    const raw = localStorage.getItem(STORAGE_kEY);
-    const parsed: unknown = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? (parsed as CartItem[]) : [];
-  } catch {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      console.warn('Ignoring invalid cart data in localStorage.');
+      return [];
+    }
+
+    const items = parsed.filter(isCartItem);
+    if (items.length !== parsed.length) {
+      console.warn('Ignoring invalid cart items in localStorage.');
+    }
+    return items;
+  } catch (error) {
+    console.error('Failed to read cart data from localStorage.', error);
     return [];
   }
 }
+
 @Injectable()
 export class CartEffects {
   private readonly actions$ = inject(Actions);
@@ -34,7 +48,11 @@ export class CartEffects {
         ),
         withLatestFrom(this.store.select(selectCartItems)),
         tap(([_, items]) => {
-          localStorage.setItem(STORAGE_kEY, JSON.stringify(items));
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+          } catch (error) {
+            console.error('Failed to save cart data to localStorage.', error);
+          }
         }),
       ),
     { dispatch: false },

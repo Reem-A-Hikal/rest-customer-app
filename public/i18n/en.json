@@ -311,7 +311,8 @@
     "increase": "Increase quantity",
     "increaseNamed": "Increase quantity of {name}",
     "decrease": "Decrease quantity",
-    "decreaseNamed": "Decrease quantity of {name}"
+    "decreaseNamed": "Decrease quantity of {name}",
+    "max": "Maximum {max} per dish"
   },
   "menu": {
     "loading": "Loading menu…",
@@ -372,6 +373,8 @@
   },
   "errors": {
     "network": "We can't reach the server. Check your connection and try again.",
+    "conflict": "This changed in the meantime. Refresh the page and try again.",
+    "tooManyRequests": "Too many attempts. Please try again in a moment.",
     "codes": {
       "KITCHEN_CLOSED": "We take orders daily between {opensAt} and {closesAt} (Cairo time).",
       "PRODUCT_UNAVAILABLE": "“{productName}” is no longer available. Please remove it from your cart and try again.",
@@ -379,7 +382,8 @@
       "ADDRESS_NOT_OWNED": "That address isn't available. Please choose another one.",
       "ORDER_EMPTY": "Your order has no items.",
       "ORDER_CANCEL_NOT_ALLOWED": "This order can no longer be cancelled online. Please contact the restaurant.",
-      "ADDRESS_OUTSIDE_DELIVERY_AREA": "We don't deliver to this address yet. Please choose an address inside our delivery areas."
+      "ADDRESS_OUTSIDE_DELIVERY_AREA": "We don't deliver to this address yet. Please choose an address inside our delivery areas.",
+      "ACCOUNT_LOCKED": "Too many failed sign-in attempts. Please try again in a little while."
     }
   }
 }

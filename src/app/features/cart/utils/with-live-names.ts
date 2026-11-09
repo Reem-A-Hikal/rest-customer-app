@@ -7,16 +7,14 @@ export function withLiveNames(
 ): CartItem[] {
   const arabicById = new Map<number, string | null>();
 
-  for (const groub of groups) {
-    for (const product of groub.products) {
+  for (const group of groups) {
+    for (const product of group.products) {
       arabicById.set(product.productId, product.nameAr ?? null);
     }
   }
 
   return items.map((item) => {
     const live = arabicById.get(item.productId);
-    return live === undefined 
-    ? item
-    : { ...item, nameAr: live };
+    return live === undefined ? item : { ...item, nameAr: live };
   });
 }

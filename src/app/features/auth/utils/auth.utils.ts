@@ -9,8 +9,22 @@ interface ApiErrorBody {
   errorParams?: unknown;
 }
 
+const STATUS_KEYS: Readonly<Record<number, string>> = {
+  409: 'errors.conflict',
+  429: 'errors.tooManyRequests',
+};
+
 function asNonEmptyString(value: unknown): string | undefined {
   return typeof value === 'string' && value ? value : undefined;
+}
+
+function translateOrUndefined(
+  translate: Translate,
+  key: string,
+  params?: Params,
+): string | undefined {
+  const text = translate(key, params);
+  return text && text !== key ? text : undefined;
 }
 
 function resolveTranslatedError(
@@ -26,10 +40,8 @@ function resolveTranslatedError(
       ? (body.errorParams as Params)
       : {};
   const params = enrichParams ? enrichParams(code, raw) : raw;
-  const key = `errors.codes.${code}`;
-  const text = translate(key, params);
 
-  return text && text !== key ? text : undefined;
+  return translateOrUndefined(translate, `errors.codes.${code}`, params);
 }
 
 function resolveFirstErrorMessage(
@@ -54,6 +66,12 @@ export function extractErrorMessage(
   const body = error.error as ApiErrorBody | null;
   const translatedError = resolveTranslatedError(body, translate, enrichParams);
   if (translatedError) return translatedError;
+
+  const statusKey = STATUS_KEYS[error.status];
+  if (statusKey) {
+    const statusMessage = translateOrUndefined(translate, statusKey);
+    if (statusMessage) return statusMessage;
+  }
 
   const firstErrorMessage = resolveFirstErrorMessage(body);
   if (firstErrorMessage) return firstErrorMessage;

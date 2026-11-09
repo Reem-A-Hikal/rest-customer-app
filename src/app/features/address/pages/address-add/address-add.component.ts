@@ -91,7 +91,9 @@ export class AddressAddComponent {
   }
 
   protected submit(): void {
-    if (this.form.invalid) {
+    const governorate = this.zone.governorate();
+    
+    if (this.form.invalid || !governorate) {
       this.form.markAllAsTouched();
       return;
     }
@@ -101,12 +103,6 @@ export class AddressAddComponent {
 
     this.submitting.set(true);
     this.serverError.set(null);
-
-    const governorate = this.zone.governorate();
-    if (this.form.invalid || !governorate) {
-      this.form.markAllAsTouched();
-      return;
-    }
 
     this.addresses
       .create({

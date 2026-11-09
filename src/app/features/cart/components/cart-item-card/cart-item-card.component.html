@@ -1,3 +1,4 @@
+@let name = item() | localizedName;
 <article class="flex gap-md rounded-md border border-outline bg-surface p-md">
   <div class="size-24 shrink-0 overflow-hidden rounded-sm sm:size-36">
     <app-dish-image class="block size-full" [product]="item()" />
@@ -5,7 +6,7 @@
 
   <div class="flex min-w-0 flex-1 flex-col gap-xs">
     <div class="flex items-start justify-between gap-sm">
-      <h2 class="font-display text-xl font-bold">{{ item().name }}</h2>
+      <h2 class="font-display text-xl font-bold">{{ name }}</h2>
 
       <div class="shrink-0 text-end">
         <p class="font-display text-xl text-accent-soft tabular-nums">
@@ -28,7 +29,7 @@
     >
       <app-qty-control
         [quantity]="item().quantity"
-        [name]="item().name"
+        [name]="name"
         (increment)="increment.emit()"
         (decrement)="decrement.emit()"
       />
@@ -36,9 +37,7 @@
       <button
         type="button"
         class="cursor-pointer inline-flex min-h-11 items-center gap-2xs px-xs text-sm text-warm-grey transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-soft"
-        [attr.aria-label]="
-          'cart.item.removeLabel' | transloco: { name: item().name }
-        "
+        [attr.aria-label]="'cart.item.removeLabel' | transloco: { name: name }"
         (click)="remove.emit()"
       >
         <svg lucideTrash class="size-4" [strokeWidth]="1.6"></svg>

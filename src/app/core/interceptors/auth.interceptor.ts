@@ -23,11 +23,15 @@ const AUTH_PATHS = [
   '/Account/refresh-token',
   '/Account/logout',
 ];
+
+/** The API answers an unusable refresh token with 400/401/403. */
+const SESSION_ENDING_STATUSES = new Set([400, 401, 403]);
+
 let refresh$: Observable<string> | null = null;
 
 function isAuthEndpoint(url: string): boolean {
   const lower = url.toLowerCase();
-  return AUTH_PATHS.some((path) => lower.includes(path));
+  return AUTH_PATHS.some((path) => lower.includes(path.toLowerCase()));
 }
 
 function withToken(
@@ -69,14 +73,20 @@ export const authInterceptor: HttpInterceptorFn = (
       }
 
       return sharedRefresh(auth).pipe(
-        switchMap((newToken) => next(withToken(req, newToken))),
         catchError((refreshError: unknown) => {
-          auth.clearSession();
-          router.navigate(['/signin'], {
-            queryParams: { returnUrl: router.url },
-          });
+          const sessionIsDead =
+            refreshError instanceof HttpErrorResponse &&
+            SESSION_ENDING_STATUSES.has(refreshError.status);
+
+          if (sessionIsDead) {
+            auth.clearSession();
+            void router.navigate(['/signin'], {
+              queryParams: { returnUrl: router.url },
+            });
+          }
           return throwError(() => refreshError);
         }),
+        switchMap((newToken) => next(withToken(req, newToken))),
       );
     }),
   );

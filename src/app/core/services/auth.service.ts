@@ -56,7 +56,10 @@ export class AuthService {
     if (refreshToken) {
       this.api
         .post<void>('/Account/logout', { refreshToken })
-        .subscribe({ error: () => {} });
+        .subscribe({
+          error: (error: unknown) =>
+            console.error('Failed to revoke refresh token on the server.', error),
+        });
     }
 
     this.clearSession();

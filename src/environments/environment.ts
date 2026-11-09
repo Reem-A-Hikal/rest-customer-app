@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:5181/api',
-  assetsBaseUrl: 'http://localhost:5181',
+  apiBaseUrl: 'https://myrest.runasp.net/api',
+  assetsBaseUrl: 'https://myrest.runasp.net',
 };

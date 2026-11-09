@@ -15,7 +15,6 @@ import {
     QtyControlComponent,
     CommonModule,
     DishImageComponent,
-    DishImageComponent,
     TranslocoPipe,
     LocalizedDescriptionPipe,
     LocalizedNamePipe,

@@ -17,7 +17,6 @@ import { CartEffects } from './store/cart/cart.effects';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { UnwrapResponseInterceptor } from './core/interceptors/unwrap-response.interceptor';
 import { provideToastr } from 'ngx-toastr';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideTransloco } from '@jsverse/transloco';
@@ -40,7 +39,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([UnwrapResponseInterceptor, authInterceptor]),
     ),
-    provideAnimations(),
     provideAnimationsAsync(),
     provideToastr({
       positionClass: 'toast-top-right',

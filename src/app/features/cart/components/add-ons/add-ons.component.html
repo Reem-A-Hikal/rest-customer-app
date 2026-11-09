@@ -13,6 +13,7 @@
 
     <ul class="mt-md grid gap-md sm:grid-cols-2">
       @for (product of products(); track product.productId) {
+        @let name = product | localizedName;
         <li
           class="flex items-center gap-sm rounded-md border border-outline bg-surface p-sm"
         >
@@ -21,7 +22,7 @@
           </div>
 
           <div class="min-w-0 flex-1">
-            <p class="truncate font-display font-bold">{{ product.name }}</p>
+            <p class="truncate font-display font-bold">{{ name }}</p>
             <p class="text-sm text-warm-grey tabular-nums">
               +<app-price [amount]="product.discountedPrice" />
             </p>
@@ -29,7 +30,7 @@
 
           <app-qty-control
             [quantity]="0"
-            [name]="product.name"
+            [name]="name"
             (add)="add.emit(product)"
           />
         </li>
