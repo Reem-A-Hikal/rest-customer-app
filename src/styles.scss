@@ -114,9 +114,9 @@ html[lang="ar"] body {
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--paper);
-  caret-color: var(--paper);
-  box-shadow: 0 0 0 1000px var(--color-bg-dark-raised) inset;
+  -webkit-text-fill-color: var(--color-paper);
+  caret-color: var(--color-paper);
+  box-shadow: 0 0 0 1000px var(--color-ink) inset;
 }
 
 .hero .container {
