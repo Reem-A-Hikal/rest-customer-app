@@ -57,4 +57,8 @@ export class CartFacade {
   clear(): void {
     this.store.dispatch(CartActions.clearCart());
   }
+
+  replaceItems(items: CartItem[]): void {
+    this.store.dispatch(CartActions.itemsSynced({ items }));
+  }
 }

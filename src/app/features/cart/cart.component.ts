@@ -22,6 +22,9 @@ import { LanguageService } from '../../core/i18n/language.service';
 import { localizedName } from '../../core/i18n/localized';
 import { formatClock } from '../../shared/utils/format-clock';
 import { CheckoutConfigService } from './services/checkout-config.service';
+import { CartSyncService } from './services/cart-sync.service';
+import { CartChange } from './utils/sync-cart';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-cart',
   imports: [
@@ -45,6 +48,9 @@ export class CartComponent {
   private readonly lang = inject(LanguageService).lang;
 
   protected readonly cart = inject(CartFacade);
+  private readonly cartSync = inject(CartSyncService);
+  protected readonly syncChanges = this.cartSync.changes;
+
   private readonly menu = inject(MenuService);
   private readonly addressService = inject(AddressService);
 
@@ -83,7 +89,7 @@ export class CartComponent {
         ? 'cart.blocked.configError'
         : 'cart.blocked.configLoading';
     }
-    
+
     if (this.checkout.acceptingOrders() === false) return 'cart.blocked.closed';
 
     if (!this.isSignedIn()) return null;
@@ -145,7 +151,15 @@ export class CartComponent {
           this.placedOrder.set(order);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         },
-        error: (err: unknown) => this.submitError.set(this.toErrorMessage(err)),
+        error: (err: unknown) => {
+          this.submitError.set(this.toErrorMessage(err));
+          if (
+            err instanceof HttpErrorResponse &&
+            err.error?.errCode === 'PRODUCT_UNAVAILABLE'
+          ) {
+            this.menu.loadMenu();
+          }
+        },
       });
   }
 
@@ -175,5 +189,13 @@ export class CartComponent {
         }
       },
     );
+  }
+
+  protected dismissSync(): void {
+    this.cartSync.dismiss();
+  }
+
+  protected nameOf(change: CartChange): string {
+    return localizedName(change, this.lang());
   }
 }

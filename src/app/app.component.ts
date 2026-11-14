@@ -7,6 +7,7 @@ import { CartActions } from './store/cart/cart.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { FooterCompactComponent } from './shared/components/footer-compact/footer-compact.component';
+import { CartSyncService } from './features/cart/services/cart-sync.service';
 
 type FooterVariant = 'full' | 'compact' | 'none';
 @Component({
@@ -23,7 +24,7 @@ type FooterVariant = 'full' | 'compact' | 'none';
 export class AppComponent implements OnInit {
   private readonly store = inject(Store);
   private readonly router = inject(Router);
-
+  private readonly cartSync = inject(CartSyncService);
   title = 'rest-customer-app';
 
   protected readonly footer = toSignal(

@@ -49,7 +49,7 @@
     @if (expanded()) {
       <fieldset id="address-options" class="mt-xs flex flex-col gap-xs">
         <legend class="sr-only">
-          {{ "cart.address.choose" | transloco }}<
+          {{ "cart.address.choose" | transloco }}
         </legend>
 
         @for (option of addresses(); track option.addressId) {
