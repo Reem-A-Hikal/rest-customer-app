@@ -303,6 +303,13 @@
       "total": "Total",
       "payment": "Pay in cash when your order arrives.",
       "back": "Back to the menu"
+    },
+    "sync": {
+      "title": "We updated your cart to match the latest menu",
+      "dismiss": "Dismiss",
+      "removed": "{name} is no longer available and was removed.",
+      "priceChanged": "The price of {name} changed from {from} to {to} EGP.",
+      "alternatives": "Browse similar dishes"
     }
   },
   "qty": {
