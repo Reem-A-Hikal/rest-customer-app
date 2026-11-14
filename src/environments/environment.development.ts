@@ -1,4 +1,5 @@
 export const environment = {
-  apiBaseUrl: 'https://myrest.runasp.net/api',
-  assetsBaseUrl: 'https://myrest.runasp.net',
+  production: false,
+  apiBaseUrl: 'https://localhost:56212/api',
+  assetsBaseUrl: 'https://localhost:56212',
 };
