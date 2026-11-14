@@ -18,9 +18,17 @@ export class MenuService {
   private readonly errorSignal = signal<string | null>(null);
   private readonly selectedCategoryIdSignal = signal<number | null>(null);
 
-  readonly loading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
   readonly selectedCategoryId = this.selectedCategoryIdSignal.asReadonly();
+
+  private static readonly TTL_MS = 5 * 60_000;
+  private readonly loadedAt = signal<number | null>(null);
+
+  readonly loaded = computed(() => this.loadedAt() !== null);
+
+  readonly loading = computed(
+    () => this.loadingSignal() && this.loadedAt() === null,
+  );
 
   readonly categories = computed(() =>
     [...this.categoriesSignal()].sort(
@@ -36,26 +44,37 @@ export class MenuService {
     }));
   });
 
-  loadMenu(): void {
-    if (this.categoriesSignal().length || this.loadingSignal()) return;
+  loadMenu(force = false): void {
+    if (this.loadingSignal()) return;
+
+    const loadedAt = this.loadedAt();
+    const fresh =
+      loadedAt !== null && Date.now() - loadedAt < MenuService.TTL_MS;
+    if (fresh && !force) return;
 
     this.loadingSignal.set(true);
-    this.errorSignal.set(null);
+    if (loadedAt === null) this.errorSignal.set(null);
 
     this.api.get<MenuCategoryResponse[]>('/Menu').subscribe({
       next: (menu) => {
         const categories = menu.map(({ products, ...category }) => category);
         const products = menu.flatMap((section) => section.products);
-        
+
         this.categoriesSignal.set(categories);
         this.productsSignal.set(products);
-        if (categories.length && !this.selectedCategoryIdSignal()) {
+
+        const selected = this.selectedCategoryIdSignal();
+        const stillExists = categories.some((c) => c.categoryId === selected);
+
+        if (categories.length && (!selected || !stillExists)) {
           this.selectedCategoryIdSignal.set(categories[0].categoryId);
         }
+
+        this.loadedAt.set(Date.now());
         this.loadingSignal.set(false);
       },
       error: () => {
-        this.errorSignal.set('menu.error');
+        if (this.loadedAt() === null) this.errorSignal.set('menu.error');
         this.loadingSignal.set(false);
       },
     });

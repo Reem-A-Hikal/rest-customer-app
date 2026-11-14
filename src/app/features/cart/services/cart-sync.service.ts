@@ -23,6 +23,8 @@ export class CartSyncService {
         return;
       }
 
+      const groups = this.menu.menuGroups();
+      if (!groups.some((g) => g.products.length)) return;
       const result = syncCartWithMenu(items, this.menu.menuGroups());
       if (!result.dirty) return;
 
