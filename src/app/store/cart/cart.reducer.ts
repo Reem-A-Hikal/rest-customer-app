@@ -76,4 +76,6 @@ export const cartReducer = createReducer(
       })),
     }),
   ),
+
+  on(CartActions.itemsSynced, (_, { items }): CartState => ({ items })),
 );

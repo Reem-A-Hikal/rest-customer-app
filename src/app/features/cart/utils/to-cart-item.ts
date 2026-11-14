@@ -4,6 +4,7 @@ import { Product } from '../../menu/models/menu.model';
 export function toCartItem(product: Product): Omit<CartItem, 'quantity'> {
   return {
     productId: product.productId,
+    categoryId: product.categoryId,
     name: product.name,
     nameAr: product.nameAr ?? null,
     price: product.price,

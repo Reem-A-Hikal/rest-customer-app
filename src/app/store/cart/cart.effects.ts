@@ -45,6 +45,7 @@ export class CartEffects {
           CartActions.decrementQuantity,
           CartActions.removeItem,
           CartActions.clearCart,
+          CartActions.itemsSynced,
         ),
         withLatestFrom(this.store.select(selectCartItems)),
         tap(([_, items]) => {

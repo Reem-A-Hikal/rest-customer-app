@@ -11,5 +11,6 @@ export const CartActions = createActionGroup({
     'Clear Cart': emptyProps(),
     'Load Cart From Storage': emptyProps(),
     'Cart Loaded': props<{ items: CartItem[] }>(),
+    'Items Synced': props<{ items: CartItem[] }>(),
   },
 });

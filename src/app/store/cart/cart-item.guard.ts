@@ -11,6 +11,9 @@ export function isCartItem(value: unknown): value is CartItem {
 
   const item = value as Record<string, unknown>;
   return (
+    (item['categoryId'] === undefined ||
+      item['categoryId'] === null ||
+      Number.isInteger(item['categoryId'])) &&
     Number.isInteger(item['productId']) &&
     (item['productId'] as number) > 0 &&
     typeof item['name'] === 'string' &&
